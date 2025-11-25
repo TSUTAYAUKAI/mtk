@@ -1,0 +1,16 @@
+68K GAS  outchr.s 			page 1
+
+
+   1               	.global outbyte
+   2               	
+   3               	.text
+   4               	.even
+   5               	
+   6               	outbyte:
+68K GAS  outchr.s 			page 2
+
+
+DEFINED SYMBOLS
+            outchr.s:6      .text:0000000000000000 outbyte
+
+NO UNDEFINED SYMBOLS

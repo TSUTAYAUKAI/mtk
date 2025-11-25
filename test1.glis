@@ -1,0 +1,300 @@
+68K GAS  /tmp/ccKEes0N.s 			page 1
+
+
+   1               	#NO_APP
+   2               		.file	"test1.c"
+   3               		.text
+   4               	.Ltext0:
+   5               		.cfi_sections	.debug_frame
+   6               		.section	.text.startup,"ax",@progbits
+   7               		.align	2
+   8               		.globl	main
+   9               		.type	main, @function
+  10               	main:
+  11               	.LFB3:
+  12               		.file 1 "test1.c"
+   1:test1.c       **** #include <stdio.h>
+   2:test1.c       **** 
+   3:test1.c       **** int main(void){
+  13               		.loc 1 3 15 view -0
+  14               		.cfi_startproc
+   4:test1.c       ****   return 0;
+  15               		.loc 1 4 3 view .LVU1
+   5:test1.c       **** }
+  16               		.loc 1 5 1 is_stmt 0 view .LVU2
+  17 0000 7000      		moveq #0,%d0
+  18 0002 4E75      		rts
+  19               		.cfi_endproc
+  20               	.LFE3:
+  21               		.size	main, .-main
+  22               		.text
+  23               	.Letext0:
+  24               		.section	.debug_info,"",@progbits
+  25               	.Ldebug_info0:
+  26 0000 0000 008D 		.long	0x8d
+  27 0004 0005      		.word	0x5
+  28 0006 01        		.byte	0x1
+  29 0007 04        		.byte	0x4
+  30 0008 0000 0000 		.long	.Ldebug_abbrev0
+  31 000c 02        		.uleb128 0x2
+  32 000d 0000 0000 		.long	.LASF11
+  33 0011 1D        		.byte	0x1d
+  34 0012 0000 0000 		.long	.LASF12
+  35 0016 0000 0000 		.long	.LASF13
+  36 001a 0000 0000 		.long	.LLRL0
+  37 001e 0000 0000 		.long	0
+  38 0022 0000 0000 		.long	.Ldebug_line0
+  39 0026 01        		.uleb128 0x1
+  40 0027 01        		.byte	0x1
+  41 0028 06        		.byte	0x6
+  42 0029 0000 0000 		.long	.LASF0
+  43 002d 01        		.uleb128 0x1
+  44 002e 01        		.byte	0x1
+  45 002f 08        		.byte	0x8
+  46 0030 0000 0000 		.long	.LASF1
+  47 0034 01        		.uleb128 0x1
+  48 0035 02        		.byte	0x2
+  49 0036 05        		.byte	0x5
+  50 0037 0000 0000 		.long	.LASF2
+  51 003b 01        		.uleb128 0x1
+  52 003c 02        		.byte	0x2
+68K GAS  /tmp/ccKEes0N.s 			page 2
+
+
+  53 003d 07        		.byte	0x7
+  54 003e 0000 0000 		.long	.LASF3
+  55 0042 01        		.uleb128 0x1
+  56 0043 04        		.byte	0x4
+  57 0044 05        		.byte	0x5
+  58 0045 0000 0000 		.long	.LASF4
+  59 0049 01        		.uleb128 0x1
+  60 004a 04        		.byte	0x4
+  61 004b 07        		.byte	0x7
+  62 004c 0000 0000 		.long	.LASF5
+  63 0050 01        		.uleb128 0x1
+  64 0051 08        		.byte	0x8
+  65 0052 05        		.byte	0x5
+  66 0053 0000 0000 		.long	.LASF6
+  67 0057 01        		.uleb128 0x1
+  68 0058 08        		.byte	0x8
+  69 0059 07        		.byte	0x7
+  70 005a 0000 0000 		.long	.LASF7
+  71 005e 01        		.uleb128 0x1
+  72 005f 0C        		.byte	0xc
+  73 0060 04        		.byte	0x4
+  74 0061 0000 0000 		.long	.LASF8
+  75 0065 01        		.uleb128 0x1
+  76 0066 04        		.byte	0x4
+  77 0067 07        		.byte	0x7
+  78 0068 0000 0000 		.long	.LASF9
+  79 006c 03        		.uleb128 0x3
+  80 006d 04        		.byte	0x4
+  81 006e 05        		.byte	0x5
+  82 006f 696E 7400 		.string	"int"
+  83 0073 01        		.uleb128 0x1
+  84 0074 01        		.byte	0x1
+  85 0075 06        		.byte	0x6
+  86 0076 0000 0000 		.long	.LASF10
+  87 007a 04        		.uleb128 0x4
+  88 007b 0000 0000 		.long	.LASF14
+  89 007f 01        		.byte	0x1
+  90 0080 03        		.byte	0x3
+  91 0081 05        		.byte	0x5
+  92 0082 0000 006C 		.long	0x6c
+  93 0086 0000 0000 		.long	.LFB3
+  94 008a 0000 0004 		.long	.LFE3-.LFB3
+  95 008e 01        		.uleb128 0x1
+  96 008f 9C        		.byte	0x9c
+  97 0090 00        		.byte	0
+  98               		.section	.debug_abbrev,"",@progbits
+  99               	.Ldebug_abbrev0:
+ 100 0000 01        		.uleb128 0x1
+ 101 0001 24        		.uleb128 0x24
+ 102 0002 00        		.byte	0
+ 103 0003 0B        		.uleb128 0xb
+ 104 0004 0B        		.uleb128 0xb
+ 105 0005 3E        		.uleb128 0x3e
+ 106 0006 0B        		.uleb128 0xb
+ 107 0007 03        		.uleb128 0x3
+ 108 0008 0E        		.uleb128 0xe
+ 109 0009 00        		.byte	0
+68K GAS  /tmp/ccKEes0N.s 			page 3
+
+
+ 110 000a 00        		.byte	0
+ 111 000b 02        		.uleb128 0x2
+ 112 000c 11        		.uleb128 0x11
+ 113 000d 01        		.byte	0x1
+ 114 000e 25        		.uleb128 0x25
+ 115 000f 0E        		.uleb128 0xe
+ 116 0010 13        		.uleb128 0x13
+ 117 0011 0B        		.uleb128 0xb
+ 118 0012 03        		.uleb128 0x3
+ 119 0013 0E        		.uleb128 0xe
+ 120 0014 1B        		.uleb128 0x1b
+ 121 0015 0E        		.uleb128 0xe
+ 122 0016 55        		.uleb128 0x55
+ 123 0017 17        		.uleb128 0x17
+ 124 0018 11        		.uleb128 0x11
+ 125 0019 01        		.uleb128 0x1
+ 126 001a 10        		.uleb128 0x10
+ 127 001b 17        		.uleb128 0x17
+ 128 001c 00        		.byte	0
+ 129 001d 00        		.byte	0
+ 130 001e 03        		.uleb128 0x3
+ 131 001f 24        		.uleb128 0x24
+ 132 0020 00        		.byte	0
+ 133 0021 0B        		.uleb128 0xb
+ 134 0022 0B        		.uleb128 0xb
+ 135 0023 3E        		.uleb128 0x3e
+ 136 0024 0B        		.uleb128 0xb
+ 137 0025 03        		.uleb128 0x3
+ 138 0026 08        		.uleb128 0x8
+ 139 0027 00        		.byte	0
+ 140 0028 00        		.byte	0
+ 141 0029 04        		.uleb128 0x4
+ 142 002a 2E        		.uleb128 0x2e
+ 143 002b 00        		.byte	0
+ 144 002c 3F        		.uleb128 0x3f
+ 145 002d 19        		.uleb128 0x19
+ 146 002e 03        		.uleb128 0x3
+ 147 002f 0E        		.uleb128 0xe
+ 148 0030 3A        		.uleb128 0x3a
+ 149 0031 0B        		.uleb128 0xb
+ 150 0032 3B        		.uleb128 0x3b
+ 151 0033 0B        		.uleb128 0xb
+ 152 0034 39        		.uleb128 0x39
+ 153 0035 0B        		.uleb128 0xb
+ 154 0036 27        		.uleb128 0x27
+ 155 0037 19        		.uleb128 0x19
+ 156 0038 49        		.uleb128 0x49
+ 157 0039 13        		.uleb128 0x13
+ 158 003a 11        		.uleb128 0x11
+ 159 003b 01        		.uleb128 0x1
+ 160 003c 12        		.uleb128 0x12
+ 161 003d 06        		.uleb128 0x6
+ 162 003e 40        		.uleb128 0x40
+ 163 003f 18        		.uleb128 0x18
+ 164 0040 7A        		.uleb128 0x7a
+ 165 0041 19        		.uleb128 0x19
+ 166 0042 00        		.byte	0
+68K GAS  /tmp/ccKEes0N.s 			page 4
+
+
+ 167 0043 00        		.byte	0
+ 168 0044 00        		.byte	0
+ 169               		.section	.debug_aranges,"",@progbits
+ 170 0000 0000 001C 		.long	0x1c
+ 171 0004 0002      		.word	0x2
+ 172 0006 0000 0000 		.long	.Ldebug_info0
+ 173 000a 04        		.byte	0x4
+ 174 000b 00        		.byte	0
+ 175 000c 0000      		.word	0
+ 176 000e 0000      		.word	0
+ 177 0010 0000 0000 		.long	.LFB3
+ 178 0014 0000 0004 		.long	.LFE3-.LFB3
+ 179 0018 0000 0000 		.long	0
+ 180 001c 0000 0000 		.long	0
+ 181               		.section	.debug_rnglists,"",@progbits
+ 182               	.Ldebug_ranges0:
+ 183 0000 0000 000F 		.long	.Ldebug_ranges3-.Ldebug_ranges2
+ 184               	.Ldebug_ranges2:
+ 185 0004 0005      		.word	0x5
+ 186 0006 04        		.byte	0x4
+ 187 0007 00        		.byte	0
+ 188 0008 0000 0000 		.long	0
+ 189               	.LLRL0:
+ 190 000c 07        		.byte	0x7
+ 191 000d 0000 0000 		.long	.LFB3
+ 192 0011 04        		.uleb128 .LFE3-.LFB3
+ 193 0012 00        		.byte	0
+ 194               	.Ldebug_ranges3:
+ 195               		.section	.debug_line,"",@progbits
+ 196               	.Ldebug_line0:
+ 197 0000 0000 003A 		.section	.debug_str,"MS",@progbits,1
+ 197      0003 0000 
+ 197      001E 0201 
+ 197      FB0E 0D00 
+ 197      0101 0101 
+ 198               	.LASF6:
+ 199 0000 6C6F 6E67 		.string	"long long int"
+ 199      206C 6F6E 
+ 199      6720 696E 
+ 199      7400 
+ 200               	.LASF9:
+ 201 000e 756E 7369 		.string	"unsigned int"
+ 201      676E 6564 
+ 201      2069 6E74 
+ 201      00
+ 202               	.LASF11:
+ 203 001b 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
+ 203      4331 3720 
+ 203      3131 2E34 
+ 203      2E30 202D 
+ 203      6D63 7075 
+ 204               	.LASF1:
+ 205 005f 756E 7369 		.string	"unsigned char"
+ 205      676E 6564 
+ 205      2063 6861 
+ 205      7200 
+ 206               	.LASF14:
+68K GAS  /tmp/ccKEes0N.s 			page 5
+
+
+ 207 006d 6D61 696E 		.string	"main"
+ 207      00
+ 208               	.LASF12:
+ 209 0072 7465 7374 		.string	"test1.c"
+ 209      312E 6300 
+ 210               	.LASF5:
+ 211 007a 6C6F 6E67 		.string	"long unsigned int"
+ 211      2075 6E73 
+ 211      6967 6E65 
+ 211      6420 696E 
+ 211      7400 
+ 212               	.LASF7:
+ 213 008c 6C6F 6E67 		.string	"long long unsigned int"
+ 213      206C 6F6E 
+ 213      6720 756E 
+ 213      7369 676E 
+ 213      6564 2069 
+ 214               	.LASF13:
+ 215 00a3 2F68 6F6D 		.string	"/home/students/23nen/1TE23861W/mtk"
+ 215      652F 7374 
+ 215      7564 656E 
+ 215      7473 2F32 
+ 215      336E 656E 
+ 216               	.LASF10:
+ 217 00c6 6368 6172 		.string	"char"
+ 217      00
+ 218               	.LASF4:
+ 219 00cb 6C6F 6E67 		.string	"long int"
+ 219      2069 6E74 
+ 219      00
+ 220               	.LASF3:
+ 221 00d4 7368 6F72 		.string	"short unsigned int"
+ 221      7420 756E 
+ 221      7369 676E 
+ 221      6564 2069 
+ 221      6E74 00
+ 222               	.LASF0:
+ 223 00e7 7369 676E 		.string	"signed char"
+ 223      6564 2063 
+ 223      6861 7200 
+ 224               	.LASF8:
+ 225 00f3 6C6F 6E67 		.string	"long double"
+ 225      2064 6F75 
+ 225      626C 6500 
+ 226               	.LASF2:
+ 227 00ff 7368 6F72 		.string	"short int"
+ 227      7420 696E 
+ 227      7400 
+ 228               		.ident	"GCC: (GNU) 11.4.0"
+68K GAS  /tmp/ccKEes0N.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 test1.c
+     /tmp/ccKEes0N.s:10     .text.startup:0000000000000000 main
+
+NO UNDEFINED SYMBOLS
