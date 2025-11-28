@@ -3,14 +3,46 @@
 
    1               	.global outbyte
    2               	
-   3               	.text
-   4               	.even
-   5               	
-   6               	outbyte:
+   3               	.equ SYSCALL_NUM_PUTSTRING, 2
+   4               	
+   5               	.text
+   6               	.even
+   7               	
+   8               	outbyte:
+   9 0000 202F 0004 		move.l 4(%sp),%d0		| fetch argument (pushed as long)
+  10 0004 0280 0000 		andi.l #0xff,%d0		| keep lower 8 bits
+  10      00FF 
+  11               	
+  12 000a 48E7 3080 		movem.l %d2-%d3/%a0,-(%sp)	| preserve callee-saved registers
+  13 000e 41F9 0000 		lea	outbyte_buf,%a0
+  13      0000 
+  14 0014 1080      		move.b %d0,(%a0)		| store byte into buffer
+  15               	
+  16               	outbyte_retry:
+  17 0016 7002      		move.l #SYSCALL_NUM_PUTSTRING,%d0 | system call number
+  18 0018 7200      		moveq	#0,%d1			| channel 0
+  19 001a 2408      		move.l %a0,%d2			| source address
+  20 001c 7601      		moveq	#1,%d3			| send 1 byte
+  21 001e 4E40      		trap	#0
+  22 0020 0C80 0000 		cmpi.l #1,%d0			| did we queue the byte?
+  22      0001 
+  23 0026 6600 FFEE 		bne	outbyte_retry		| retry until success
+  24               	
+  25 002a 4CDF 010C 		movem.l (%sp)+,%d2-%d3/%a0	| restore registers
+  26 002e 4E75      		rts
+  27               	
+  28               	.section .bss
+  29               	.even
+  30               	outbyte_buf:
+  31 0000 00        		.ds.b 1				| single byte output buffer
+  32 0001 00        	.even
 68K GAS  outchr.s 			page 2
 
 
 DEFINED SYMBOLS
-            outchr.s:6      .text:0000000000000000 outbyte
+            outchr.s:8      .text:0000000000000000 outbyte
+            outchr.s:3      *ABS*:0000000000000002 SYSCALL_NUM_PUTSTRING
+            outchr.s:30     .bss:0000000000000000 outbyte_buf
+            outchr.s:16     .text:0000000000000016 outbyte_retry
 
 NO UNDEFINED SYMBOLS
