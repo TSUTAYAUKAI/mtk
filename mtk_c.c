@@ -8,7 +8,7 @@ void sleep(int ch){
 }
 
 void wakeup(int ch){
-	TASK_ID_TYPE wake_up_id = removeq(&semaphore[ch].task_list);
+	TASK_ID_TYPE  wake_up_id = removeq(&semaphore[ch].task_list);
 	addq(&ready, wake_up_id);			        
 }
 
