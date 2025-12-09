@@ -1,0 +1,153 @@
+#include<stdio.h>
+#include "mtk_c.h"
+
+/*カーネルの初期化*/
+void init_kernel(void)
+{
+  int i;
+
+  /*TCB配列の初期化*/
+  for (i = 0; i < NUMTASK; i++){
+    task_tab[i].task_addr = NULL;
+    task_tab[i].stack_ptr = NULL;
+    task_tab[i].priority = 0;
+    task_tab[i].next = NULLTASKID;
+  }
+
+  /*セマフォ値を初期化*/
+  for (i = 0; i < NUMSEMAPHORE; i++){
+    semaphore[i].count = 1;
+    semaphore[i].nst = 0;
+    semaphore[i].task_list = NULLTASKID;
+  }
+
+  /*readyキュー、カレントタスクの初期化*/
+  ready = NULLTASKID;
+  curr_task = NULLTASKID;
+  new_task = NULLTASKID;
+  next_task = NULLTASKID;
+}
+
+
+void set_task(void(*func)())
+{
+  int id;
+
+  /*空きタスクIDを探す（0は予約なので1から）*/
+  for (id = 1; id <= NUMTASK; id++){
+    if(task_tab[id].status == 0){
+      break;
+    }
+  }
+
+  if(id > NUMTASK){
+    /*空きがない*/
+    return;
+  }
+
+  /*TCBの登録*/
+  task_tab[id].task_addr = func;
+  task_tab[id].status = 1;
+  task_tab[id].priority = 0;
+  task_tab[id].next = NULLTASKID;
+
+  /*スタックの初期化*/
+  task_tab[id].stack_ptr = init_stack(id);
+
+  /*readyキューへ登録*/
+  addq(&ready, id);
+}
+
+
+void begin_sch(void)
+{
+  /*最初のタスクをreadyキューから取り出す*/
+  curr_task = removeq(&ready);
+  if(curr_task == NULLTASKID){
+    return;
+  }
+
+  /*タイマ割り込み開始*/
+  init_timer();
+
+  /*最初のタスクの実行開始*/
+  first_task();
+}
+
+
+/* addq: キューの最後尾にタスクを追加*/
+void addq(TASK_ID_TYPE *head, TASK_ID_TYPE id) {
+    TASK_ID_TYPE curr;
+
+    /* キューが空の場合 */
+    if (*head == NULLTASKID) {
+        *head = id;
+    } 
+    else {
+        /* 末尾を探す */
+        curr = *head;
+        while (task_tab[curr].next != NULLTASKID) {
+            curr = task_tab[curr].next;
+        }
+        /* 末尾に繋ぐ */
+        task_tab[curr].next = id;
+    }
+    
+    /* 新しい末尾のnextは必ずNULL */
+    task_tab[id].next = NULLTASKID;
+}
+
+/* removeq: キューの先頭からタスクを取り出す*/
+TASK_ID_TYPE removeq(TASK_ID_TYPE *head) {
+    TASK_ID_TYPE id;
+
+    if (*head == NULLTASKID) {
+        return NULLTASKID;
+    }
+
+    /* 先頭を取り出す */
+    id = *head;
+    /* 先頭位置を次にずらす */
+    *head = task_tab[id].next;
+    
+    /* 取り出したタスクのnextはクリアしておく */
+    task_tab[id].next = NULLTASKID;
+
+    return id;
+}
+
+/* sched: 次に実行するタスクを決定する */
+void sched(void) {
+    /* readyキューから1つ取り出す */
+    next_task = removeq(&ready);
+
+    /* 実行できるタスクがなければ無限ループ*/
+    if (next_task == NULLTASKID) {
+        while(1);
+    }
+}
+
+void sleep(int ch){
+	addq(&semaphore[ch].nst, curr_task);
+	sched();				        
+	swtch();		        
+}
+
+void wakeup(int ch){
+	TASK_ID_TYPE  wake_up_id = removeq(&semaphore[ch].nst);
+	addq(&ready, wake_up_id);			        
+}
+
+void p_body(TASK_ID_TYPE id){
+	semaphore[id].count--; 		        
+	if(semaphore[id].count < 0){
+		sleep(id);      
+	}
+}
+
+void v_body(TASK_ID_TYPE id){
+	semaphore[id].count++; 		        
+	if(semaphore[id].count <= 0){
+		wakeup(id); 
+	}
+}

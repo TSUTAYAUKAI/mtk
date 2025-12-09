@@ -6,27 +6,25 @@
 .even
 
 inbyte:
-	| Use GETSTRING to read one byte from channel 0.
-	movem.l %d2-%d3/%a0,-(%sp)	| preserve callee-saved registers we touch
-
-inbyte_retry:
-	move.l #SYSCALL_NUM_GETSTRING,%d0	| system call number
-	moveq	#0,%d1			| channel 0
-	lea	inbyte_buf,%a0		| 1-byte buffer
-	move.l %a0,%d2			| destination buffer address
-	moveq	#1,%d3			| request size = 1 byte
+	movem.l %d2-%d3/%a0,-(%sp)
+inbyte_loop:
+	move.l #SYSCALL_NUM_GETSTRING,%d0	| GETSTRING指定
+	moveq	#0,%d1			| チャネル0を指定
+	lea	inbyte_buf,%a0	
+	move.l %a0,%d2			| バッファのアドレスを格納
+	moveq	#1,%d3
 	trap	#0
-	tst.l	%d0			| did we get a byte?
-	beq	inbyte_retry		| retry until one byte received
+	tst.l	%d0
+	beq	inbyte_loop		| １バイト受け取るまで続ける
 
-	moveq	#0,%d0			| clear upper bits
-	move.b	inbyte_buf,%d0		| load received byte
+	moveq	#0,%d0
+	move.b	inbyte_buf,%d0		| 返り値を格納
 
-	movem.l (%sp)+,%d2-%d3/%a0	| restore registers
+	movem.l (%sp)+,%d2-%d3/%a0
 	rts
 
 .section .bss
 .even
 inbyte_buf:
-	.ds.b 1				| single byte input buffer
+	.ds.b 1				| １バイト分
 .even

@@ -6,27 +6,25 @@
 .even
 
 outbyte:
-	move.l 4(%sp),%d0		| fetch argument (pushed as long)
-	andi.l #0xff,%d0		| keep lower 8 bits
-
-	movem.l %d2-%d3/%a0,-(%sp)	| preserve callee-saved registers
+	move.l 4(%sp),%d0		| スタックからデータを取り出す
+	andi.l #0xff,%d0		| ８ビットに
+	movem.l %d2-%d3/%a0,-(%sp)
 	lea	outbyte_buf,%a0
-	move.b %d0,(%a0)		| store byte into buffer
+	move.b %d0,(%a0)		| バッファにいれる
 
-outbyte_retry:
-	move.l #SYSCALL_NUM_PUTSTRING,%d0 | system call number
-	moveq	#0,%d1			| channel 0
-	move.l %a0,%d2			| source address
-	moveq	#1,%d3			| send 1 byte
+outbyte_loop:
+	move.l #SYSCALL_NUM_PUTSTRING,%d0
+	moveq	#0,%d1			| チャネル0を指定
+	move.l %a0,%d2 
+	moveq	#1,%d3			| １バイト送る
 	trap	#0
-	cmpi.l #1,%d0			| did we queue the byte?
-	bne	outbyte_retry		| retry until success
-
-	movem.l (%sp)+,%d2-%d3/%a0	| restore registers
+	cmpi.l #1,%d0			| 判定
+	bne	outbyte_loop
+	movem.l (%sp)+,%d2-%d3/%a0
 	rts
 
 .section .bss
 .even
 outbyte_buf:
-	.ds.b 1				| single byte output buffer
+	.ds.b 1				| １バイト分のバッファ確保 
 .even
