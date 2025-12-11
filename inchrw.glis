@@ -9,39 +9,37 @@
    6               	.even
    7               	
    8               	inbyte:
-   9               		| Use GETSTRING to read one byte from channel 0.
-  10 0000 48E7 3080 		movem.l %d2-%d3/%a0,-(%sp)	| preserve callee-saved registers we touch
-  11               	
-  12               	inbyte_retry:
-  13 0004 7001      		move.l #SYSCALL_NUM_GETSTRING,%d0	| system call number
-  14 0006 7200      		moveq	#0,%d1			| channel 0
-  15 0008 41F9 0000 		lea	inbyte_buf,%a0		| 1-byte buffer
-  15      0000 
-  16 000e 2408      		move.l %a0,%d2			| destination buffer address
-  17 0010 7601      		moveq	#1,%d3			| request size = 1 byte
-  18 0012 4E40      		trap	#0
-  19 0014 4A80      		tst.l	%d0			| did we get a byte?
-  20 0016 6700 FFEC 		beq	inbyte_retry		| retry until one byte received
-  21               	
-  22 001a 7000      		moveq	#0,%d0			| clear upper bits
-  23 001c 1039 0000 		move.b	inbyte_buf,%d0		| load received byte
-  23      0000 
-  24               	
-  25 0022 4CDF 010C 		movem.l (%sp)+,%d2-%d3/%a0	| restore registers
-  26 0026 4E75      		rts
-  27               	
-  28               	.section .bss
-  29               	.even
-  30               	inbyte_buf:
-  31 0000 00        		.ds.b 1				| single byte input buffer
-  32 0001 00        	.even
+   9 0000 48E7 3080 		movem.l %d2-%d3/%a0,-(%sp)
+  10               	inbyte_loop:
+  11 0004 7001      		move.l #SYSCALL_NUM_GETSTRING,%d0	| GETSTRING指定
+  12 0006 7200      		moveq	#0,%d1			| チャネル0を指定
+  13 0008 41F9 0000 		lea	inbyte_buf,%a0	
+  13      0000 
+  14 000e 2408      		move.l %a0,%d2			| バッファのアドレスを格納
+  15 0010 7601      		moveq	#1,%d3
+  16 0012 4E40      		trap	#0
+  17 0014 4A80      		tst.l	%d0
+  18 0016 6700 FFEC 		beq	inbyte_loop		| １バイト受け取るまで続ける
+  19               	
+  20 001a 7000      		moveq	#0,%d0
+  21 001c 1039 0000 		move.b	inbyte_buf,%d0		| 返り値を格納
+  21      0000 
+  22               	
+  23 0022 4CDF 010C 		movem.l (%sp)+,%d2-%d3/%a0
+  24 0026 4E75      		rts
+  25               	
+  26               	.section .bss
+  27               	.even
+  28               	inbyte_buf:
+  29 0000 00        		.ds.b 1				| １バイト分
+  30 0001 00        	.even
 68K GAS  inchrw.s 			page 2
 
 
 DEFINED SYMBOLS
             inchrw.s:8      .text:0000000000000000 inbyte
             inchrw.s:3      *ABS*:0000000000000001 SYSCALL_NUM_GETSTRING
-            inchrw.s:12     .text:0000000000000004 inbyte_retry
-            inchrw.s:30     .bss:0000000000000000 inbyte_buf
+            inchrw.s:10     .text:0000000000000004 inbyte_loop
+            inchrw.s:28     .bss:0000000000000000 inbyte_buf
 
 NO UNDEFINED SYMBOLS

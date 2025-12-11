@@ -10,3 +10,8 @@ int main(void){
   }
   return 0;
 }
+
+void exit(int value){
+	*(char *)0x00d00039 = 'H';
+	for(;;);
+};
