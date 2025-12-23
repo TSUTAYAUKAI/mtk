@@ -1,4 +1,4 @@
-68K GAS  /tmp/ccBmgS9T.s 			page 1
+68K GAS  /tmp/cc7f32nD.s 			page 1
 
 
    1               	#NO_APP
@@ -58,7 +58,7 @@
   27               	.LFE0:
   28               		.size	fcntl, .-fcntl
   29               		.align	2
-68K GAS  /tmp/ccBmgS9T.s 			page 2
+68K GAS  /tmp/cc7f32nD.s 			page 2
 
 
   30               		.globl	read
@@ -118,7 +118,7 @@
   62 0024 B280      		cmp.l %d0,%d1
   63 0026 6410      		jcc .L12
   34:csys68k.c     ****         return 1; /* fd 4   -> Port 1 (UART2) */
-68K GAS  /tmp/ccBmgS9T.s 			page 3
+68K GAS  /tmp/cc7f32nD.s 			page 3
 
 
   64               		.loc 1 34 12 is_stmt 1 view .LVU13
@@ -178,7 +178,7 @@
   78 0032 4CDF 1C3C 		movem.l (%sp)+,#7228
   79 0036 4E75      		rts
   80               	.LVL5:
-68K GAS  /tmp/ccBmgS9T.s 			page 4
+68K GAS  /tmp/cc7f32nD.s 			page 4
 
 
   81               	.L12:
@@ -238,7 +238,7 @@
  122 0066 7000      		moveq #0,%d0
  123               	.LVL10:
   76:csys68k.c     ****       *(buf + i) = c;
-68K GAS  /tmp/ccBmgS9T.s 			page 5
+68K GAS  /tmp/cc7f32nD.s 			page 5
 
 
  124               		.loc 1 76 7 is_stmt 0 view .LVU29
@@ -298,7 +298,7 @@
  166               		.cfi_def_cfa_offset 36
  167 008e 2F04      		move.l %d4,-(%sp)
  168               		.cfi_def_cfa_offset 40
-68K GAS  /tmp/ccBmgS9T.s 			page 6
+68K GAS  /tmp/cc7f32nD.s 			page 6
 
 
  169 0090 4E92      		jsr (%a2)
@@ -358,7 +358,7 @@
   68:csys68k.c     ****         outbyte(port, '\x8'); /* bs  */
  211               		.loc 1 68 9 view .LVU55
  212 00bc 4878 0020 		pea 32.w
-68K GAS  /tmp/ccBmgS9T.s 			page 7
+68K GAS  /tmp/cc7f32nD.s 			page 7
 
 
  213               		.cfi_def_cfa_offset 44
@@ -418,7 +418,7 @@
  257 00de 48E7 3030 		movem.l #12336,-(%sp)
  258               		.cfi_def_cfa_offset 20
  259               		.cfi_offset 2, -20
-68K GAS  /tmp/ccBmgS9T.s 			page 8
+68K GAS  /tmp/cc7f32nD.s 			page 8
 
 
  260               		.cfi_offset 3, -16
@@ -478,7 +478,7 @@
  287               		.loc 1 109 1 view .LVU75
  288 00f2 4CDF 0C0C 		movem.l (%sp)+,#3084
  289 00f6 4E75      		rts
-68K GAS  /tmp/ccBmgS9T.s 			page 9
+68K GAS  /tmp/cc7f32nD.s 			page 9
 
 
  290               	.LVL31:
@@ -538,7 +538,7 @@
  331 0126 B68A      		cmp.l %a2,%d3
  332 0128 66E6      		jne .L30
  333               	.LVL36:
-68K GAS  /tmp/ccBmgS9T.s 			page 10
+68K GAS  /tmp/cc7f32nD.s 			page 10
 
 
  334               	.L32:
@@ -598,7 +598,7 @@
  378               	.LBE17:
  379               		.cfi_endproc
  380               	.LFE3:
-68K GAS  /tmp/ccBmgS9T.s 			page 11
+68K GAS  /tmp/cc7f32nD.s 			page 11
 
 
  381               		.size	write, .-write
@@ -658,7 +658,7 @@
  435 0078 01        		.uleb128 0x1
  436 0079 9C        		.byte	0x9c
  437 007a 0000 0109 		.long	0x109
-68K GAS  /tmp/ccBmgS9T.s 			page 12
+68K GAS  /tmp/cc7f32nD.s 			page 12
 
 
  438 007e 02        		.uleb128 0x2
@@ -718,7 +718,7 @@
  492 00ee 0000 0000 		.long	.LVL35
  493 00f2 0000 0026 		.long	0x26
  494 00f6 01        		.uleb128 0x1
-68K GAS  /tmp/ccBmgS9T.s 			page 13
+68K GAS  /tmp/cc7f32nD.s 			page 13
 
 
  495 00f7 0000 0000 		.long	.LVL38
@@ -778,7 +778,7 @@
  549 016a 0000 0000 		.long	.LLST1
  550 016e 0000 0000 		.long	.LVUS1
  551 0172 08        		.uleb128 0x8
-68K GAS  /tmp/ccBmgS9T.s 			page 14
+68K GAS  /tmp/cc7f32nD.s 			page 14
 
 
  552 0173 0000 0000 		.long	.LASF3
@@ -838,7 +838,7 @@
  606 0202 00        		.byte	0
  607 0203 13        		.uleb128 0x13
  608 0204 0000 0000 		.long	.LASF12
-68K GAS  /tmp/ccBmgS9T.s 			page 15
+68K GAS  /tmp/cc7f32nD.s 			page 15
 
 
  609 0208 01        		.byte	0x1
@@ -898,7 +898,7 @@
  663 0019 00        		.byte	0
  664 001a 00        		.byte	0
  665 001b 03        		.uleb128 0x3
-68K GAS  /tmp/ccBmgS9T.s 			page 16
+68K GAS  /tmp/cc7f32nD.s 			page 16
 
 
  666 001c 05        		.uleb128 0x5
@@ -958,7 +958,7 @@
  720 0053 19        		.uleb128 0x19
  721 0054 49        		.uleb128 0x49
  722 0055 13        		.uleb128 0x13
-68K GAS  /tmp/ccBmgS9T.s 			page 17
+68K GAS  /tmp/cc7f32nD.s 			page 17
 
 
  723 0056 11        		.uleb128 0x11
@@ -1018,7 +1018,7 @@
  777 008c B842      		.uleb128 0x2138
  778 008e 0B        		.uleb128 0xb
  779 008f 55        		.uleb128 0x55
-68K GAS  /tmp/ccBmgS9T.s 			page 18
+68K GAS  /tmp/cc7f32nD.s 			page 18
 
 
  780 0090 17        		.uleb128 0x17
@@ -1078,7 +1078,7 @@
  834 00c7 39        		.uleb128 0x39
  835 00c8 0B        		.uleb128 0xb
  836 00c9 27        		.uleb128 0x27
-68K GAS  /tmp/ccBmgS9T.s 			page 19
+68K GAS  /tmp/cc7f32nD.s 			page 19
 
 
  837 00ca 19        		.uleb128 0x19
@@ -1138,7 +1138,7 @@
  891 0100 00        		.byte	0
  892 0101 00        		.byte	0
  893 0102 10        		.uleb128 0x10
-68K GAS  /tmp/ccBmgS9T.s 			page 20
+68K GAS  /tmp/cc7f32nD.s 			page 20
 
 
  894 0103 0F        		.uleb128 0xf
@@ -1198,7 +1198,7 @@
  948 0139 0B        		.uleb128 0xb
  949 013a 39        		.uleb128 0x39
  950 013b 0B        		.uleb128 0xb
-68K GAS  /tmp/ccBmgS9T.s 			page 21
+68K GAS  /tmp/cc7f32nD.s 			page 21
 
 
  951 013c 27        		.uleb128 0x27
@@ -1258,7 +1258,7 @@
  1005 0028 91        		.byte	0x91
  1006 0029 74        		.sleb128 -12
  1007 002a 06        		.byte	0x6
-68K GAS  /tmp/ccBmgS9T.s 			page 22
+68K GAS  /tmp/cc7f32nD.s 			page 22
 
 
  1008 002b 1C        		.byte	0x1c
@@ -1318,7 +1318,7 @@
  1062 0068 00        		.uleb128 .LVU76
  1063 0069 00        		.uleb128 .LVU77
  1064 006a 00        		.uleb128 .LVU96
-68K GAS  /tmp/ccBmgS9T.s 			page 23
+68K GAS  /tmp/cc7f32nD.s 			page 23
 
 
  1065 006b 00        		.uleb128 0
@@ -1378,7 +1378,7 @@
  1119 00a9 04        		.byte	0x4
  1120 00aa 9101      		.uleb128 .LVL17-1-.Ltext0
  1121 00ac AC01      		.uleb128 .LVL20-.Ltext0
-68K GAS  /tmp/ccBmgS9T.s 			page 24
+68K GAS  /tmp/cc7f32nD.s 			page 24
 
 
  1122 00ae 01        		.uleb128 0x1
@@ -1438,7 +1438,7 @@
  1176 00e6 7C        		.uleb128 .LVL14-.Ltext0
  1177 00e7 A201      		.uleb128 .LVL19-.Ltext0
  1178 00e9 01        		.uleb128 0x1
-68K GAS  /tmp/ccBmgS9T.s 			page 25
+68K GAS  /tmp/cc7f32nD.s 			page 25
 
 
  1179 00ea 53        		.byte	0x53
@@ -1498,7 +1498,7 @@
  1233 012a 50        		.byte	0x50
  1234 012b 04        		.byte	0x4
  1235 012c 2A        		.uleb128 .LVL3-.Ltext0
-68K GAS  /tmp/ccBmgS9T.s 			page 26
+68K GAS  /tmp/cc7f32nD.s 			page 26
 
 
  1236 012d 30        		.uleb128 .LVL4-.Ltext0
@@ -1558,7 +1558,7 @@
  1290 0020 FA01      		.uleb128 .LBE16-.Ltext0
  1291 0022 04        		.byte	0x4
  1292 0023 D602      		.uleb128 .LBB17-.Ltext0
-68K GAS  /tmp/ccBmgS9T.s 			page 27
+68K GAS  /tmp/cc7f32nD.s 			page 27
 
 
  1293 0025 DA02      		.uleb128 .LBE17-.Ltext0
@@ -1575,65 +1575,65 @@
  1300 0000 6F75 7462 		.string	"outbyte"
  1300      7974 6500 
  1301               	.LASF8:
- 1302 0008 2F68 6F6D 		.string	"/home/students/9698848454/soft2/section4/section3/mtk"
+ 1302 0008 2F68 6F6D 		.string	"/home/students/23nen/1TE23861W/software_experiment_group9/three/fudaba"
  1302      652F 7374 
  1302      7564 656E 
- 1302      7473 2F39 
- 1302      3639 3838 
- 1303               	.LASF5:
- 1304 003e 7265 6164 		.string	"read"
- 1304      00
- 1305               	.LASF1:
- 1306 0043 6368 6172 		.string	"char"
+ 1302      7473 2F32 
+ 1302      336E 656E 
+ 1303               	.LASF2:
+ 1304 004f 6E62 7974 		.string	"nbytes"
+ 1304      6573 00
+ 1305               	.LASF5:
+ 1306 0056 7265 6164 		.string	"read"
  1306      00
- 1307               	.LASF11:
- 1308 0048 6765 745F 		.string	"get_port_from_fd"
- 1308      706F 7274 
- 1308      5F66 726F 
- 1308      6D5F 6664 
+ 1307               	.LASF1:
+ 1308 005b 6368 6172 		.string	"char"
  1308      00
- 1309               	.LASF7:
- 1310 0059 6373 7973 		.string	"csys68k.c"
- 1310      3638 6B2E 
- 1310      6300 
- 1311               	.LASF6:
- 1312 0063 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
- 1312      4331 3720 
- 1312      3131 2E34 
- 1312      2E30 202D 
- 1312      6D63 7075 
- 1313               	.LASF0:
- 1314 00a7 756E 7369 		.string	"unsigned char"
- 1314      676E 6564 
- 1314      2063 6861 
- 1314      7200 
- 1315               	.LASF4:
- 1316 00b5 7772 6974 		.string	"write"
- 1316      6500 
- 1317               	.LASF3:
- 1318 00bb 706F 7274 		.string	"port"
- 1318      00
- 1319               	.LASF2:
- 1320 00c0 6E62 7974 		.string	"nbytes"
- 1320      6573 00
+ 1309               	.LASF11:
+ 1310 0060 6765 745F 		.string	"get_port_from_fd"
+ 1310      706F 7274 
+ 1310      5F66 726F 
+ 1310      6D5F 6664 
+ 1310      00
+ 1311               	.LASF7:
+ 1312 0071 6373 7973 		.string	"csys68k.c"
+ 1312      3638 6B2E 
+ 1312      6300 
+ 1313               	.LASF6:
+ 1314 007b 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
+ 1314      4331 3720 
+ 1314      3131 2E34 
+ 1314      2E30 202D 
+ 1314      6D63 7075 
+ 1315               	.LASF0:
+ 1316 00bf 756E 7369 		.string	"unsigned char"
+ 1316      676E 6564 
+ 1316      2063 6861 
+ 1316      7200 
+ 1317               	.LASF4:
+ 1318 00cd 7772 6974 		.string	"write"
+ 1318      6500 
+ 1319               	.LASF3:
+ 1320 00d3 706F 7274 		.string	"port"
+ 1320      00
  1321               	.LASF12:
- 1322 00c7 6663 6E74 		.string	"fcntl"
-68K GAS  /tmp/ccBmgS9T.s 			page 28
+ 1322 00d8 6663 6E74 		.string	"fcntl"
+68K GAS  /tmp/cc7f32nD.s 			page 28
 
 
  1322      6C00 
  1323               	.LASF10:
- 1324 00cd 696E 6279 		.string	"inbyte"
+ 1324 00de 696E 6279 		.string	"inbyte"
  1324      7465 00
  1325               		.ident	"GCC: (GNU) 11.4.0"
-68K GAS  /tmp/ccBmgS9T.s 			page 29
+68K GAS  /tmp/cc7f32nD.s 			page 29
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 csys68k.c
-     /tmp/ccBmgS9T.s:9      .text:0000000000000000 fcntl
-     /tmp/ccBmgS9T.s:32     .text:0000000000000012 read
-     /tmp/ccBmgS9T.s:251    .text:00000000000000de write
+     /tmp/cc7f32nD.s:9      .text:0000000000000000 fcntl
+     /tmp/cc7f32nD.s:32     .text:0000000000000012 read
+     /tmp/cc7f32nD.s:251    .text:00000000000000de write
 
 UNDEFINED SYMBOLS
 inbyte

@@ -1,4 +1,4 @@
-68K GAS  /tmp/cccjE5nM.s 			page 1
+68K GAS  /tmp/ccETgYA6.s 			page 1
 
 
    1               	#NO_APP
@@ -58,7 +58,7 @@
   17:test3.c       ****         if(com0out) {
   32               		.loc 1 17 9 view .LVU3
   33               		.loc 1 17 11 is_stmt 0 view .LVU4
-68K GAS  /tmp/cccjE5nM.s 			page 2
+68K GAS  /tmp/ccETgYA6.s 			page 2
 
 
   34 0018 4A81      		tst.l %d1
@@ -118,7 +118,7 @@
   79 0076 0C80 0000 		cmp.l #29999,%d0
   79      752F 
   80 007c 6FD4      		jle .L4
-68K GAS  /tmp/cccjE5nM.s 			page 3
+68K GAS  /tmp/ccETgYA6.s 			page 3
 
 
   81 007e 6098      		jra .L5
@@ -178,7 +178,7 @@
  120               		.cfi_def_cfa_offset 28
  121 00a6 4879 0000 		pea .LC1
  121      0000 
-68K GAS  /tmp/cccjE5nM.s 			page 4
+68K GAS  /tmp/ccETgYA6.s 			page 4
 
 
  122               		.cfi_def_cfa_offset 32
@@ -238,7 +238,7 @@
   33:test3.c       ****     }
   34:test3.c       **** }
   35:test3.c       **** /* ユーザ定義 exit() (暴走防止) */
-68K GAS  /tmp/cccjE5nM.s 			page 5
+68K GAS  /tmp/ccETgYA6.s 			page 5
 
 
   36:test3.c       **** void exit(int status) {
@@ -298,7 +298,7 @@
  205 0012 45F9 0000 		lea fdopen,%a2
  205      0000 
  206 0018 4E92      		jsr (%a2)
-68K GAS  /tmp/cccjE5nM.s 			page 6
+68K GAS  /tmp/ccETgYA6.s 			page 6
 
 
  207               	.LVL6:
@@ -358,7 +358,7 @@
   56:test3.c       ****         printf("Error: fdopen failed for Port 1. Check fcntl() implementation.\n");
   57:test3.c       ****     }
   58:test3.c       **** 
-68K GAS  /tmp/cccjE5nM.s 			page 7
+68K GAS  /tmp/ccETgYA6.s 			page 7
 
 
   59:test3.c       ****     /* 3. タスクの登録 */
@@ -418,7 +418,7 @@
   61:test3.c       **** 
  280               		.loc 1 61 5 view .LVU54
  281 009c 4879 0000 		pea task2
-68K GAS  /tmp/cccjE5nM.s 			page 8
+68K GAS  /tmp/ccETgYA6.s 			page 8
 
 
  281      0000 
@@ -478,7 +478,7 @@
  332               		.section	.debug_info,"",@progbits
  333               	.Ldebug_info0:
  334 0000 0000 08C9 		.long	0x8c9
-68K GAS  /tmp/cccjE5nM.s 			page 9
+68K GAS  /tmp/ccETgYA6.s 			page 9
 
 
  335 0004 0005      		.word	0x5
@@ -538,7 +538,7 @@
  389 0072 06        		.uleb128 0x6
  390 0073 04        		.byte	0x4
  391 0074 07        		.byte	0x7
-68K GAS  /tmp/cccjE5nM.s 			page 10
+68K GAS  /tmp/ccETgYA6.s 			page 10
 
 
  392 0075 0000 0000 		.long	.LASF9
@@ -598,7 +598,7 @@
  446 00de 0000 00FD 		.long	0xfd
  447 00e2 02        		.uleb128 0x2
  448 00e3 0000 0000 		.long	.LASF16
-68K GAS  /tmp/cccjE5nM.s 			page 11
+68K GAS  /tmp/ccETgYA6.s 			page 11
 
 
  449 00e7 03        		.byte	0x3
@@ -658,7 +658,7 @@
  503 014c 07        		.byte	0x7
  504 014d 0000 0085 		.long	0x85
  505 0151 04        		.byte	0x4
-68K GAS  /tmp/cccjE5nM.s 			page 12
+68K GAS  /tmp/ccETgYA6.s 			page 12
 
 
  506 0152 02        		.uleb128 0x2
@@ -718,7 +718,7 @@
  560 01ba 0000 0085 		.long	0x85
  561 01be 04        		.byte	0x4
  562 01bf 02        		.uleb128 0x2
-68K GAS  /tmp/cccjE5nM.s 			page 13
+68K GAS  /tmp/ccETgYA6.s 			page 13
 
 
  563 01c0 0000 0000 		.long	.LASF30
@@ -778,7 +778,7 @@
  617 0226 02        		.uleb128 0x2
  618 0227 0000 0000 		.long	.LASF38
  619 022b 04        		.byte	0x4
-68K GAS  /tmp/cccjE5nM.s 			page 14
+68K GAS  /tmp/ccETgYA6.s 			page 14
 
 
  620 022c 74        		.byte	0x74
@@ -838,7 +838,7 @@
  674 0292 11        		.byte	0x11
  675 0293 0000 021B 		.long	0x21b
  676 0297 10        		.byte	0x10
-68K GAS  /tmp/cccjE5nM.s 			page 15
+68K GAS  /tmp/ccETgYA6.s 			page 15
 
 
  677 0298 02        		.uleb128 0x2
@@ -898,7 +898,7 @@
  731 02fe 07        		.uleb128 0x7
  732 02ff 5F75 7200 		.string	"_ur"
  733 0303 B3        		.byte	0xb3
-68K GAS  /tmp/cccjE5nM.s 			page 16
+68K GAS  /tmp/ccETgYA6.s 			page 16
 
 
  734 0304 07        		.byte	0x7
@@ -958,7 +958,7 @@
  788 036a C7        		.byte	0xc7
  789 036b 0E        		.byte	0xe
  790 036c 0000 00FD 		.long	0xfd
-68K GAS  /tmp/cccjE5nM.s 			page 17
+68K GAS  /tmp/ccETgYA6.s 			page 17
 
 
  791 0370 5C        		.byte	0x5c
@@ -1018,7 +1018,7 @@
  845 03e5 01        		.uleb128 0x1
  846 03e6 0000 0000 		.long	.LASF62
  847 03ea 0240      		.word	0x240
-68K GAS  /tmp/cccjE5nM.s 			page 18
+68K GAS  /tmp/ccETgYA6.s 			page 18
 
 
  848 03ec 08        		.byte	0x8
@@ -1078,7 +1078,7 @@
  902 0461 09        		.byte	0x9
  903 0462 0000 0484 		.long	0x484
  904 0466 4A        		.byte	0x4a
-68K GAS  /tmp/cccjE5nM.s 			page 19
+68K GAS  /tmp/ccETgYA6.s 			page 19
 
 
  905 0467 01        		.uleb128 0x1
@@ -1138,7 +1138,7 @@
  959 04e5 0C        		.uleb128 0xc
  960 04e6 0000 0085 		.long	0x85
  961 04ea 0000 04F9 		.long	0x4f9
-68K GAS  /tmp/cccjE5nM.s 			page 20
+68K GAS  /tmp/ccETgYA6.s 			page 20
 
 
  962 04ee 03        		.uleb128 0x3
@@ -1198,7 +1198,7 @@
  1016 0565 00        		.byte	0
  1017 0566 08        		.uleb128 0x8
  1018 0567 0000 003B 		.long	0x3b
-68K GAS  /tmp/cccjE5nM.s 			page 21
+68K GAS  /tmp/ccETgYA6.s 			page 21
 
 
  1019 056b 0000 0576 		.long	0x576
@@ -1258,7 +1258,7 @@
  1073 05dc 0000 0000 		.long	.LASF87
  1074 05e0 0266      		.word	0x266
  1075 05e2 16        		.byte	0x16
-68K GAS  /tmp/cccjE5nM.s 			page 22
+68K GAS  /tmp/ccETgYA6.s 			page 22
 
 
  1076 05e3 0000 00FD 		.long	0xfd
@@ -1318,7 +1318,7 @@
  1130 0658 0000 00FD 		.long	0xfd
  1131 065c B8        		.byte	0xb8
  1132 065d 01        		.uleb128 0x1
-68K GAS  /tmp/cccjE5nM.s 			page 23
+68K GAS  /tmp/ccETgYA6.s 			page 23
 
 
  1133 065e 0000 0000 		.long	.LASF97
@@ -1378,7 +1378,7 @@
  1187 06d3 0000 039D 		.long	0x39d
  1188 06d7 00        		.byte	0
  1189 06d8 04        		.uleb128 0x4
-68K GAS  /tmp/cccjE5nM.s 			page 24
+68K GAS  /tmp/ccETgYA6.s 			page 24
 
 
  1190 06d9 0000 06CD 		.long	0x6cd
@@ -1438,7 +1438,7 @@
  1244 0754 11        		.uleb128 0x11
  1245 0755 0000 0000 		.long	.LASF103
  1246 0759 33        		.byte	0x33
-68K GAS  /tmp/cccjE5nM.s 			page 25
+68K GAS  /tmp/ccETgYA6.s 			page 25
 
 
  1247 075a 25        		.uleb128 0x25
@@ -1498,7 +1498,7 @@
  1301 07d9 05        		.uleb128 0x5
  1302 07da 0000 0000 		.long	.LVL8
  1303 07de 0000 076C 		.long	0x76c
-68K GAS  /tmp/cccjE5nM.s 			page 26
+68K GAS  /tmp/ccETgYA6.s 			page 26
 
 
  1304 07e2 05        		.uleb128 0x5
@@ -1558,7 +1558,7 @@
  1358 086d 1A        		.byte	0x1a
  1359 086e 0000 008C 		.long	0x8c
  1360 0872 02        		.uleb128 0x2
-68K GAS  /tmp/cccjE5nM.s 			page 27
+68K GAS  /tmp/ccETgYA6.s 			page 27
 
 
  1361 0873 91        		.byte	0x91
@@ -1618,7 +1618,7 @@
  1415 000e 38        		.uleb128 0x38
  1416 000f 0B        		.uleb128 0xb
  1417 0010 00        		.byte	0
-68K GAS  /tmp/cccjE5nM.s 			page 28
+68K GAS  /tmp/ccETgYA6.s 			page 28
 
 
  1418 0011 00        		.byte	0
@@ -1678,7 +1678,7 @@
  1472 0047 00        		.byte	0
  1473 0048 07        		.uleb128 0x7
  1474 0049 0D        		.uleb128 0xd
-68K GAS  /tmp/cccjE5nM.s 			page 29
+68K GAS  /tmp/ccETgYA6.s 			page 29
 
 
  1475 004a 00        		.byte	0
@@ -1738,7 +1738,7 @@
  1529 0080 0B        		.uleb128 0xb
  1530 0081 0B        		.uleb128 0xb
  1531 0082 3A        		.uleb128 0x3a
-68K GAS  /tmp/cccjE5nM.s 			page 30
+68K GAS  /tmp/ccETgYA6.s 			page 30
 
 
  1532 0083 21        		.uleb128 0x21
@@ -1798,7 +1798,7 @@
  1586 00b9 49        		.uleb128 0x49
  1587 00ba 13        		.uleb128 0x13
  1588 00bb 00        		.byte	0
-68K GAS  /tmp/cccjE5nM.s 			page 31
+68K GAS  /tmp/ccETgYA6.s 			page 31
 
 
  1589 00bc 00        		.byte	0
@@ -1858,7 +1858,7 @@
  1643 00f2 3A        		.uleb128 0x3a
  1644 00f3 21        		.uleb128 0x21
  1645 00f4 01        		.sleb128 1
-68K GAS  /tmp/cccjE5nM.s 			page 32
+68K GAS  /tmp/ccETgYA6.s 			page 32
 
 
  1646 00f5 3B        		.uleb128 0x3b
@@ -1918,7 +1918,7 @@
  1700 012b 00        		.byte	0
  1701 012c 15        		.uleb128 0x15
  1702 012d 11        		.uleb128 0x11
-68K GAS  /tmp/cccjE5nM.s 			page 33
+68K GAS  /tmp/ccETgYA6.s 			page 33
 
 
  1703 012e 01        		.byte	0x1
@@ -1978,7 +1978,7 @@
  1757 0164 0B        		.uleb128 0xb
  1758 0165 3A        		.uleb128 0x3a
  1759 0166 0B        		.uleb128 0xb
-68K GAS  /tmp/cccjE5nM.s 			page 34
+68K GAS  /tmp/ccETgYA6.s 			page 34
 
 
  1760 0167 3B        		.uleb128 0x3b
@@ -2038,7 +2038,7 @@
  1814 019d 00        		.byte	0
  1815 019e 00        		.byte	0
  1816 019f 1E        		.uleb128 0x1e
-68K GAS  /tmp/cccjE5nM.s 			page 35
+68K GAS  /tmp/ccETgYA6.s 			page 35
 
 
  1817 01a0 13        		.uleb128 0x13
@@ -2098,7 +2098,7 @@
  1871 01d6 05        		.uleb128 0x5
  1872 01d7 39        		.uleb128 0x39
  1873 01d8 0B        		.uleb128 0xb
-68K GAS  /tmp/cccjE5nM.s 			page 36
+68K GAS  /tmp/ccETgYA6.s 			page 36
 
 
  1874 01d9 49        		.uleb128 0x49
@@ -2158,7 +2158,7 @@
  1928 020f 0B        		.uleb128 0xb
  1929 0210 3B        		.uleb128 0x3b
  1930 0211 05        		.uleb128 0x5
-68K GAS  /tmp/cccjE5nM.s 			page 37
+68K GAS  /tmp/ccETgYA6.s 			page 37
 
 
  1931 0212 39        		.uleb128 0x39
@@ -2218,7 +2218,7 @@
  1985 0248 40        		.uleb128 0x40
  1986 0249 18        		.uleb128 0x18
  1987 024a 7A        		.uleb128 0x7a
-68K GAS  /tmp/cccjE5nM.s 			page 38
+68K GAS  /tmp/ccETgYA6.s 			page 38
 
 
  1988 024b 19        		.uleb128 0x19
@@ -2278,7 +2278,7 @@
  2042               		.section	.debug_loclists,"",@progbits
  2043 0000 0000 0014 		.long	.Ldebug_loc3-.Ldebug_loc2
  2044               	.Ldebug_loc2:
-68K GAS  /tmp/cccjE5nM.s 			page 39
+68K GAS  /tmp/ccETgYA6.s 			page 39
 
 
  2045 0004 0005      		.word	0x5
@@ -2338,7 +2338,7 @@
  2095      0101 0101 
  2096               	.LASF39:
  2097 0000 5F73 697A 		.string	"_size"
-68K GAS  /tmp/cccjE5nM.s 			page 40
+68K GAS  /tmp/ccETgYA6.s 			page 40
 
 
  2097      6500 
@@ -2398,7 +2398,7 @@
  2123 0097 5F5F 746D 		.string	"__tm_sec"
  2123      5F73 6563 
  2123      00
-68K GAS  /tmp/cccjE5nM.s 			page 41
+68K GAS  /tmp/ccETgYA6.s 			page 41
 
 
  2124               	.LASF6:
@@ -2458,7 +2458,7 @@
  2153 0125 636F 6D30 		.string	"com0out"
  2153      6F75 7400 
  2154               	.LASF71:
-68K GAS  /tmp/cccjE5nM.s 			page 42
+68K GAS  /tmp/ccETgYA6.s 			page 42
 
 
  2155 012d 5F63 7674 		.string	"_cvtbuf"
@@ -2518,7 +2518,7 @@
  2183      6F75 7400 
  2184               	.LASF70:
  2185 01bb 5F63 7674 		.string	"_cvtlen"
-68K GAS  /tmp/cccjE5nM.s 			page 43
+68K GAS  /tmp/ccETgYA6.s 			page 43
 
 
  2185      6C65 6E00 
@@ -2561,271 +2561,271 @@
  2204               	.LASF14:
  2205 0223 5F5F 7763 		.string	"__wch"
  2205      6800 
- 2206               	.LASF10:
- 2207 0229 7769 6E74 		.string	"wint_t"
- 2207      5F74 00
- 2208               	.LASF54:
- 2209 0230 5F6C 6F63 		.string	"_lock"
- 2209      6B00 
- 2210               	.LASF56:
- 2211 0236 5F66 6C61 		.string	"_flags2"
- 2211      6773 3200 
- 2212               	.LASF46:
- 2213 023e 5F77 7269 		.string	"_write"
- 2213      7465 00
- 2214               	.LASF33:
- 2215 0245 5F5F 746D 		.string	"__tm_year"
- 2215      5F79 6561 
- 2215      7200 
- 2216               	.LASF109:
-68K GAS  /tmp/cccjE5nM.s 			page 44
+ 2206               	.LASF115:
+ 2207 0229 2F68 6F6D 		.string	"/home/students/23nen/1TE23861W/software_experiment_group9/three/fudaba"
+ 2207      652F 7374 
+ 2207      7564 656E 
+ 2207      7473 2F32 
+ 2207      336E 656E 
+ 2208               	.LASF10:
+ 2209 0270 7769 6E74 		.string	"wint_t"
+ 2209      5F74 00
+ 2210               	.LASF54:
+ 2211 0277 5F6C 6F63 		.string	"_lock"
+ 2211      6B00 
+ 2212               	.LASF56:
+ 2213 027d 5F66 6C61 		.string	"_flags2"
+ 2213      6773 3200 
+ 2214               	.LASF46:
+ 2215 0285 5F77 7269 		.string	"_write"
+68K GAS  /tmp/ccETgYA6.s 			page 44
 
 
- 2217 024f 7075 7473 		.string	"puts"
- 2217      00
- 2218               	.LASF20:
- 2219 0254 5F4C 4F43 		.string	"_LOCK_RECURSIVE_T"
- 2219      4B5F 5245 
- 2219      4355 5253 
- 2219      4956 455F 
- 2219      5400 
- 2220               	.LASF115:
- 2221 0266 2F68 6F6D 		.string	"/home/students/9698848454/software_experiment_group9/three/fudaba"
- 2221      652F 7374 
- 2221      7564 656E 
- 2221      7473 2F39 
- 2221      3639 3838 
+ 2215      7465 00
+ 2216               	.LASF33:
+ 2217 028c 5F5F 746D 		.string	"__tm_year"
+ 2217      5F79 6561 
+ 2217      7200 
+ 2218               	.LASF109:
+ 2219 0296 7075 7473 		.string	"puts"
+ 2219      00
+ 2220               	.LASF20:
+ 2221 029b 5F4C 4F43 		.string	"_LOCK_RECURSIVE_T"
+ 2221      4B5F 5245 
+ 2221      4355 5253 
+ 2221      4956 455F 
+ 2221      5400 
  2222               	.LASF32:
- 2223 02a8 5F5F 746D 		.string	"__tm_mon"
+ 2223 02ad 5F5F 746D 		.string	"__tm_mon"
  2223      5F6D 6F6E 
  2223      00
  2224               	.LASF11:
- 2225 02b1 5F6F 6666 		.string	"_off_t"
+ 2225 02b6 5F6F 6666 		.string	"_off_t"
  2225      5F74 00
  2226               	.LASF101:
- 2227 02b8 636F 6D31 		.string	"com1in"
+ 2227 02bd 636F 6D31 		.string	"com1in"
  2227      696E 00
  2228               	.LASF69:
- 2229 02bf 5F66 7265 		.string	"_freelist"
+ 2229 02c4 5F66 7265 		.string	"_freelist"
  2229      656C 6973 
  2229      7400 
  2230               	.LASF106:
- 2231 02c9 6666 6C75 		.string	"fflush"
+ 2231 02ce 6666 6C75 		.string	"fflush"
  2231      7368 00
  2232               	.LASF113:
- 2233 02d0 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
+ 2233 02d5 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
  2233      4331 3720 
  2233      3131 2E34 
  2233      2E30 202D 
  2233      6D63 7075 
  2234               	.LASF103:
- 2235 0314 6265 6769 		.string	"begin_sch"
+ 2235 0319 6265 6769 		.string	"begin_sch"
  2235      6E5F 7363 
  2235      6800 
  2236               	.LASF1:
- 2237 031e 756E 7369 		.string	"unsigned char"
+ 2237 0323 756E 7369 		.string	"unsigned char"
  2237      676E 6564 
  2237      2063 6861 
  2237      7200 
  2238               	.LASF72:
- 2239 032c 5F6E 6577 		.string	"_new"
+ 2239 0331 5F6E 6577 		.string	"_new"
  2239      00
  2240               	.LASF99:
- 2241 0331 636F 6D30 		.string	"com0in"
+ 2241 0336 636F 6D30 		.string	"com0in"
  2241      696E 00
  2242               	.LASF97:
- 2243 0338 5F68 5F65 		.string	"_h_errno"
+ 2243 033d 5F68 5F65 		.string	"_h_errno"
  2243      7272 6E6F 
  2243      00
  2244               	.LASF2:
-68K GAS  /tmp/cccjE5nM.s 			page 45
+68K GAS  /tmp/ccETgYA6.s 			page 45
 
 
- 2245 0341 7368 6F72 		.string	"short int"
+ 2245 0346 7368 6F72 		.string	"short int"
  2245      7420 696E 
  2245      7400 
  2246               	.LASF35:
- 2247 034b 5F5F 746D 		.string	"__tm_yday"
+ 2247 0350 5F5F 746D 		.string	"__tm_yday"
  2247      5F79 6461 
  2247      7900 
  2248               	.LASF37:
- 2249 0355 5F5F 7362 		.string	"__sbuf"
+ 2249 035a 5F5F 7362 		.string	"__sbuf"
  2249      7566 00
  2250               	.LASF75:
- 2251 035c 5F5F 4649 		.string	"__FILE"
+ 2251 0361 5F5F 4649 		.string	"__FILE"
  2251      4C45 00
  2252               	.LASF18:
- 2253 0363 5F6D 6273 		.string	"_mbstate_t"
+ 2253 0368 5F6D 6273 		.string	"_mbstate_t"
  2253      7461 7465 
  2253      5F74 00
  2254               	.LASF40:
- 2255 036e 5F5F 7346 		.string	"__sFILE"
+ 2255 0373 5F5F 7346 		.string	"__sFILE"
  2255      494C 4500 
  2256               	.LASF55:
- 2257 0376 5F6D 6273 		.string	"_mbstate"
+ 2257 037b 5F6D 6273 		.string	"_mbstate"
  2257      7461 7465 
  2257      00
  2258               	.LASF84:
- 2259 037f 5F72 616E 		.string	"_rand_next"
+ 2259 0384 5F72 616E 		.string	"_rand_next"
  2259      645F 6E65 
  2259      7874 00
  2260               	.LASF86:
- 2261 038a 5F6D 626C 		.string	"_mblen_state"
+ 2261 038f 5F6D 626C 		.string	"_mblen_state"
  2261      656E 5F73 
  2261      7461 7465 
  2261      00
  2262               	.LASF62:
- 2263 0397 5F69 6E63 		.string	"_inc"
+ 2263 039c 5F69 6E63 		.string	"_inc"
  2263      00
  2264               	.LASF119:
- 2265 039c 6578 6974 		.string	"exit"
+ 2265 03a1 6578 6974 		.string	"exit"
  2265      00
  2266               	.LASF64:
- 2267 03a1 5F6C 6F63 		.string	"_locale"
+ 2267 03a6 5F6C 6F63 		.string	"_locale"
  2267      616C 6500 
  2268               	.LASF65:
- 2269 03a9 5F5F 636C 		.string	"__cleanup"
+ 2269 03ae 5F5F 636C 		.string	"__cleanup"
  2269      6561 6E75 
  2269      7000 
  2270               	.LASF23:
- 2271 03b3 5F6D 6178 		.string	"_maxwds"
+ 2271 03b8 5F6D 6178 		.string	"_maxwds"
  2271      7764 7300 
  2272               	.LASF57:
- 2273 03bb 5F72 6565 		.string	"_reent"
+ 2273 03c0 5F72 6565 		.string	"_reent"
  2273      6E74 00
  2274               	.LASF77:
- 2275 03c2 5F73 6565 		.string	"_seed"
+ 2275 03c7 5F73 6565 		.string	"_seed"
  2275      6400 
  2276               	.LASF16:
- 2277 03c8 5F5F 636F 		.string	"__count"
-68K GAS  /tmp/cccjE5nM.s 			page 46
+ 2277 03cd 5F5F 636F 		.string	"__count"
+68K GAS  /tmp/ccETgYA6.s 			page 46
 
 
  2277      756E 7400 
  2278               	.LASF17:
- 2279 03d0 5F5F 7661 		.string	"__value"
+ 2279 03d5 5F5F 7661 		.string	"__value"
  2279      6C75 6500 
  2280               	.LASF47:
- 2281 03d8 5F73 6565 		.string	"_seek"
+ 2281 03dd 5F73 6565 		.string	"_seek"
  2281      6B00 
  2282               	.LASF12:
- 2283 03de 5F66 706F 		.string	"_fpos_t"
+ 2283 03e3 5F66 706F 		.string	"_fpos_t"
  2283      735F 7400 
  2284               	.LASF8:
- 2285 03e6 6C6F 6E67 		.string	"long double"
+ 2285 03eb 6C6F 6E67 		.string	"long double"
  2285      2064 6F75 
  2285      626C 6500 
  2286               	.LASF58:
- 2287 03f2 5F65 7272 		.string	"_errno"
+ 2287 03f7 5F65 7272 		.string	"_errno"
  2287      6E6F 00
  2288               	.LASF74:
- 2289 03f9 6368 6172 		.string	"char"
+ 2289 03fe 6368 6172 		.string	"char"
  2289      00
  2290               	.LASF29:
- 2291 03fe 5F5F 746D 		.string	"__tm_min"
+ 2291 0403 5F5F 746D 		.string	"__tm_min"
  2291      5F6D 696E 
  2291      00
  2292               	.LASF104:
- 2293 0407 696E 6974 		.string	"init_kernel"
+ 2293 040c 696E 6974 		.string	"init_kernel"
  2293      5F6B 6572 
  2293      6E65 6C00 
  2294               	.LASF78:
- 2295 0413 5F6D 756C 		.string	"_mult"
+ 2295 0418 5F6D 756C 		.string	"_mult"
  2295      7400 
  2296               	.LASF22:
- 2297 0419 5F6E 6578 		.string	"_next"
+ 2297 041e 5F6E 6578 		.string	"_next"
  2297      7400 
  2298               	.LASF80:
- 2299 041f 5F73 7472 		.string	"_strtok_last"
+ 2299 0424 5F73 7472 		.string	"_strtok_last"
  2299      746F 6B5F 
  2299      6C61 7374 
  2299      00
  2300               	.LASF79:
- 2301 042c 5F61 6464 		.string	"_add"
+ 2301 0431 5F61 6464 		.string	"_add"
  2301      00
  2302               	.LASF19:
- 2303 0431 5F5F 554C 		.string	"__ULong"
+ 2303 0436 5F5F 554C 		.string	"__ULong"
  2303      6F6E 6700 
  2304               	.LASF91:
- 2305 0439 5F67 6574 		.string	"_getdate_err"
+ 2305 043e 5F67 6574 		.string	"_getdate_err"
  2305      6461 7465 
  2305      5F65 7272 
  2305      00
  2306               	.LASF120:
- 2307 0446 7374 6174 		.string	"status"
+ 2307 044b 7374 6174 		.string	"status"
  2307      7573 00
  2308               	.LASF25:
- 2309 044d 5F77 6473 		.string	"_wds"
+ 2309 0452 5F77 6473 		.string	"_wds"
  2309      00
  2310               	.LASF34:
-68K GAS  /tmp/cccjE5nM.s 			page 47
+68K GAS  /tmp/ccETgYA6.s 			page 47
 
 
- 2311 0452 5F5F 746D 		.string	"__tm_wday"
+ 2311 0457 5F5F 746D 		.string	"__tm_wday"
  2311      5F77 6461 
  2311      7900 
  2312               	.LASF13:
- 2313 045c 5F73 7369 		.string	"_ssize_t"
+ 2313 0461 5F73 7369 		.string	"_ssize_t"
  2313      7A65 5F74 
  2313      00
  2314               	.LASF89:
- 2315 0465 5F6C 3634 		.string	"_l64a_buf"
+ 2315 046a 5F6C 3634 		.string	"_l64a_buf"
  2315      615F 6275 
  2315      6600 
  2316               	.LASF73:
- 2317 046f 5F73 6967 		.string	"_sig_func"
+ 2317 0474 5F73 6967 		.string	"_sig_func"
  2317      5F66 756E 
  2317      6300 
  2318               	.LASF50:
- 2319 0479 5F6E 6275 		.string	"_nbuf"
+ 2319 047e 5F6E 6275 		.string	"_nbuf"
  2319      6600 
  2320               	.LASF110:
- 2321 047f 6677 7269 		.string	"fwrite"
+ 2321 0484 6677 7269 		.string	"fwrite"
  2321      7465 00
  2322               	.LASF36:
- 2323 0486 5F5F 746D 		.string	"__tm_isdst"
+ 2323 048b 5F5F 746D 		.string	"__tm_isdst"
  2323      5F69 7364 
  2323      7374 00
  2324               	.LASF82:
- 2325 0491 5F6C 6F63 		.string	"_localtime_buf"
+ 2325 0496 5F6C 6F63 		.string	"_localtime_buf"
  2325      616C 7469 
  2325      6D65 5F62 
  2325      7566 00
  2326               	.LASF48:
- 2327 04a0 5F63 6C6F 		.string	"_close"
+ 2327 04a5 5F63 6C6F 		.string	"_close"
  2327      7365 00
  2328               	.LASF85:
- 2329 04a7 5F72 3438 		.string	"_r48"
+ 2329 04ac 5F72 3438 		.string	"_r48"
  2329      00
  2330               	.LASF87:
- 2331 04ac 5F6D 6274 		.string	"_mbtowc_state"
+ 2331 04b1 5F6D 6274 		.string	"_mbtowc_state"
  2331      6F77 635F 
  2331      7374 6174 
  2331      6500 
  2332               	.LASF68:
- 2333 04ba 5F70 3573 		.string	"_p5s"
+ 2333 04bf 5F70 3573 		.string	"_p5s"
  2333      00
  2334               	.LASF118:
- 2335 04bf 6D61 696E 		.string	"main"
+ 2335 04c4 6D61 696E 		.string	"main"
  2335      00
  2336               	.LASF31:
- 2337 04c4 5F5F 746D 		.string	"__tm_mday"
+ 2337 04c9 5F5F 746D 		.string	"__tm_mday"
  2337      5F6D 6461 
  2337      7900 
  2338               		.ident	"GCC: (GNU) 11.4.0"
-68K GAS  /tmp/cccjE5nM.s 			page 48
+68K GAS  /tmp/ccETgYA6.s 			page 48
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 test3.c
-     /tmp/cccjE5nM.s:13     .text:0000000000000000 task1
-     /tmp/cccjE5nM.s:315    .bss:0000000000000008 com0out
-     /tmp/cccjE5nM.s:92     .text:0000000000000080 task2
-     /tmp/cccjE5nM.s:303    .bss:0000000000000000 com1out
-     /tmp/cccjE5nM.s:166    .text:0000000000000100 exit
-     /tmp/cccjE5nM.s:189    .text.startup:0000000000000000 main
-     /tmp/cccjE5nM.s:321    .bss:000000000000000c com0in
-     /tmp/cccjE5nM.s:309    .bss:0000000000000004 com1in
+     /tmp/ccETgYA6.s:13     .text:0000000000000000 task1
+     /tmp/ccETgYA6.s:315    .bss:0000000000000008 com0out
+     /tmp/ccETgYA6.s:92     .text:0000000000000080 task2
+     /tmp/ccETgYA6.s:303    .bss:0000000000000000 com1out
+     /tmp/ccETgYA6.s:166    .text:0000000000000100 exit
+     /tmp/ccETgYA6.s:189    .text.startup:0000000000000000 main
+     /tmp/ccETgYA6.s:321    .bss:000000000000000c com0in
+     /tmp/ccETgYA6.s:309    .bss:0000000000000004 com1in
 
 UNDEFINED SYMBOLS
 fwrite

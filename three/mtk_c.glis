@@ -1,4 +1,4 @@
-68K GAS  /tmp/cc0d8Zpp.s 			page 1
+68K GAS  /tmp/ccTkVEtn.s 			page 1
 
 
    1               	#NO_APP
@@ -58,7 +58,7 @@
   24 000c 41F9 0000 		lea task_tab,%a0
   24      0000 
   25               	.L2:
-68K GAS  /tmp/cc0d8Zpp.s 			page 2
+68K GAS  /tmp/ccTkVEtn.s 			page 2
 
 
   26               	.LVL1:
@@ -118,7 +118,7 @@
   63               		.loc 1 32 15 is_stmt 0 view .LVU16
   64 0046 2089      		move.l %a1,(%a0)
   65 0048 41F9 0000 		lea task_tab,%a0
-68K GAS  /tmp/cc0d8Zpp.s 			page 3
+68K GAS  /tmp/ccTkVEtn.s 			page 3
 
 
   65      0000 
@@ -178,7 +178,7 @@
  104 0070 D1C8      		add.l %a0,%a0
  105 0072 D1C8      		add.l %a0,%a0
  106 0074 D1FC 0000 		add.l #task_tab+16,%a0
-68K GAS  /tmp/cc0d8Zpp.s 			page 4
+68K GAS  /tmp/ccTkVEtn.s 			page 4
 
 
  106      0000 
@@ -238,7 +238,7 @@
   57:mtk_c.c       ****     /* 先頭位置を次にずらす */
  139               		.loc 1 57 5 is_stmt 1 view .LVU41
  140               	.LVL8:
-68K GAS  /tmp/cc0d8Zpp.s 			page 5
+68K GAS  /tmp/ccTkVEtn.s 			page 5
 
 
   59:mtk_c.c       ****     
@@ -298,7 +298,7 @@
  175               		.align	2
  176               		.globl	sleep
  177               		.type	sleep, @function
-68K GAS  /tmp/cc0d8Zpp.s 			page 6
+68K GAS  /tmp/ccTkVEtn.s 			page 6
 
 
  178               	sleep:
@@ -358,7 +358,7 @@
   37:mtk_c.c       ****             curr = task_tab[curr].next;
  213               		.loc 1 37 30 view .LVU66
  214 00d6 D080      		add.l %d0,%d0
-68K GAS  /tmp/cc0d8Zpp.s 			page 7
+68K GAS  /tmp/ccTkVEtn.s 			page 7
 
 
  215 00d8 D081      		add.l %d1,%d0
@@ -418,7 +418,7 @@
   52:mtk_c.c       ****         return NULLTASKID;
  255               		.loc 1 52 9 is_stmt 0 view .LVU79
  256 0104 2239 0000 		move.l ready,%d1
-68K GAS  /tmp/cc0d8Zpp.s 			page 8
+68K GAS  /tmp/ccTkVEtn.s 			page 8
 
 
  256      0000 
@@ -478,7 +478,7 @@
  290      0000 
  291               	.LVL18:
  292               	.L30:
-68K GAS  /tmp/cc0d8Zpp.s 			page 9
+68K GAS  /tmp/ccTkVEtn.s 			page 9
 
 
  293               	.LBB30:
@@ -538,7 +538,7 @@
   77:mtk_c.c       ****         while(1);
  331               		.loc 1 77 5 is_stmt 1 view .LVU109
  332               	.L25:
-68K GAS  /tmp/cc0d8Zpp.s 			page 10
+68K GAS  /tmp/ccTkVEtn.s 			page 10
 
 
   78:mtk_c.c       ****     }
@@ -598,7 +598,7 @@
  372 0162 D080      		add.l %d0,%d0
  373 0164 2040      		move.l %d0,%a0
  374 0166 D1FC 0000 		add.l #semaphore+8,%a0
-68K GAS  /tmp/cc0d8Zpp.s 			page 11
+68K GAS  /tmp/ccTkVEtn.s 			page 11
 
 
  374      0000 
@@ -658,7 +658,7 @@
  410 018c 2039 0000 		move.l ready,%d0
  410      0000 
   31:mtk_c.c       ****         *head = id;
-68K GAS  /tmp/cc0d8Zpp.s 			page 12
+68K GAS  /tmp/ccTkVEtn.s 			page 12
 
 
  411               		.loc 1 31 8 view .LVU137
@@ -718,7 +718,7 @@
  451 01c0 D081      		add.l %d1,%d0
  452 01c2 D080      		add.l %d0,%d0
  453 01c4 D081      		add.l %d1,%d0
-68K GAS  /tmp/cc0d8Zpp.s 			page 13
+68K GAS  /tmp/ccTkVEtn.s 			page 13
 
 
  454 01c6 D080      		add.l %d0,%d0
@@ -778,7 +778,7 @@
  117:mtk_c.c       ****     }
  118:mtk_c.c       **** }
  497               		.loc 1 118 1 view .LVU160
-68K GAS  /tmp/cc0d8Zpp.s 			page 14
+68K GAS  /tmp/ccTkVEtn.s 			page 14
 
 
  498 01fc 4E75      		rts
@@ -838,7 +838,7 @@
   92:mtk_c.c       **** 
  537               		.loc 1 92 5 is_stmt 1 view .LVU174
  538               	.LBB57:
-68K GAS  /tmp/cc0d8Zpp.s 			page 15
+68K GAS  /tmp/ccTkVEtn.s 			page 15
 
 
  539               	.LBI57:
@@ -898,7 +898,7 @@
  575               		.loc 1 74 15 view .LVU190
  576 0244 23C1 0000 		move.l %d1,next_task
  576      0000 
-68K GAS  /tmp/cc0d8Zpp.s 			page 16
+68K GAS  /tmp/ccTkVEtn.s 			page 16
 
 
   77:mtk_c.c       ****         while(1);
@@ -958,7 +958,7 @@
  618 0274 2189 0810 		move.l %a1,16(%a0,%d0.l)
   45:mtk_c.c       **** }
  619               		.loc 1 45 5 is_stmt 1 view .LVU203
-68K GAS  /tmp/cc0d8Zpp.s 			page 17
+68K GAS  /tmp/ccTkVEtn.s 			page 17
 
 
   45:mtk_c.c       **** }
@@ -1018,7 +1018,7 @@
  657 0290 60FE      		jra .L50
  658               	.LBE63:
  659               	.LBE65:
-68K GAS  /tmp/cc0d8Zpp.s 			page 18
+68K GAS  /tmp/ccTkVEtn.s 			page 18
 
 
  660               	.LBE66:
@@ -1078,7 +1078,7 @@
  703               	.LBI74:
   99:mtk_c.c       ****     TASK_ID_TYPE id;
  704               		.loc 1 99 6 view .LVU229
-68K GAS  /tmp/cc0d8Zpp.s 			page 19
+68K GAS  /tmp/ccTkVEtn.s 			page 19
 
 
  705               	.LBB75:
@@ -1138,7 +1138,7 @@
  742               		.loc 1 106 5 is_stmt 1 view .LVU245
  107:mtk_c.c       ****     }
  743               		.loc 1 107 9 view .LVU246
-68K GAS  /tmp/cc0d8Zpp.s 			page 20
+68K GAS  /tmp/ccTkVEtn.s 			page 20
 
 
  744               	.LBB78:
@@ -1198,7 +1198,7 @@
  784               		.loc 1 37 30 is_stmt 0 view .LVU260
  785 0302 D080      		add.l %d0,%d0
  786               	.LVL47:
-68K GAS  /tmp/cc0d8Zpp.s 			page 21
+68K GAS  /tmp/ccTkVEtn.s 			page 21
 
 
   37:mtk_c.c       ****             curr = task_tab[curr].next;
@@ -1258,7 +1258,7 @@
  135:mtk_c.c       **** void *init_stack(TASK_ID_TYPE id) {
  827               		.loc 1 135 35 is_stmt 1 view -0
  828               		.cfi_startproc
-68K GAS  /tmp/cc0d8Zpp.s 			page 22
+68K GAS  /tmp/ccTkVEtn.s 			page 22
 
 
  829               		.loc 1 135 35 is_stmt 0 view .LVU269
@@ -1318,7 +1318,7 @@
  153:mtk_c.c       ****     /* 3. Registers D0-D7, A0-A6 (15 * 4 = 60 bytes) */
  154:mtk_c.c       ****     /* 初期値は不定でよいのでポインタだけずらす */
  155:mtk_c.c       ****     sp -= 60;
-68K GAS  /tmp/cc0d8Zpp.s 			page 23
+68K GAS  /tmp/ccTkVEtn.s 			page 23
 
 
  863               		.loc 1 155 5 is_stmt 1 view .LVU283
@@ -1378,7 +1378,7 @@
  898               		.loc 1 173 5 view .LVU295
  899               	.LVL55:
  174:mtk_c.c       ****     for (i = 1; i <= NUMTASK; i++) {
-68K GAS  /tmp/cc0d8Zpp.s 			page 24
+68K GAS  /tmp/ccTkVEtn.s 			page 24
 
 
  900               		.loc 1 174 5 view .LVU296
@@ -1438,7 +1438,7 @@
  927 0394 45F9 0000 		lea task_tab,%a2
  927      0000 
  928 039a 2241      		move.l %d1,%a1
-68K GAS  /tmp/cc0d8Zpp.s 			page 25
+68K GAS  /tmp/ccTkVEtn.s 			page 25
 
 
  929 039c D3C1      		add.l %d1,%a1
@@ -1498,7 +1498,7 @@
  965               	.LVL61:
  150:mtk_c.c       ****     *wsp = 0x0000;
  966               		.loc 1 150 5 view .LVU322
-68K GAS  /tmp/cc0d8Zpp.s 			page 26
+68K GAS  /tmp/ccTkVEtn.s 			page 26
 
 
  151:mtk_c.c       **** 
@@ -1558,7 +1558,7 @@
  1001 03ee 23C1 0000 		move.l %d1,ready
  1001      0000 
   45:mtk_c.c       **** }
-68K GAS  /tmp/cc0d8Zpp.s 			page 27
+68K GAS  /tmp/ccTkVEtn.s 			page 27
 
 
  1002               		.loc 1 45 5 is_stmt 1 view .LVU341
@@ -1618,7 +1618,7 @@
  1046               		.loc 1 45 23 is_stmt 0 view .LVU353
  1047 0428 D3C9      		add.l %a1,%a1
  1048 042a D3C1      		add.l %d1,%a1
-68K GAS  /tmp/cc0d8Zpp.s 			page 28
+68K GAS  /tmp/ccTkVEtn.s 			page 28
 
 
  1049 042c D3C9      		add.l %a1,%a1
@@ -1678,7 +1678,7 @@
  1085 044e 4290      		clr.l (%a0)
  209:mtk_c.c       ****         task_tab[i].next = NULLTASKID;
  1086               		.loc 1 209 9 is_stmt 1 discriminator 3 view .LVU367
-68K GAS  /tmp/cc0d8Zpp.s 			page 29
+68K GAS  /tmp/ccTkVEtn.s 			page 29
 
 
  1087               		.loc 1 209 26 is_stmt 0 discriminator 3 view .LVU368
@@ -1738,7 +1738,7 @@
  1119               		.loc 1 215 32 is_stmt 0 view .LVU387
  1120 0480 42B9 0000 		clr.l semaphore+32
  1120      0000 
-68K GAS  /tmp/cc0d8Zpp.s 			page 30
+68K GAS  /tmp/ccTkVEtn.s 			page 30
 
 
  213:mtk_c.c       ****         semaphore[i].count = 1; /* 初期値は用途によるが一旦0 */
@@ -1798,7 +1798,7 @@
  1153               		.loc 1 59 5 view .LVU401
   59:mtk_c.c       ****     
  1154               		.loc 1 59 25 is_stmt 0 view .LVU402
-68K GAS  /tmp/cc0d8Zpp.s 			page 31
+68K GAS  /tmp/ccTkVEtn.s 			page 31
 
 
  1155 0498 2040      		move.l %d0,%a0
@@ -1858,7 +1858,7 @@
  1190               		.size	next_task, 4
  1191               	next_task:
  1192 0000 0000 0000 		.zero	4
-68K GAS  /tmp/cc0d8Zpp.s 			page 32
+68K GAS  /tmp/ccTkVEtn.s 			page 32
 
 
  1193               		.globl	curr_task
@@ -1918,7 +1918,7 @@
  1235 0012 0000 0000 		.long	.LASF42
  1236 0016 0000 0000 		.long	.LASF43
  1237 001a 0000 0000 		.long	.Ltext0
-68K GAS  /tmp/cc0d8Zpp.s 			page 33
+68K GAS  /tmp/ccTkVEtn.s 			page 33
 
 
  1238 001e 0000 04C4 		.long	.Letext0-.Ltext0
@@ -1978,7 +1978,7 @@
  1292 008a 0000 00C0 		.long	0xc0
  1293 008e 04        		.byte	0x4
  1294 008f 03        		.uleb128 0x3
-68K GAS  /tmp/cc0d8Zpp.s 			page 34
+68K GAS  /tmp/ccTkVEtn.s 			page 34
 
 
  1295 0090 0000 0000 		.long	.LASF6
@@ -2038,7 +2038,7 @@
  1349 00fb 23        		.uleb128 0x23
  1350 00fc 0000 0103 		.long	0x103
  1351 0100 03FF      		.word	0x3ff
-68K GAS  /tmp/cc0d8Zpp.s 			page 35
+68K GAS  /tmp/ccTkVEtn.s 			page 35
 
 
  1352 0102 00        		.byte	0
@@ -2098,7 +2098,7 @@
  1406 0174 10        		.byte	0x10
  1407 0175 0000 015E 		.long	0x15e
  1408 0179 05        		.uleb128 0x5
-68K GAS  /tmp/cc0d8Zpp.s 			page 36
+68K GAS  /tmp/ccTkVEtn.s 			page 36
 
 
  1409 017a 03        		.byte	0x3
@@ -2158,7 +2158,7 @@
  1463 01ef 02        		.byte	.LVU395
  1464 01f0 0000 0000 		.long	.LBB94
  1465 01f4 0000 0022 		.long	.LBE94-.LBB94
-68K GAS  /tmp/cc0d8Zpp.s 			page 37
+68K GAS  /tmp/ccTkVEtn.s 			page 37
 
 
  1466 01f8 E2        		.byte	0xe2
@@ -2218,7 +2218,7 @@
  1520 0279 12        		.byte	0x12
  1521 027a 0000 0026 		.long	0x26
  1522 027e 0000 0000 		.long	.LLST41
-68K GAS  /tmp/cc0d8Zpp.s 			page 38
+68K GAS  /tmp/ccTkVEtn.s 			page 38
 
 
  1523 0282 0000 0000 		.long	.LVUS41
@@ -2278,7 +2278,7 @@
  1577 031c 0000 0000 		.long	.LVUS50
  1578 0320 00        		.byte	0
  1579 0321 00        		.byte	0
-68K GAS  /tmp/cc0d8Zpp.s 			page 39
+68K GAS  /tmp/ccTkVEtn.s 			page 39
 
 
  1580 0322 00        		.byte	0
@@ -2338,7 +2338,7 @@
  1634 0395 0000 0031 		.long	0x31
  1635 0399 02        		.uleb128 0x2
  1636 039a 91        		.byte	0x91
-68K GAS  /tmp/cc0d8Zpp.s 			page 40
+68K GAS  /tmp/ccTkVEtn.s 			page 40
 
 
  1637 039b 00        		.sleb128 0
@@ -2398,7 +2398,7 @@
  1691 042e 0000 0595 		.long	0x595
  1692 0432 0000 0000 		.long	.LLST37
  1693 0436 0000 0000 		.long	.LVUS37
-68K GAS  /tmp/cc0d8Zpp.s 			page 41
+68K GAS  /tmp/ccTkVEtn.s 			page 41
 
 
  1694 043a 00        		.byte	0
@@ -2458,7 +2458,7 @@
  1748 04be 00        		.byte	0
  1749 04bf 11        		.uleb128 0x11
  1750 04c0 0000 0543 		.long	0x543
-68K GAS  /tmp/cc0d8Zpp.s 			page 42
+68K GAS  /tmp/ccTkVEtn.s 			page 42
 
 
  1751 04c4 0000 0000 		.long	.LBI57
@@ -2518,7 +2518,7 @@
  1805 0542 00        		.byte	0
  1806 0543 26        		.uleb128 0x26
  1807 0544 0000 0000 		.long	.LASF35
-68K GAS  /tmp/cc0d8Zpp.s 			page 43
+68K GAS  /tmp/ccTkVEtn.s 			page 43
 
 
  1808 0548 01        		.byte	0x1
@@ -2578,7 +2578,7 @@
  1862 05bb 91        		.byte	0x91
  1863 05bc 00        		.sleb128 0
  1864 05bd 07        		.uleb128 0x7
-68K GAS  /tmp/cc0d8Zpp.s 			page 44
+68K GAS  /tmp/ccTkVEtn.s 			page 44
 
 
  1865 05be 0000 058B 		.long	0x58b
@@ -2638,7 +2638,7 @@
  1919 0645 0000 0000 		.long	.LFB3
  1920 0649 0000 00A6 		.long	.LFE3-.LFB3
  1921 064d 01        		.uleb128 0x1
-68K GAS  /tmp/cc0d8Zpp.s 			page 45
+68K GAS  /tmp/ccTkVEtn.s 			page 45
 
 
  1922 064e 9C        		.byte	0x9c
@@ -2698,7 +2698,7 @@
  1976 06de 00        		.byte	0
  1977 06df 00        		.byte	0
  1978 06e0 00        		.byte	0
-68K GAS  /tmp/cc0d8Zpp.s 			page 46
+68K GAS  /tmp/ccTkVEtn.s 			page 46
 
 
  1979 06e1 14        		.uleb128 0x14
@@ -2758,7 +2758,7 @@
  2033 0771 0000 0000 		.long	.LLRL15
  2034 0775 01        		.uleb128 0x1
  2035 0776 0000 0595 		.long	0x595
-68K GAS  /tmp/cc0d8Zpp.s 			page 47
+68K GAS  /tmp/ccTkVEtn.s 			page 47
 
 
  2036 077a 0000 0000 		.long	.LLST18
@@ -2818,7 +2818,7 @@
  2090 0018 03        		.uleb128 0x3
  2091 0019 0D        		.uleb128 0xd
  2092 001a 00        		.byte	0
-68K GAS  /tmp/cc0d8Zpp.s 			page 48
+68K GAS  /tmp/ccTkVEtn.s 			page 48
 
 
  2093 001b 03        		.uleb128 0x3
@@ -2878,7 +2878,7 @@
  2147 0052 49        		.uleb128 0x49
  2148 0053 13        		.uleb128 0x13
  2149 0054 3F        		.uleb128 0x3f
-68K GAS  /tmp/cc0d8Zpp.s 			page 49
+68K GAS  /tmp/ccTkVEtn.s 			page 49
 
 
  2150 0055 19        		.uleb128 0x19
@@ -2938,7 +2938,7 @@
  2204 008b 34        		.uleb128 0x34
  2205 008c 00        		.byte	0
  2206 008d 03        		.uleb128 0x3
-68K GAS  /tmp/cc0d8Zpp.s 			page 50
+68K GAS  /tmp/ccTkVEtn.s 			page 50
 
 
  2207 008e 08        		.uleb128 0x8
@@ -2998,7 +2998,7 @@
  2261 00c4 0E        		.uleb128 0xe
  2262 00c5 24        		.uleb128 0x24
  2263 00c6 00        		.byte	0
-68K GAS  /tmp/cc0d8Zpp.s 			page 51
+68K GAS  /tmp/ccTkVEtn.s 			page 51
 
 
  2264 00c7 0B        		.uleb128 0xb
@@ -3058,7 +3058,7 @@
  2318 00fe 01        		.uleb128 0x1
  2319 00ff B842      		.uleb128 0x2138
  2320 0101 0B        		.uleb128 0xb
-68K GAS  /tmp/cc0d8Zpp.s 			page 52
+68K GAS  /tmp/ccTkVEtn.s 			page 52
 
 
  2321 0102 55        		.uleb128 0x55
@@ -3118,7 +3118,7 @@
  2375 0139 00        		.byte	0
  2376 013a 15        		.uleb128 0x15
  2377 013b 34        		.uleb128 0x34
-68K GAS  /tmp/cc0d8Zpp.s 			page 53
+68K GAS  /tmp/ccTkVEtn.s 			page 53
 
 
  2378 013c 00        		.byte	0
@@ -3178,7 +3178,7 @@
  2432 0173 21        		.uleb128 0x21
  2433 0174 01        		.sleb128 1
  2434 0175 01        		.uleb128 0x1
-68K GAS  /tmp/cc0d8Zpp.s 			page 54
+68K GAS  /tmp/ccTkVEtn.s 			page 54
 
 
  2435 0176 13        		.uleb128 0x13
@@ -3238,7 +3238,7 @@
  2489 01ac 0E        		.uleb128 0xe
  2490 01ad 3A        		.uleb128 0x3a
  2491 01ae 21        		.uleb128 0x21
-68K GAS  /tmp/cc0d8Zpp.s 			page 55
+68K GAS  /tmp/ccTkVEtn.s 			page 55
 
 
  2492 01af 01        		.sleb128 1
@@ -3298,7 +3298,7 @@
  2546 01e5 00        		.byte	0
  2547 01e6 00        		.byte	0
  2548 01e7 1F        		.uleb128 0x1f
-68K GAS  /tmp/cc0d8Zpp.s 			page 56
+68K GAS  /tmp/ccTkVEtn.s 			page 56
 
 
  2549 01e8 15        		.uleb128 0x15
@@ -3358,7 +3358,7 @@
  2603 021e 24        		.uleb128 0x24
  2604 021f 2E        		.uleb128 0x2e
  2605 0220 01        		.byte	0x1
-68K GAS  /tmp/cc0d8Zpp.s 			page 57
+68K GAS  /tmp/ccTkVEtn.s 			page 57
 
 
  2606 0221 3F        		.uleb128 0x3f
@@ -3418,7 +3418,7 @@
  2660 0257 0B        		.uleb128 0xb
  2661 0258 49        		.uleb128 0x49
  2662 0259 13        		.uleb128 0x13
-68K GAS  /tmp/cc0d8Zpp.s 			page 58
+68K GAS  /tmp/ccTkVEtn.s 			page 58
 
 
  2663 025a 00        		.byte	0
@@ -3478,7 +3478,7 @@
  2717 0013 06        		.uleb128 0x6
  2718 0014 03        		.byte	0x3
  2719 0015 0000 0000 		.long	ready
-68K GAS  /tmp/cc0d8Zpp.s 			page 59
+68K GAS  /tmp/ccTkVEtn.s 			page 59
 
 
  2720 0019 9F        		.byte	0x9f
@@ -3538,7 +3538,7 @@
  2774 0057 00        		.byte	0
  2775               	.LVUS41:
  2776 0058 03        		.uleb128 .LVU296
-68K GAS  /tmp/cc0d8Zpp.s 			page 60
+68K GAS  /tmp/ccTkVEtn.s 			page 60
 
 
  2777 0059 00        		.uleb128 .LVU304
@@ -3598,7 +3598,7 @@
  2831 0095 03        		.uleb128 .LVU318
  2832 0096 01        		.uleb128 .LVU322
  2833 0097 01        		.uleb128 .LVU322
-68K GAS  /tmp/cc0d8Zpp.s 			page 61
+68K GAS  /tmp/ccTkVEtn.s 			page 61
 
 
  2834 0098 01        		.uleb128 .LVU326
@@ -3658,7 +3658,7 @@
  2888 00d8 D407      		.uleb128 .LVL62-.Ltext0
  2889 00da 03        		.uleb128 0x3
  2890 00db 7B        		.byte	0x7b
-68K GAS  /tmp/cc0d8Zpp.s 			page 62
+68K GAS  /tmp/ccTkVEtn.s 			page 62
 
 
  2891 00dc 7C        		.sleb128 -4
@@ -3718,7 +3718,7 @@
  2945 011e 7A        		.sleb128 -6
  2946 011f 9F        		.byte	0x9f
  2947 0120 04        		.byte	0x4
-68K GAS  /tmp/cc0d8Zpp.s 			page 63
+68K GAS  /tmp/ccTkVEtn.s 			page 63
 
 
  2948 0121 E207      		.uleb128 .LVL64-.Ltext0
@@ -3778,7 +3778,7 @@
  3002               	.LVUS49:
  3003 0164 01        		.uleb128 .LVU334
  3004 0165 00        		.uleb128 .LVU343
-68K GAS  /tmp/cc0d8Zpp.s 			page 64
+68K GAS  /tmp/ccTkVEtn.s 			page 64
 
 
  3005 0166 00        		.uleb128 .LVU346
@@ -3838,7 +3838,7 @@
  3059               	.LVUS31:
  3060 01a9 01        		.uleb128 .LVU244
  3061 01aa 00        		.uleb128 .LVU256
-68K GAS  /tmp/cc0d8Zpp.s 			page 65
+68K GAS  /tmp/ccTkVEtn.s 			page 65
 
 
  3062 01ab 00        		.uleb128 .LVU259
@@ -3898,7 +3898,7 @@
  3116               	.LLST35:
  3117 01e8 04        		.byte	0x4
  3118 01e9 E005      		.uleb128 .LVL43-.Ltext0
-68K GAS  /tmp/cc0d8Zpp.s 			page 66
+68K GAS  /tmp/ccTkVEtn.s 			page 66
 
 
  3119 01eb FA05      		.uleb128 .LVL44-.Ltext0
@@ -3958,7 +3958,7 @@
  3173 022e 02        		.uleb128 0x2
  3174 022f 91        		.byte	0x91
  3175 0230 70        		.sleb128 -16
-68K GAS  /tmp/cc0d8Zpp.s 			page 67
+68K GAS  /tmp/ccTkVEtn.s 			page 67
 
 
  3176 0231 00        		.byte	0
@@ -4018,7 +4018,7 @@
  3230 0270 00        		.uleb128 .LVU199
  3231 0271 00        		.uleb128 .LVU205
  3232               	.LLST24:
-68K GAS  /tmp/cc0d8Zpp.s 			page 68
+68K GAS  /tmp/ccTkVEtn.s 			page 68
 
 
  3233 0272 04        		.byte	0x4
@@ -4078,7 +4078,7 @@
  3287 02b2 16        		.uleb128 .LVL2-.Ltext0
  3288 02b3 46        		.uleb128 .LVL3-.Ltext0
  3289 02b4 01        		.uleb128 0x1
-68K GAS  /tmp/cc0d8Zpp.s 			page 69
+68K GAS  /tmp/ccTkVEtn.s 			page 69
 
 
  3290 02b5 51        		.byte	0x51
@@ -4138,7 +4138,7 @@
  3344 02f1 04        		.byte	0x4
  3345 02f2 B002      		.uleb128 .LVL18-.Ltext0
  3346 02f4 C802      		.uleb128 .LVL19-.Ltext0
-68K GAS  /tmp/cc0d8Zpp.s 			page 70
+68K GAS  /tmp/ccTkVEtn.s 			page 70
 
 
  3347 02f6 01        		.uleb128 0x1
@@ -4198,7 +4198,7 @@
  3401               	.LLST7:
  3402 0338 04        		.byte	0x4
  3403 0339 D201      		.uleb128 .LVL13-.Ltext0
-68K GAS  /tmp/cc0d8Zpp.s 			page 71
+68K GAS  /tmp/ccTkVEtn.s 			page 71
 
 
  3404 033b D601      		.uleb128 .LVL14-.Ltext0
@@ -4258,7 +4258,7 @@
  3458 037e 01        		.uleb128 0x1
  3459 037f 52        		.byte	0x52
  3460 0380 00        		.byte	0
-68K GAS  /tmp/cc0d8Zpp.s 			page 72
+68K GAS  /tmp/ccTkVEtn.s 			page 72
 
 
  3461               	.LVUS13:
@@ -4318,7 +4318,7 @@
  3515 03bd 00        		.uleb128 .LVU144
  3516 03be 00        		.uleb128 .LVU152
  3517               	.LLST17:
-68K GAS  /tmp/cc0d8Zpp.s 			page 73
+68K GAS  /tmp/ccTkVEtn.s 			page 73
 
 
  3518 03bf 04        		.byte	0x4
@@ -4378,7 +4378,7 @@
  3572 0403 03        		.uleb128 0x3
  3573 0404 78        		.byte	0x78
  3574 0405 7C        		.sleb128 -4
-68K GAS  /tmp/cc0d8Zpp.s 			page 74
+68K GAS  /tmp/ccTkVEtn.s 			page 74
 
 
  3575 0406 9F        		.byte	0x9f
@@ -4438,7 +4438,7 @@
  3629 044b 50        		.byte	0x50
  3630 044c 00        		.byte	0
  3631               	.LVUS40:
-68K GAS  /tmp/cc0d8Zpp.s 			page 75
+68K GAS  /tmp/ccTkVEtn.s 			page 75
 
 
  3632 044d 02        		.uleb128 .LVU281
@@ -4498,7 +4498,7 @@
  3686 002a D002      		.uleb128 .LBE28-.Ltext0
  3687 002c 00        		.byte	0
  3688               	.LLRL15:
-68K GAS  /tmp/cc0d8Zpp.s 			page 76
+68K GAS  /tmp/ccTkVEtn.s 			page 76
 
 
  3689 002d 04        		.byte	0x4
@@ -4558,7 +4558,7 @@
  3743 0079 00        		.byte	0
  3744               	.LLRL47:
  3745 007a 04        		.byte	0x4
-68K GAS  /tmp/cc0d8Zpp.s 			page 77
+68K GAS  /tmp/ccTkVEtn.s 			page 77
 
 
  3746 007b E607      		.uleb128 .LBB90-.Ltext0
@@ -4618,7 +4618,7 @@
  3778               	.LASF7:
  3779 0064 7374 6174 		.string	"status"
  3779      7573 00
-68K GAS  /tmp/cc0d8Zpp.s 			page 78
+68K GAS  /tmp/ccTkVEtn.s 			page 78
 
 
  3780               	.LASF37:
@@ -4640,143 +4640,143 @@
  3789 0091 7365 745F 		.string	"set_task"
  3789      7461 736B 
  3789      00
- 3790               	.LASF1:
- 3791 009a 7461 736B 		.string	"task_list"
- 3791      5F6C 6973 
- 3791      7400 
- 3792               	.LASF12:
- 3793 00a4 6C6F 6E67 		.string	"long unsigned int"
- 3793      2075 6E73 
- 3793      6967 6E65 
- 3793      6420 696E 
+ 3790               	.LASF43:
+ 3791 009a 2F68 6F6D 		.string	"/home/students/23nen/1TE23861W/software_experiment_group9/three/fudaba"
+ 3791      652F 7374 
+ 3791      7564 656E 
+ 3791      7473 2F32 
+ 3791      336E 656E 
+ 3792               	.LASF1:
+ 3793 00e1 7461 736B 		.string	"task_list"
+ 3793      5F6C 6973 
  3793      7400 
- 3794               	.LASF4:
- 3795 00b6 7461 736B 		.string	"task_addr"
- 3795      5F61 6464 
- 3795      7200 
- 3796               	.LASF6:
- 3797 00c0 7072 696F 		.string	"priority"
- 3797      7269 7479 
- 3797      00
- 3798               	.LASF27:
- 3799 00c9 756E 7369 		.string	"unsigned char"
- 3799      676E 6564 
- 3799      2063 6861 
- 3799      7200 
- 3800               	.LASF10:
- 3801 00d7 7573 7461 		.string	"ustack"
- 3801      636B 00
- 3802               	.LASF20:
- 3803 00de 6E65 7874 		.string	"next_task"
- 3803      5F74 6173 
- 3803      6B00 
- 3804               	.LASF5:
- 3805 00e8 7374 6163 		.string	"stack_ptr"
- 3805      6B5F 7074 
- 3805      7200 
- 3806               	.LASF38:
- 3807 00f2 6865 6164 		.string	"head"
- 3807      00
- 3808               	.LASF41:
-68K GAS  /tmp/cc0d8Zpp.s 			page 79
+ 3794               	.LASF12:
+ 3795 00eb 6C6F 6E67 		.string	"long unsigned int"
+ 3795      2075 6E73 
+ 3795      6967 6E65 
+ 3795      6420 696E 
+ 3795      7400 
+ 3796               	.LASF4:
+ 3797 00fd 7461 736B 		.string	"task_addr"
+ 3797      5F61 6464 
+ 3797      7200 
+ 3798               	.LASF6:
+ 3799 0107 7072 696F 		.string	"priority"
+ 3799      7269 7479 
+ 3799      00
+ 3800               	.LASF27:
+ 3801 0110 756E 7369 		.string	"unsigned char"
+ 3801      676E 6564 
+ 3801      2063 6861 
+ 3801      7200 
+ 3802               	.LASF10:
+ 3803 011e 7573 7461 		.string	"ustack"
+ 3803      636B 00
+ 3804               	.LASF20:
+ 3805 0125 6E65 7874 		.string	"next_task"
+ 3805      5F74 6173 
+ 3805      6B00 
+ 3806               	.LASF5:
+ 3807 012f 7374 6163 		.string	"stack_ptr"
+68K GAS  /tmp/ccTkVEtn.s 			page 79
 
 
- 3809 00f7 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
- 3809      4331 3720 
- 3809      3131 2E34 
- 3809      2E30 202D 
- 3809      6D63 7075 
- 3810               	.LASF14:
- 3811 013b 5354 4143 		.string	"STACK_TYPE"
- 3811      4B5F 5459 
- 3811      5045 00
- 3812               	.LASF29:
- 3813 0146 765F 626F 		.string	"v_body"
- 3813      6479 00
- 3814               	.LASF18:
- 3815 014d 7265 6164 		.string	"ready"
- 3815      7900 
- 3816               	.LASF43:
- 3817 0153 2F68 6F6D 		.string	"/home/students/9698848454/soft2/section4/section3/mtk"
- 3817      652F 7374 
- 3817      7564 656E 
- 3817      7473 2F39 
- 3817      3639 3838 
- 3818               	.LASF2:
- 3819 0189 5441 534B 		.string	"TASK_ID_TYPE"
- 3819      5F49 445F 
- 3819      5459 5045 
+ 3807      6B5F 7074 
+ 3807      7200 
+ 3808               	.LASF38:
+ 3809 0139 6865 6164 		.string	"head"
+ 3809      00
+ 3810               	.LASF41:
+ 3811 013e 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
+ 3811      4331 3720 
+ 3811      3131 2E34 
+ 3811      2E30 202D 
+ 3811      6D63 7075 
+ 3812               	.LASF14:
+ 3813 0182 5354 4143 		.string	"STACK_TYPE"
+ 3813      4B5F 5459 
+ 3813      5045 00
+ 3814               	.LASF29:
+ 3815 018d 765F 626F 		.string	"v_body"
+ 3815      6479 00
+ 3816               	.LASF18:
+ 3817 0194 7265 6164 		.string	"ready"
+ 3817      7900 
+ 3818               	.LASF13:
+ 3819 019a 6368 6172 		.string	"char"
  3819      00
- 3820               	.LASF30:
- 3821 0196 6675 6E63 		.string	"func"
+ 3820               	.LASF2:
+ 3821 019f 5441 534B 		.string	"TASK_ID_TYPE"
+ 3821      5F49 445F 
+ 3821      5459 5045 
  3821      00
- 3822               	.LASF25:
- 3823 019b 696E 6974 		.string	"init_kernel"
- 3823      5F6B 6572 
- 3823      6E65 6C00 
- 3824               	.LASF32:
- 3825 01a7 705F 626F 		.string	"p_body"
- 3825      6479 00
- 3826               	.LASF13:
- 3827 01ae 6368 6172 		.string	"char"
- 3827      00
+ 3822               	.LASF30:
+ 3823 01ac 6675 6E63 		.string	"func"
+ 3823      00
+ 3824               	.LASF25:
+ 3825 01b1 696E 6974 		.string	"init_kernel"
+ 3825      5F6B 6572 
+ 3825      6E65 6C00 
+ 3826               	.LASF32:
+ 3827 01bd 705F 626F 		.string	"p_body"
+ 3827      6479 00
  3828               	.LASF33:
- 3829 01b3 7761 6B65 		.string	"wakeup"
+ 3829 01c4 7761 6B65 		.string	"wakeup"
  3829      7570 00
  3830               	.LASF23:
- 3831 01ba 7377 7463 		.string	"swtch"
+ 3831 01cb 7377 7463 		.string	"swtch"
  3831      6800 
  3832               	.LASF24:
- 3833 01c0 6265 6769 		.string	"begin_sch"
+ 3833 01d1 6265 6769 		.string	"begin_sch"
  3833      6E5F 7363 
  3833      6800 
  3834               	.LASF11:
- 3835 01ca 7373 7461 		.string	"sstack"
+ 3835 01db 7373 7461 		.string	"sstack"
  3835      636B 00
  3836               	.LASF3:
- 3837 01d1 5345 4D41 		.string	"SEMAPHORE_TYPE"
+ 3837 01e2 5345 4D41 		.string	"SEMAPHORE_TYPE"
  3837      5048 4F52 
  3837      455F 5459 
  3837      5045 00
-68K GAS  /tmp/cc0d8Zpp.s 			page 80
+68K GAS  /tmp/ccTkVEtn.s 			page 80
 
 
  3838               	.LASF34:
- 3839 01e0 736C 6565 		.string	"sleep"
+ 3839 01f1 736C 6565 		.string	"sleep"
  3839      7000 
  3840               	.LASF35:
- 3841 01e6 7363 6865 		.string	"sched"
+ 3841 01f7 7363 6865 		.string	"sched"
  3841      6400 
  3842               	.LASF39:
- 3843 01ec 6164 6471 		.string	"addq"
+ 3843 01fd 6164 6471 		.string	"addq"
  3843      00
  3844               	.LASF15:
- 3845 01f1 7461 736B 		.string	"task_tab"
+ 3845 0202 7461 736B 		.string	"task_tab"
  3845      5F74 6162 
  3845      00
  3846               		.ident	"GCC: (GNU) 11.4.0"
-68K GAS  /tmp/cc0d8Zpp.s 			page 81
+68K GAS  /tmp/ccTkVEtn.s 			page 81
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 mtk_c.c
-     /tmp/cc0d8Zpp.s:9      .text:0000000000000000 addq
-     /tmp/cc0d8Zpp.s:1220   .bss:0000000000002830 task_tab
-     /tmp/cc0d8Zpp.s:83     .text:0000000000000060 removeq
-     /tmp/cc0d8Zpp.s:123    .text:0000000000000080 sched
-     /tmp/cc0d8Zpp.s:1203   .bss:0000000000000008 ready
-     /tmp/cc0d8Zpp.s:1191   .bss:0000000000000000 next_task
-     /tmp/cc0d8Zpp.s:178    .text:00000000000000ac sleep
-     /tmp/cc0d8Zpp.s:1197   .bss:0000000000000004 curr_task
-     /tmp/cc0d8Zpp.s:1209   .bss:000000000000000c semaphore
-     /tmp/cc0d8Zpp.s:346    .text:0000000000000152 wakeup
-     /tmp/cc0d8Zpp.s:475    .text:00000000000001dc p_body
-     /tmp/cc0d8Zpp.s:668    .text:0000000000000292 v_body
-     /tmp/cc0d8Zpp.s:824    .text:0000000000000330 init_stack
-     /tmp/cc0d8Zpp.s:1214   .bss:0000000000000030 stacks
-     /tmp/cc0d8Zpp.s:885    .text:0000000000000372 set_task
-     /tmp/cc0d8Zpp.s:1063   .text:0000000000000436 init_kernel
-     /tmp/cc0d8Zpp.s:1135   .text:0000000000000490 begin_sch
+     /tmp/ccTkVEtn.s:9      .text:0000000000000000 addq
+     /tmp/ccTkVEtn.s:1220   .bss:0000000000002830 task_tab
+     /tmp/ccTkVEtn.s:83     .text:0000000000000060 removeq
+     /tmp/ccTkVEtn.s:123    .text:0000000000000080 sched
+     /tmp/ccTkVEtn.s:1203   .bss:0000000000000008 ready
+     /tmp/ccTkVEtn.s:1191   .bss:0000000000000000 next_task
+     /tmp/ccTkVEtn.s:178    .text:00000000000000ac sleep
+     /tmp/ccTkVEtn.s:1197   .bss:0000000000000004 curr_task
+     /tmp/ccTkVEtn.s:1209   .bss:000000000000000c semaphore
+     /tmp/ccTkVEtn.s:346    .text:0000000000000152 wakeup
+     /tmp/ccTkVEtn.s:475    .text:00000000000001dc p_body
+     /tmp/ccTkVEtn.s:668    .text:0000000000000292 v_body
+     /tmp/ccTkVEtn.s:824    .text:0000000000000330 init_stack
+     /tmp/ccTkVEtn.s:1214   .bss:0000000000000030 stacks
+     /tmp/ccTkVEtn.s:885    .text:0000000000000372 set_task
+     /tmp/ccTkVEtn.s:1063   .text:0000000000000436 init_kernel
+     /tmp/ccTkVEtn.s:1135   .text:0000000000000490 begin_sch
 
 UNDEFINED SYMBOLS
 swtch
