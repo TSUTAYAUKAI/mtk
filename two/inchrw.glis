@@ -1,0 +1,56 @@
+68K GAS  inchrw.s 			page 1
+
+
+   1               	/* inchrw.s : 中難度Option (link/unlk版) */
+   2               	
+   3               	    .section .text
+   4               	    .global inbyte
+   5               	    .even
+   6               	    .equ SYSCALL_NUM_GETSTRING, 1
+   7               	
+   8               	inbyte:
+   9               	    /* 1. スタックフレームの作成 (バッファ確保) */
+  10               	    /* 旧FP保存 -> FP更新 -> スタック4バイト確保 を1命令で行う */
+  11 0000 4E56 FFFC 	    link    %a6, #-4
+  12               	
+  13               	    /* 2. レジスタの退避 */
+  14               	    /* linkの後に行うのが一般的です */
+  15 0004 48E7 3000 	    movem.l %d2-%d3, -(%sp)
+  16               	
+  17               	retry_in:
+  18 0008 7001      	    move.l  #SYSCALL_NUM_GETSTRING, %d0
+  19 000a 7200      	    move.l  #0, %d1
+  20               	
+  21               	    /* 3. バッファアドレスの指定 */
+  22               	    /* フレームポインタ(%a6)基準で -4 の位置が確保したバッファ */
+  23               	    /* lea命令でその「アドレス」を計算してd2に入れる */
+  24 000c 41EE FFFC 	    lea     -4(%a6), %a0    /* アドレス -4(%a6) を a0 にロード */
+  25 0010 2408      	    move.l  %a0, %d2        /* システムコール引数に設定 */
+  26               	
+  27 0012 7601      	    move.l  #1, %d3
+  28 0014 4E40      	    trap    #0
+  29               	
+  30 0016 4A80      	    tst.l   %d0
+  31 0018 6700 FFEE 	    beq     retry_in
+  32               	
+  33               	    /* 4. 戻り値の取得 */
+  34 001c 7000      	    move.l  #0, %d0
+  35 001e 102E FFFC 	    move.b  -4(%a6), %d0    /* フレームポインタ基準でデータ読み出し */
+  36               	
+  37               	    /* 5. レジスタの復帰 */
+  38 0022 4CDF 000C 	    movem.l (%sp)+, %d2-%d3
+  39               	
+  40               	    /* 6. スタックフレームの破棄 */
+  41               	    /* SPを戻す -> 旧FP復帰 を1命令で行う */
+  42 0026 4E5E      	    unlk    %a6
+  43               	    
+  44 0028 4E75      	    rts
+68K GAS  inchrw.s 			page 2
+
+
+DEFINED SYMBOLS
+            inchrw.s:8      .text:0000000000000000 inbyte
+            inchrw.s:6      *ABS*:0000000000000001 SYSCALL_NUM_GETSTRING
+            inchrw.s:17     .text:0000000000000008 retry_in
+
+NO UNDEFINED SYMBOLS

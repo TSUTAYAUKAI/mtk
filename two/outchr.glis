@@ -1,0 +1,64 @@
+68K GAS  outchr.s 			page 1
+
+
+   1               	/* outchr.s : 中難度Option (link/unlk版) */
+   2               	
+   3               	    .section .text
+   4               	    .global outbyte
+   5               	    .even
+   6               	    
+   7               	    /* 定数定義 */
+   8               	    .equ SYSCALL_NUM_PUTSTRING, 2
+   9               	
+  10               	outbyte:
+  11               	    /* 1. スタックフレームの作成 (バッファ確保) */
+  12               	    /* 旧FP保存 -> FP更新 -> スタック4バイト確保(-4) */
+  13 0000 4E56 FFFC 	    link    %a6, #-4
+  14               	
+  15               	    /* 2. レジスタの退避 */
+  16 0004 48E7 3000 	    movem.l %d2-%d3, -(%sp)
+  17               	
+  18               	    /* 3. 引数の取得 (ここが便利！) */
+  19               	    /* linkを使った場合、引数は必ず 8(%a6) 以降にあります */
+  20               	    /* 0(%a6) = 旧フレームポインタ
+  21               	       4(%a6) = 戻り番地
+  22               	       8(%a6) = 第1引数 (char c)
+  23               	    */
+  24 0008 202E 0008 	    move.l  8(%a6), %d0     /* 引数cをレジスタに取り出す */
+  25               	    
+  26               	    /* 4. ローカル変数(バッファ)への書き込み */
+  27               	    /* 確保した -4(%a6) の領域にデータを置く */
+  28 000c 1D40 FFFC 	    move.b  %d0, -4(%a6)
+  29               	
+  30               	retry_out:
+  31 0010 7002      	    move.l  #SYSCALL_NUM_PUTSTRING, %d0
+  32 0012 7200      	    move.l  #0, %d1
+  33               	
+  34               	    /* 5. バッファアドレスの指定 */
+  35               	    /* フレームポインタ基準で -4 の位置のアドレスを計算 */
+  36 0014 41EE FFFC 	    lea     -4(%a6), %a0
+  37 0018 2408      	    move.l  %a0, %d2
+  38               	
+  39 001a 7601      	    move.l  #1, %d3
+  40 001c 4E40      	    trap    #0
+  41               	
+  42               	    /* 6. 戻り値チェック (0文字ならリトライ) */
+  43 001e 4A80      	    tst.l   %d0
+  44 0020 6700 FFEE 	    beq     retry_out
+  45               	
+  46               	    /* 7. レジスタの復帰 */
+  47 0024 4CDF 000C 	    movem.l (%sp)+, %d2-%d3
+  48               	
+  49               	    /* 8. スタックフレームの破棄 */
+  50 0028 4E5E      	    unlk    %a6
+  51               	
+  52 002a 4E75      	    rts
+68K GAS  outchr.s 			page 2
+
+
+DEFINED SYMBOLS
+            outchr.s:10     .text:0000000000000000 outbyte
+            outchr.s:8      *ABS*:0000000000000002 SYSCALL_NUM_PUTSTRING
+            outchr.s:30     .text:0000000000000010 retry_out
+
+NO UNDEFINED SYMBOLS
