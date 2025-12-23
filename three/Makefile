@@ -11,6 +11,7 @@ default:
 	@echo '# make test1  -- build test1.abs                  #'
 	@echo '# make test2  -- build test2.abs                  #'
 	@echo '# make test3  -- build test3.abs                  #'
+	@echo '# make shooting -- build shooting.abs             #'
 	@echo '# make clean  -- cleanup current directory        #'
 	@echo '# make depend -- make dependency in .depend       #'
 	@echo '###################################################'
@@ -23,5 +24,7 @@ test2:
 	$(MAKE) $(MAKEFLAGS) LIB_JIKKEN=$(LIB_JIKKEN) -f Makefile.2
 test3:
 	$(MAKE) $(MAKEFLAGS) LIB_JIKKEN=$(LIB_JIKKEN) -f Makefile.3
+shooting:
+	$(MAKE) $(MAKEFLAGS) LIB_JIKKEN=$(LIB_JIKKEN) -f Makefile.shooting
 
 include $(LIB_JIKKEN)/make.conf

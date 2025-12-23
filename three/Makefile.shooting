@@ -1,0 +1,18 @@
+################################################################
+### Software Jikken -- Makefile for shooting duel (theme 3 base)
+################################################################
+
+PROGRAM		= shooting
+
+# mon.o must be first so that ld places mon.o $400.
+
+OBJECTS		= crt0.o mon.o csys68k.o inchrw.o mtk_asm.o \
+			mtk_c.o outchr.o $(PROGRAM).o
+
+SRCS		= crt0.s mon.s csys68k.c inchrw.s mtk_asm.s \
+			mtk_c.c outchr.s $(PROGRAM).c
+
+ASMGLIS		= crt0.glis mon.glis csys68k.glis inchrw.glis mtk_asm.glis \
+			mtk_c.glis outchr.glis $(PROGRAM).glis
+
+include $(LIB_JIKKEN)/make.conf
