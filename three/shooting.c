@@ -29,6 +29,7 @@ typedef struct {
     int p2_cooldown;
     int input_dir[2];
     int input_fire[2];
+    char last_key[2];
     unsigned int rng;
     unsigned int tick;
     BULLET bullets[2][MAX_BULLETS];
@@ -93,6 +94,8 @@ static void init_game(void) {
     g.input_dir[1] = 0;
     g.input_fire[0] = 0;
     g.input_fire[1] = 0;
+    g.last_key[0] = '-';
+    g.last_key[1] = '-';
     reset_round();
 }
 
@@ -156,6 +159,11 @@ static void render_port(int port, const GAMESTATE *s) {
     out_str(port, " - ");
     out_num(port, s->p2_score);
     out_str(port, "\n");
+    out_str(port, "Last key P1=");
+    outbyte(port, (unsigned char)s->last_key[0]);
+    out_str(port, " P2=");
+    outbyte(port, (unsigned char)s->last_key[1]);
+    out_str(port, "\n");
 
     for (int y = 0; y < BOARD_H; y++) {
         for (int x = 0; x < BOARD_W; x++) {
@@ -198,6 +206,7 @@ void task_input_p1(void) {
     while (1) {
         char c = inbyte(PORT_P1);
         P(0);
+        g.last_key[0] = c;
         if (c == 'w') g.input_dir[0] = -1;
         else if (c == 's') g.input_dir[0] = 1;
         else if (c == ' ') g.input_fire[0] = 1;
@@ -210,6 +219,7 @@ void task_input_p2(void) {
     while (1) {
         char c = inbyte(PORT_P2);
         P(0);
+        g.last_key[1] = c;
         if (c == 'i') g.input_dir[1] = -1;
         else if (c == 'k') g.input_dir[1] = 1;
         else if (c == 'p') g.input_fire[1] = 1;
@@ -255,7 +265,7 @@ void task_game(void) {
         rng_next();
         V(0);
 
-        for (volatile int i = 0; i < 2000; i++);
+        for (volatile int i = 0; i < 200; i++);
     }
 }
 
@@ -270,7 +280,7 @@ void task_render(void) {
         render_port(PORT_P1, &snapshot);
         render_port(PORT_P2, &snapshot);
 
-        for (volatile int i = 0; i < 4000; i++);
+        for (volatile int i = 0; i < 400; i++);
     }
 }
 
