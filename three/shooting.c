@@ -13,6 +13,8 @@ extern char inbyte(int port);
 #define MAX_BULLETS 5
 #define COOLDOWN_TICKS 6
 #define BULLET_STEP_DIV 18
+#define SEM_MUTEX 0
+#define SEM_RENDER 1
 
 typedef struct {
     int x;
@@ -123,6 +125,7 @@ static int clamp_y(int y) {
 static int step_bullets(void) {
     int p1_x = 2;
     int p2_x = BOARD_W - 3;
+    int moved = 0;
 
     if ((g.tick % BULLET_STEP_DIV) != 0) {
         return 0;
@@ -134,8 +137,10 @@ static int step_bullets(void) {
             BULLET *b = &g.bullets[owner][i];
             if (!b->alive) continue;
             b->x += dx;
+            moved = 1;
             if (b->x <= 0 || b->x >= BOARD_W - 1) {
                 b->alive = 0;
+                moved = 1;
                 continue;
             }
             if (owner == 0 && b->x == p2_x && b->y == g.p2_y) {
@@ -148,7 +153,7 @@ static int step_bullets(void) {
             }
         }
     }
-    return 0;
+    return moved;
 }
 
 static void render_port(int port, const GAMESTATE *s) {
@@ -201,7 +206,7 @@ static void render_port(int port, const GAMESTATE *s) {
 void task_input_p1(void) {
     while (1) {
         char c = inbyte(PORT_P1);
-        P(0);
+        P(SEM_MUTEX);
         g.last_key[0] = c;
         if (c == 'w' || c == 'W') g.input_dir[0] = -1;
         else if (c == 's' || c == 'S') g.input_dir[0] = 1;
@@ -209,7 +214,7 @@ void task_input_p1(void) {
         else if (c == 'i' || c == 'I') g.input_dir[1] = -1;
         else if (c == 'k' || c == 'K') g.input_dir[1] = 1;
         else if (c == 'p' || c == 'P') g.input_fire[1] = 1;
-        V(0);
+        V(SEM_MUTEX);
     }
 }
 
@@ -217,7 +222,7 @@ void task_input_p1(void) {
 void task_input_p2(void) {
     while (1) {
         char c = inbyte(PORT_P2);
-        P(0);
+        P(SEM_MUTEX);
         g.last_key[1] = c;
         if (c == 'w' || c == 'W') g.input_dir[0] = -1;
         else if (c == 's' || c == 'S') g.input_dir[0] = 1;
@@ -225,7 +230,7 @@ void task_input_p2(void) {
         else if (c == 'i' || c == 'I') g.input_dir[1] = -1;
         else if (c == 'k' || c == 'K') g.input_dir[1] = 1;
         else if (c == 'p' || c == 'P') g.input_fire[1] = 1;
-        V(0);
+        V(SEM_MUTEX);
     }
 }
 
@@ -234,7 +239,8 @@ void task_game(void) {
     init_game();
     while (1) {
         int dir1, dir2, fire1, fire2;
-        P(0);
+        int changed = 0;
+        P(SEM_MUTEX);
         dir1 = g.input_dir[0];
         dir2 = g.input_dir[1];
         fire1 = g.input_fire[0];
@@ -244,6 +250,9 @@ void task_game(void) {
         g.input_fire[0] = 0;
         g.input_fire[1] = 0;
 
+        if (dir1 != 0 || dir2 != 0) {
+            changed = 1;
+        }
         g.p1_y = clamp_y(g.p1_y + dir1);
         g.p2_y = clamp_y(g.p2_y + dir2);
 
@@ -253,21 +262,26 @@ void task_game(void) {
         if (fire1 && g.p1_cooldown == 0) {
             spawn_bullet(0);
             g.p1_cooldown = COOLDOWN_TICKS;
+            changed = 1;
         }
         if (fire2 && g.p2_cooldown == 0) {
             spawn_bullet(1);
             g.p2_cooldown = COOLDOWN_TICKS;
+            changed = 1;
         }
 
         if (step_bullets()) {
             reset_round();
+            changed = 1;
         }
 
         g.tick++;
         rng_next();
-        V(0);
+        V(SEM_MUTEX);
 
-        // for (volatile int i = 0; i < 200; i++);
+        if (changed) {
+            V(SEM_RENDER);
+        }
     }
 }
 
@@ -275,14 +289,13 @@ void task_game(void) {
 void task_render(void) {
     while (1) {
         GAMESTATE snapshot;
-        P(0);
+        P(SEM_RENDER);
+        P(SEM_MUTEX);
         snapshot = g;
-        V(0);
+        V(SEM_MUTEX);
 
         render_port(PORT_P1, &snapshot);
         render_port(PORT_P2, &snapshot);
-
-        // for (volatile int i = 0; i < 400; i++);
     }
 }
 
@@ -293,8 +306,10 @@ void exit(int status) {
 int main(void) {
     init_kernel();
 
-    semaphore[0].count = 1;
-    semaphore[0].task_list = NULLTASKID;
+    semaphore[SEM_MUTEX].count = 1;
+    semaphore[SEM_MUTEX].task_list = NULLTASKID;
+    semaphore[SEM_RENDER].count = 1;
+    semaphore[SEM_RENDER].task_list = NULLTASKID;
 
     set_task(task_input_p1);
     set_task(task_input_p2);
