@@ -12,7 +12,7 @@ extern char inbyte(int port);
 #define BOARD_H 8
 #define MAX_BULLETS 5
 #define COOLDOWN_TICKS 6
-#define BULLET_STEP_DIV 3
+#define BULLET_STEP_DIV 6
 
 typedef struct {
     int x;
