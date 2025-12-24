@@ -77,19 +77,19 @@ static void clear_bullets(void) {
 }
 
 static void reset_round(void) {
-    int span = BOARD_H - 2;
-    g.p1_y = 1 + (int)(rng_next() % span);
-    g.p2_y = 1 + (int)(rng_next() % span);
     g.p1_cooldown = 0;
     g.p2_cooldown = 0;
     clear_bullets();
 }
 
 static void init_game(void) {
+    int span = BOARD_H - 2;
     g.rng = 1234567u;
     g.tick = 0;
     g.p1_score = 0;
     g.p2_score = 0;
+    g.p1_y = 1 + (int)(rng_next() % span);
+    g.p2_y = 1 + (int)(rng_next() % span);
     g.input_dir[0] = 0;
     g.input_dir[1] = 0;
     g.input_fire[0] = 0;
@@ -207,8 +207,8 @@ void task_input_p1(void) {
         char c = inbyte(PORT_P1);
         P(0);
         g.last_key[0] = c;
-        if (c == 'w') g.input_dir[0] = -1;
-        else if (c == 's') g.input_dir[0] = 1;
+        if (c == 'w' || c == 'W') g.input_dir[0] = -1;
+        else if (c == 's' || c == 'S') g.input_dir[0] = 1;
         else if (c == ' ') g.input_fire[0] = 1;
         V(0);
     }
@@ -220,9 +220,9 @@ void task_input_p2(void) {
         char c = inbyte(PORT_P2);
         P(0);
         g.last_key[1] = c;
-        if (c == 'i') g.input_dir[1] = -1;
-        else if (c == 'k') g.input_dir[1] = 1;
-        else if (c == 'p') g.input_fire[1] = 1;
+        if (c == 'i' || c == 'I') g.input_dir[1] = -1;
+        else if (c == 'k' || c == 'K') g.input_dir[1] = 1;
+        else if (c == 'p' || c == 'P') g.input_fire[1] = 1;
         V(0);
     }
 }
