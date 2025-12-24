@@ -284,22 +284,26 @@ static void render_port(int port, const GAMESTATE *s) {
     
     /* プレイヤー位置の変更を検出して更新 */
     if (prev->p1_y != s->p1_y) {
-        /* 前の位置を消去 */
+        /* 前の位置を消去（prev->boardも更新） */
         put_char_at(port, prev->p1_y + 2, p1_x + 1, ' ');
+        prev->board[prev->p1_y][p1_x] = ' ';
         /* 新しい位置に描画 */
         put_char_at(port, s->p1_y + 2, p1_x + 1, 'A');
+        prev->board[s->p1_y][p1_x] = 'A';
         prev->p1_y = s->p1_y;
     }
     
     if (prev->p2_y != s->p2_y) {
-        /* 前の位置を消去 */
+        /* 前の位置を消去（prev->boardも更新） */
         put_char_at(port, prev->p2_y + 2, p2_x + 1, ' ');
+        prev->board[prev->p2_y][p2_x] = ' ';
         /* 新しい位置に描画 */
         put_char_at(port, s->p2_y + 2, p2_x + 1, 'B');
+        prev->board[s->p2_y][p2_x] = 'B';
         prev->p2_y = s->p2_y;
     }
     
-    /* 弾の位置を差分更新 */
+    /* 弾の位置を差分更新（プレイヤー位置も含めて全セルをチェック） */
     for (int y = 1; y < BOARD_H - 1; y++) {
         for (int x = 1; x < BOARD_W - 1; x++) {
             char old_ch = prev->board[y][x];
