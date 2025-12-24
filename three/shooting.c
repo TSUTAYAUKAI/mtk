@@ -15,6 +15,7 @@ extern char inbyte(int port);
 #define BULLET_STEP_DIV 18
 #define SEM_MUTEX 0
 #define SEM_RENDER 1
+#define SEM_RENDER_DONE 2
 
 typedef struct {
     int x;
@@ -38,7 +39,18 @@ typedef struct {
     BULLET bullets[2][MAX_BULLETS];
 } GAMESTATE;
 
+/* 前回の描画状態を保持（差分描画用） */
+typedef struct {
+    int p1_y;
+    int p2_y;
+    int p1_score;
+    int p2_score;
+    char board[BOARD_H][BOARD_W];
+    int initialized;
+} RENDER_STATE;
+
 static GAMESTATE g;
+static RENDER_STATE render_state[2]; /* PORT_P1, PORT_P2用 */
 
 static void out_str(int port, const char *s) {
     while (*s) {
@@ -64,6 +76,35 @@ static void out_num(int port, int value) {
     while (i-- > 0) {
         outbyte(port, (unsigned char)buf[i]);
     }
+}
+
+/* カーソル位置移動（1-based座標） */
+static void cursor_move(int port, int row, int col) {
+    char buf[16];
+    int i = 0;
+    buf[i++] = '\x1b';
+    buf[i++] = '[';
+    /* row */
+    int r = row;
+    if (r >= 100) buf[i++] = (char)('0' + (r / 100));
+    if (r >= 10) buf[i++] = (char)('0' + ((r / 10) % 10));
+    buf[i++] = (char)('0' + (r % 10));
+    buf[i++] = ';';
+    /* col */
+    int c = col;
+    if (c >= 100) buf[i++] = (char)('0' + (c / 100));
+    if (c >= 10) buf[i++] = (char)('0' + ((c / 10) % 10));
+    buf[i++] = (char)('0' + (c % 10));
+    buf[i++] = 'H';
+    for (int j = 0; j < i; j++) {
+        outbyte(port, buf[j]);
+    }
+}
+
+/* 1文字を指定位置に出力 */
+static void put_char_at(int port, int row, int col, char ch) {
+    cursor_move(port, row, col);
+    outbyte(port, (unsigned char)ch);
 }
 
 static unsigned int rng_next(void) {
@@ -156,49 +197,120 @@ static int step_bullets(void) {
     return moved;
 }
 
-static void render_port(int port, const GAMESTATE *s) {
-    char line[BOARD_W + 1];
+/* 現在の盤面状態を計算 */
+static void build_board(char board[BOARD_H][BOARD_W], const GAMESTATE *s) {
     int p1_x = 2;
     int p2_x = BOARD_W - 3;
-
-    out_str(port, "\x1b[H\x1b[2J");
-    out_str(port, "Score ");
-    out_num(port, s->p1_score);
-    out_str(port, " - ");
-    out_num(port, s->p2_score);
-    out_str(port, "\r\n");
-
+    
+    /* 盤面を初期化 */
     for (int y = 0; y < BOARD_H; y++) {
         for (int x = 0; x < BOARD_W; x++) {
-            char ch = ' ';
             if (y == 0 || y == BOARD_H - 1) {
-                ch = '-';
-            }
-            line[x] = ch;
-        }
-        line[BOARD_W] = '\0';
-
-        if (y > 0 && y < BOARD_H - 1) {
-            for (int owner = 0; owner < 2; owner++) {
-                for (int i = 0; i < MAX_BULLETS; i++) {
-                    const BULLET *b = &s->bullets[owner][i];
-                    if (!b->alive || b->y != y) continue;
-                    if (b->x > 0 && b->x < BOARD_W - 1) {
-                        line[b->x] = (owner == 0) ? '>' : '<';
-                    }
-                }
-            }
-
-            if (y == s->p1_y) {
-                line[p1_x] = 'A';
-            }
-            if (y == s->p2_y) {
-                line[p2_x] = 'B';
+                board[y][x] = '-';
+            } else {
+                board[y][x] = ' ';
             }
         }
+    }
+    
+    /* プレイヤーを配置 */
+    board[s->p1_y][p1_x] = 'A';
+    board[s->p2_y][p2_x] = 'B';
+    
+    /* 弾を配置 */
+    for (int owner = 0; owner < 2; owner++) {
+        for (int i = 0; i < MAX_BULLETS; i++) {
+            const BULLET *b = &s->bullets[owner][i];
+            if (b->alive && b->x > 0 && b->x < BOARD_W - 1 && b->y > 0 && b->y < BOARD_H - 1) {
+                board[b->y][b->x] = (owner == 0) ? '>' : '<';
+            }
+        }
+    }
+}
 
-        out_str(port, line);
+static void render_port(int port, const GAMESTATE *s) {
+    RENDER_STATE *prev = &render_state[port];
+    char new_board[BOARD_H][BOARD_W];
+    int p1_x = 2;
+    int p2_x = BOARD_W - 3;
+    int need_full_clear = !prev->initialized;
+    
+    /* 現在の盤面状態を計算 */
+    build_board(new_board, s);
+    
+    /* 初回描画またはラウンドリセット時は全画面クリア */
+    if (need_full_clear) {
+        out_str(port, "\x1b[H\x1b[2J");
+        prev->initialized = 1;
+        
+        /* スコア行を描画 */
+        out_str(port, "Score ");
+        out_num(port, s->p1_score);
+        out_str(port, " - ");
+        out_num(port, s->p2_score);
         out_str(port, "\r\n");
+        
+        /* 全盤面を描画 */
+        for (int y = 0; y < BOARD_H; y++) {
+            for (int x = 0; x < BOARD_W; x++) {
+                outbyte(port, (unsigned char)new_board[y][x]);
+            }
+            out_str(port, "\r\n");
+        }
+        
+        /* 前回状態を保存 */
+        prev->p1_y = s->p1_y;
+        prev->p2_y = s->p2_y;
+        prev->p1_score = s->p1_score;
+        prev->p2_score = s->p2_score;
+        for (int y = 0; y < BOARD_H; y++) {
+            for (int x = 0; x < BOARD_W; x++) {
+                prev->board[y][x] = new_board[y][x];
+            }
+        }
+        return;
+    }
+    
+    /* スコアが変更された場合のみ更新 */
+    if (prev->p1_score != s->p1_score || prev->p2_score != s->p2_score) {
+        cursor_move(port, 1, 1);
+        out_str(port, "Score ");
+        out_num(port, s->p1_score);
+        out_str(port, " - ");
+        out_num(port, s->p2_score);
+        prev->p1_score = s->p1_score;
+        prev->p2_score = s->p2_score;
+    }
+    
+    /* プレイヤー位置の変更を検出して更新 */
+    if (prev->p1_y != s->p1_y) {
+        /* 前の位置を消去 */
+        put_char_at(port, prev->p1_y + 2, p1_x + 1, ' ');
+        /* 新しい位置に描画 */
+        put_char_at(port, s->p1_y + 2, p1_x + 1, 'A');
+        prev->p1_y = s->p1_y;
+    }
+    
+    if (prev->p2_y != s->p2_y) {
+        /* 前の位置を消去 */
+        put_char_at(port, prev->p2_y + 2, p2_x + 1, ' ');
+        /* 新しい位置に描画 */
+        put_char_at(port, s->p2_y + 2, p2_x + 1, 'B');
+        prev->p2_y = s->p2_y;
+    }
+    
+    /* 弾の位置を差分更新 */
+    for (int y = 1; y < BOARD_H - 1; y++) {
+        for (int x = 1; x < BOARD_W - 1; x++) {
+            char old_ch = prev->board[y][x];
+            char new_ch = new_board[y][x];
+            
+            /* 変更があった場合のみ更新 */
+            if (old_ch != new_ch) {
+                put_char_at(port, y + 2, x + 1, new_ch);
+                prev->board[y][x] = new_ch;
+            }
+        }
     }
 }
 
@@ -240,6 +352,7 @@ void task_game(void) {
     while (1) {
         int dir1, dir2, fire1, fire2;
         int changed = 0;
+        static int first_render = 1;
         P(SEM_MUTEX);
         dir1 = g.input_dir[0];
         dir2 = g.input_dir[1];
@@ -279,8 +392,14 @@ void task_game(void) {
         rng_next();
         V(SEM_MUTEX);
 
+        if (first_render) {
+            changed = 1;
+            first_render = 0;
+        }
+
         if (changed) {
             V(SEM_RENDER);
+            P(SEM_RENDER_DONE);
         }
     }
 }
@@ -296,6 +415,7 @@ void task_render(void) {
 
         render_port(PORT_P1, &snapshot);
         render_port(PORT_P2, &snapshot);
+        V(SEM_RENDER_DONE);
     }
 }
 
@@ -308,8 +428,10 @@ int main(void) {
 
     semaphore[SEM_MUTEX].count = 1;
     semaphore[SEM_MUTEX].task_list = NULLTASKID;
-    semaphore[SEM_RENDER].count = 1;
+    semaphore[SEM_RENDER].count = 0;
     semaphore[SEM_RENDER].task_list = NULLTASKID;
+    semaphore[SEM_RENDER_DONE].count = 0;
+    semaphore[SEM_RENDER_DONE].task_list = NULLTASKID;
 
     set_task(task_input_p1);
     set_task(task_input_p2);
