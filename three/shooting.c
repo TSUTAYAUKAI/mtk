@@ -8,7 +8,7 @@ extern char inbyte(int port);
 #define PORT_P1 0
 #define PORT_P2 1
 
-#define BOARD_W 40
+#define BOARD_W 80
 #define BOARD_H 15
 #define MAX_BULLETS 5
 #define COOLDOWN_TICKS 6
