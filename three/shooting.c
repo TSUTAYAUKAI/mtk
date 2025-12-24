@@ -8,8 +8,8 @@ extern char inbyte(int port);
 #define PORT_P1 0
 #define PORT_P2 1
 
-#define BOARD_W 80
-#define BOARD_H 15
+#define BOARD_W 40
+#define BOARD_H 8
 #define MAX_BULLETS 5
 #define COOLDOWN_TICKS 6
 
@@ -152,17 +152,10 @@ static void render_port(int port, const GAMESTATE *s) {
     int p2_x = BOARD_W - 3;
 
     out_str(port, "\x1b[H\x1b[2J");
-    out_str(port, "Shooting Duel (RS232C)\n");
-    out_str(port, "P1: W/S + Space   P2: I/K + P\n");
     out_str(port, "Score ");
     out_num(port, s->p1_score);
     out_str(port, " - ");
     out_num(port, s->p2_score);
-    out_str(port, "\n");
-    out_str(port, "Last key P1=");
-    outbyte(port, (unsigned char)s->last_key[0]);
-    out_str(port, " P2=");
-    outbyte(port, (unsigned char)s->last_key[1]);
     out_str(port, "\n");
 
     for (int y = 0; y < BOARD_H; y++) {
