@@ -12,6 +12,7 @@ extern char inbyte(int port);
 #define BOARD_H 8
 #define MAX_BULLETS 5
 #define COOLDOWN_TICKS 6
+#define BULLET_STEP_DIV 3
 
 typedef struct {
     int x;
@@ -123,6 +124,10 @@ static int step_bullets(void) {
     int p1_x = 2;
     int p2_x = BOARD_W - 3;
 
+    if ((g.tick % BULLET_STEP_DIV) != 0) {
+        return 0;
+    }
+
     for (int owner = 0; owner < 2; owner++) {
         int dx = (owner == 0) ? 1 : -1;
         for (int i = 0; i < MAX_BULLETS; i++) {
@@ -156,7 +161,7 @@ static void render_port(int port, const GAMESTATE *s) {
     out_num(port, s->p1_score);
     out_str(port, " - ");
     out_num(port, s->p2_score);
-    out_str(port, "\n");
+    out_str(port, "\r\n");
 
     for (int y = 0; y < BOARD_H; y++) {
         for (int x = 0; x < BOARD_W; x++) {
@@ -188,7 +193,7 @@ static void render_port(int port, const GAMESTATE *s) {
         }
 
         out_str(port, line);
-        out_str(port, "\n");
+        out_str(port, "\r\n");
     }
 }
 
