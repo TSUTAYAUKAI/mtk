@@ -265,7 +265,7 @@ void task_game(void) {
         rng_next();
         V(0);
 
-        for (volatile int i = 0; i < 200; i++);
+        // for (volatile int i = 0; i < 200; i++);
     }
 }
 
@@ -280,7 +280,7 @@ void task_render(void) {
         render_port(PORT_P1, &snapshot);
         render_port(PORT_P2, &snapshot);
 
-        for (volatile int i = 0; i < 400; i++);
+        // for (volatile int i = 0; i < 400; i++);
     }
 }
 
