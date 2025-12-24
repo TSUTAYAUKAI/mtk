@@ -170,8 +170,6 @@ static void render_port(int port, const GAMESTATE *s) {
             char ch = ' ';
             if (y == 0 || y == BOARD_H - 1) {
                 ch = '-';
-            } else if (x == 0 || x == BOARD_W - 1) {
-                ch = '|';
             }
             line[x] = ch;
         }
@@ -210,6 +208,9 @@ void task_input_p1(void) {
         if (c == 'w' || c == 'W') g.input_dir[0] = -1;
         else if (c == 's' || c == 'S') g.input_dir[0] = 1;
         else if (c == ' ') g.input_fire[0] = 1;
+        else if (c == 'i' || c == 'I') g.input_dir[1] = -1;
+        else if (c == 'k' || c == 'K') g.input_dir[1] = 1;
+        else if (c == 'p' || c == 'P') g.input_fire[1] = 1;
         V(0);
     }
 }
@@ -220,7 +221,10 @@ void task_input_p2(void) {
         char c = inbyte(PORT_P2);
         P(0);
         g.last_key[1] = c;
-        if (c == 'i' || c == 'I') g.input_dir[1] = -1;
+        if (c == 'w' || c == 'W') g.input_dir[0] = -1;
+        else if (c == 's' || c == 'S') g.input_dir[0] = 1;
+        else if (c == ' ') g.input_fire[0] = 1;
+        else if (c == 'i' || c == 'I') g.input_dir[1] = -1;
         else if (c == 'k' || c == 'K') g.input_dir[1] = 1;
         else if (c == 'p' || c == 'P') g.input_fire[1] = 1;
         V(0);
