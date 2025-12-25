@@ -12,7 +12,7 @@ extern char inbyte(int port);
 #define BOARD_H 8
 #define MAX_BULLETS 7
 #define COOLDOWN_TICKS 6
-#define BULLET_STEP_DIV 18
+#define BULLET_STEP_DIV 15
 #define TARGET_SCORE 30
 #define SEM_MUTEX 0
 #define SEM_RENDER 1
@@ -137,8 +137,8 @@ static void init_game(void) {
     g.tick = 0;
     g.p1_score = 0;
     g.p2_score = 0;
-    g.p1_y = 1 + (int)(rng_next() % span);
-    g.p2_y = 1 + (int)(rng_next() % span);
+    g.p1_y = 1 + (span / 2);
+    g.p2_y = 1 + (span / 2);
     g.input_dir[0] = 0;
     g.input_dir[1] = 0;
     g.input_fire[0] = 0;
