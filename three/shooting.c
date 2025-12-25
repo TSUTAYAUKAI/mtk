@@ -244,7 +244,7 @@ static void render_port(int port, const GAMESTATE *s) {
     int p1_x = 2;
     int p2_x = BOARD_W - 3;
     int need_full_clear = !prev->initialized;
-    const char *msg = NULL;
+    const char *msg = 0;
     
     /* 現在の盤面状態を計算 */
     build_board(new_board, s);
