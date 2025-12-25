@@ -2,232 +2,220 @@
 
 
    1               	/* mtk_asm.s */
-   2               	/* マルチタスクカーネル (アセンブリ言語部分) */
-   3               	
-   4               	    .section .text
-   5               	    .even
-   6               	    
-   7               	    /* 外部シンボルの定義 */
-   8               	    .global first_task
-   9               	    .global swtch
-  10               	    .global P
-  11               	    .global V
-  12               	    .global pv_handler
-  13               	    .global hard_clock
-  14               	    .global init_timer
-  15               	
-  16               	    /* 外部参照 (C言語の変数・関数) */
-  17               	    .extern curr_task
-  18               	    .extern next_task
-  19               	    .extern ready
-  20               	    .extern task_tab
-  21               	    .extern p_body
-  22               	    .extern v_body
-  23               	    .extern addq
-  24               	    .extern sched
-  25               	
-  26               	    /* 定数定義 */
-  27               	    .equ TCB_SIZE, 20       /* TCB構造体のサイズ (5要素×4バイト) */
-  28               	    .equ TCB_SP_OFFSET, 4   /* stack_ptrのオフセット (2番目の要素) */
-  29               	    .equ SYSCALL_NUM_SET_TIMER, 4
-  30               	
-  31               	/* ==========================================================
-  32               	   ユーザタスク起動サブルーチン
-  33               	   first_task()
-  34               	   C言語の begin_sch() から呼ばれる。ここからは戻らない。
-  35               	   ========================================================== */
-  36               	first_task:
-  37               	    /* 1. 現在のタスク(curr_task)のSSPを回復する */
-  38               	    /* TCBのアドレス計算: task_tab + (curr_task * 20) */
-  39 0000 2039 0000 	    move.l  curr_task, %d0
-  39      0000 
-  40 0006 C0FC 0014 	    mulu.w  #TCB_SIZE, %d0
-  41 000a 41F9 0000 	    lea     task_tab, %a0
-  41      0000 
-  42 0010 D1C0      	    add.l   %d0, %a0        /* a0 = &task_tab[curr_task] */
-  43               	    
-  44 0012 2E68 0004 	    move.l  TCB_SP_OFFSET(%a0), %sp /* SSPを回復 */
-  45               	
-  46               	    /* 2. USP, レジスタの回復 (図2.8のスタック構造に対応) */
-  47 0016 205F      	    move.l  (%sp)+, %a0
-  48 0018 4E60      	    move.l  %a0, %usp       /* USP回復 */
-  49               	    
-  50 001a 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6 /* レジスタ回復 */
-  51               	
-  52               	    /* 3. ユーザタスクへ移行 */
-  53 001e 4E73      	    rte
-  54               	
-  55               	/* ==========================================================
+   2               	
+   3               	    .section .text
+   4               	    .even
+   5               	    
+   6               	    /* 外部シンボルの定義 */
+   7               	    .global first_task
+   8               	    .global swtch
+   9               	    .global P
+  10               	    .global V
+  11               	    .global pv_handler
+  12               	    .global hard_clock
+  13               	    .global init_timer
+  14               	
+  15               	    /* C言語の変数・関数 */
+  16               	    .extern curr_task
+  17               	    .extern next_task
+  18               	    .extern ready
+  19               	    .extern task_tab
+  20               	    .extern p_body
+  21               	    .extern v_body
+  22               	    .extern addq
+  23               	    .extern sched
+  24               	
+  25               	    /* 定数定義 */
+  26               	    .equ TCB_SIZE, 20       /* TCB構造体のサイズ  */
+  27               	    .equ TCB_SP_OFFSET, 4   /* stack_ptrのオフセット */
+  28               	    .equ SYSCALL_NUM_SET_TIMER, 4
+  29               	
+  30               	/* ==========================================================
+  31               	   ユーザタスク起動サブルーチン
+  32               	   first_task()
+  33               	   C言語の begin_sch() から呼ばれる。ここからは戻らない。
+  34               	   ========================================================== */
+  35               	first_task:
+  36               	    /* 現在のタスクのSSPを回復する */
+  37               	    /* TCBのアドレス計算: task_tab + (curr_task * 20) */
+  38 0000 2039 0000 	    move.l  curr_task, %d0
+  38      0000 
+  39 0006 C0FC 0014 	    mulu.w  #TCB_SIZE, %d0
+  40 000a 41F9 0000 	    lea     task_tab, %a0
+  40      0000 
+  41 0010 D1C0      	    add.l   %d0, %a0        /* a0 = &task_tab[curr_task] */
+  42               	    
+  43 0012 2E68 0004 	    move.l  TCB_SP_OFFSET(%a0), %sp /* SSPを回復 */
+  44               	
+  45 0016 205F      	    move.l  (%sp)+, %a0
+  46 0018 4E60      	    move.l  %a0, %usp       /* USP回復 */
+  47               	    
+  48 001a 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6 /* レジスタ復帰 */
+  49               	
+  50               	    /* ユーザタスクへ移行 */
+  51 001e 4E73      	    rte
+  52               	
+  53               	/* ==========================================================
+  54               	   タスクスイッチ関数
+  55               	   swtch()
 68K GAS  mtk_asm.s 			page 2
 
 
-  56               	   タスクスイッチ関数
-  57               	   swtch()
-  58               	   sched()でnext_taskが決まった後に呼ばれる。
-  59               	   ========================================================== */
-  60               	swtch:
-  61               	    /* 1. 戻り番地用にSRをスタックに積む (RTEで復帰するため) */
-  62 0020 40E7      	    move.w  %sr, -(%sp)
-  63               	
-  64               	    /* 2. 現在のタスクのコンテキスト保存 */
-  65 0022 48E7 FFFE 	    movem.l %d0-%d7/%a0-%a6, -(%sp) /* レジスタ保存 */
-  66 0026 4E68      	    move.l  %usp, %a0
-  67 0028 2F08      	    move.l  %a0, -(%sp)             /* USP保存 */
-  68               	
-  69               	    /* 3. 現在のタスクのSSPをTCBに保存 */
-  70 002a 2039 0000 	    move.l  curr_task, %d0
-  70      0000 
-  71 0030 C0FC 0014 	    mulu.w  #TCB_SIZE, %d0
-  72 0034 41F9 0000 	    lea     task_tab, %a0
+  56               	   sched()でnext_taskが決まった後に呼ばれる。
+  57               	   ========================================================== */
+  58               	swtch:
+  59 0020 40E7      	    move.w  %sr, -(%sp) /*戻り番地用にスタックに積む*/
+  60               	
+  61 0022 48E7 FFFE 	    movem.l %d0-%d7/%a0-%a6, -(%sp) /* レジスタ保存 */
+  62 0026 4E68      	    move.l  %usp, %a0
+  63 0028 2F08      	    move.l  %a0, -(%sp)             /* USP保存 */
+  64               	
+  65               	    /* 現在のタスクのSSPをTCBに保存 */
+  66 002a 2039 0000 	    move.l  curr_task, %d0
+  66      0000 
+  67 0030 C0FC 0014 	    mulu.w  #TCB_SIZE, %d0
+  68 0034 41F9 0000 	    lea     task_tab, %a0
+  68      0000 
+  69 003a D1C0      	    add.l   %d0, %a0
+  70 003c 214F 0004 	    move.l  %sp, TCB_SP_OFFSET(%a0)
+  71               	   
+  72 0040 23F9 0000 	    move.l  next_task, curr_task　/* タスクの切り替え */
+  72      0000 0000 
   72      0000 
-  73 003a D1C0      	    add.l   %d0, %a0
-  74 003c 214F 0004 	    move.l  %sp, TCB_SP_OFFSET(%a0)
-  75               	
-  76               	    /* 4. タスクの切り替え */
-  77 0040 23F9 0000 	    move.l  next_task, curr_task
-  77      0000 0000 
+  73               	
+  74               	    /* 次のタスクのSSPをTCBから復帰 */
+  75 004a 2039 0000 	    move.l  curr_task, %d0
+  75      0000 
+  76 0050 C0FC 0014 	    mulu.w  #TCB_SIZE, %d0
+  77 0054 41F9 0000 	    lea     task_tab, %a0
   77      0000 
-  78               	
-  79               	    /* 5. 次のタスクのSSPをTCBから復帰 */
-  80 004a 2039 0000 	    move.l  curr_task, %d0
-  80      0000 
-  81 0050 C0FC 0014 	    mulu.w  #TCB_SIZE, %d0
-  82 0054 41F9 0000 	    lea     task_tab, %a0
-  82      0000 
-  83 005a D1C0      	    add.l   %d0, %a0
-  84 005c 2E68 0004 	    move.l  TCB_SP_OFFSET(%a0), %sp
-  85               	
-  86               	    /* 6. 次のタスクのコンテキスト復帰 */
-  87 0060 205F      	    move.l  (%sp)+, %a0
-  88 0062 4E60      	    move.l  %a0, %usp               /* USP復帰 */
-  89 0064 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6 /* レジスタ復帰 */
-  90               	
-  91               	    /* 7. 新しいタスクへ (RTE) */
-  92 0068 4E73      	    rte
-  93               	
-  94               	/* ==========================================================
-  95               	   システムコール入口 (P, V)
-  96               	   C言語から呼ばれる: P(sem_id), V(sem_id)
-  97               	   ========================================================== */
-  98               	P:
-  99 006a 7000      	    move.l  #0, %d0         /* D0 = 0 (P操作を示す) */
- 100 006c 222F 0004 	    move.l  4(%sp), %d1     /* D1 = 引数 sem_id */
- 101 0070 4E41      	    trap    #1
- 102 0072 4E75      	    rts
+  78 005a D1C0      	    add.l   %d0, %a0
+  79 005c 2E68 0004 	    move.l  TCB_SP_OFFSET(%a0), %sp
+  80               	
+  81               	
+  82 0060 205F      	    move.l  (%sp)+, %a0
+  83 0062 4E60      	    move.l  %a0, %usp               /* USP復帰 */
+  84 0064 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6 /* レジスタ復帰 */
+  85               	 
+  86 0068 4E73      	    rte  /* 新しいタスク開始 */
+  87               	
+  88               	/* ==========================================================
+  89               	   システムコール入口 (P, V)
+  90               	   C言語から呼ばれる: P(sem_id), V(sem_id)
+  91               	   ========================================================== */
+  92               	P:
+  93 006a 7000      	    move.l  #0, %d0         /* D0 = 0 */
+  94 006c 222F 0004 	    move.l  4(%sp), %d1     /* D1 = 引数 sem_id */
+  95 0070 4E41      	    trap    #1
+  96 0072 4E75      	    rts
+  97               	
+  98               	V:
+  99 0074 7001      	    move.l  #1, %d0         /* D0 = 1  */
+ 100 0076 222F 0004 	    move.l  4(%sp), %d1     /* D1 = 引数 sem_id */
+ 101 007a 4E41      	    trap    #1
+ 102 007c 4E75      	    rts
  103               	
- 104               	V:
- 105 0074 7001      	    move.l  #1, %d0         /* D0 = 1 (V操作を示す) */
- 106 0076 222F 0004 	    move.l  4(%sp), %d1     /* D1 = 引数 sem_id */
+ 104               	/* ==========================================================
+ 105               	   TRAP #1 割り込みハンドラ
+ 106               	   pv_handler
 68K GAS  mtk_asm.s 			page 3
 
 
- 107 007a 4E41      	    trap    #1
- 108 007c 4E75      	    rts
- 109               	
- 110               	/* ==========================================================
- 111               	   TRAP #1 割り込みハンドラ
- 112               	   pv_handler
- 113               	   P, Vシステムコールの実体処理
- 114               	   ========================================================== */
- 115               	pv_handler:
- 116               	    /* 1. レジスタ退避 */
- 117 007e 48E7 FFFE 	    movem.l %d0-%d7/%a0-%a6, -(%sp)
- 118               	
- 119               	    /* 2. 割り込み禁止 (SR操作) */
- 120 0082 40E7      	    move.w  %sr, -(%sp)     /* SR退避 */
- 121 0084 46FC 2700 	    move.w  #0x2700, %sr    /* 割り込み禁止 (Level 7) */
- 122               	
- 123               	    /* 3. C関数の呼び出し (p_body or v_body) */
- 124 0088 2F01      	    move.l  %d1, -(%sp)     /* 引数 sem_id をプッシュ */
+ 107               	   P, Vシステムコール
+ 108               	   ========================================================== */
+ 109               	pv_handler:
+ 110               	    
+ 111 007e 48E7 FFFE 	    movem.l %d0-%d7/%a0-%a6, -(%sp)/* レジスタ退避 */
+ 112               	
+ 113 0082 40E7      	    move.w  %sr, -(%sp)     /* SR退避 */
+ 114 0084 46FC 2700 	    move.w  #0x2700, %sr    /* 割り込み禁止 */
+ 115               	
+ 116 0088 2F01      	    move.l  %d1, -(%sp)     /* 引数 sem_id をプッシュ */
+ 117               	    
+ 118 008a 4A80      	    tst.l   %d0             /* D0が0ならP, 1ならVを呼び出す */
+ 119 008c 6600 000C 	    bne     do_v
+ 120               	do_p:
+ 121 0090 4EB9 0000 	    jsr     p_body
+ 121      0000 
+ 122 0096 6000 0008 	    bra     pv_end
+ 123               	do_v:
+ 124 009a 4EB9 0000 	    jsr     v_body
+ 124      0000 
  125               	    
- 126 008a 4A80      	    tst.l   %d0             /* D0が0ならP, 1ならV */
- 127 008c 6600 000C 	    bne     do_v
- 128               	do_p:
- 129 0090 4EB9 0000 	    jsr     p_body
- 129      0000 
- 130 0096 6000 0008 	    bra     pv_end
- 131               	do_v:
- 132 009a 4EB9 0000 	    jsr     v_body
- 132      0000 
- 133               	    
- 134               	pv_end:
- 135 00a0 588F      	    addq.l  #4, %sp         /* 引数除去 */
- 136               	
- 137               	    /* 4. 割り込み禁止解除 & レジスタ復帰 */
- 138 00a2 46DF      	    move.w  (%sp)+, %sr
- 139 00a4 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6
- 140               	
- 141               	    /* 5. 復帰 */
- 142 00a8 4E73      	    rte
- 143               	
- 144               	/* ==========================================================
- 145               	   タイマ初期化
- 146               	   init_timer()
- 147               	   モニタのシステムコールを使ってタイマを設定する
- 148               	   ========================================================== */
- 149               	init_timer:
- 150 00aa 7004      	    move.l  #SYSCALL_NUM_SET_TIMER, %d0
- 151 00ac 323C C350 	    move.w  #50000, %d1         /* 割り込み間隔 (適当な値) */
- 152 00b0 243C 0000 	    move.l  #hard_clock, %d2    /* ハンドラのアドレス */
- 152      0000 
- 153 00b6 4E40      	    trap    #0
- 154 00b8 4E75      	    rts
- 155               	
- 156               	/* ==========================================================
- 157               	   タイマ割り込みハンドラ
- 158               	   hard_clock
- 159               	   モニタから呼ばれるため RTS で戻る
- 160               	   ========================================================== */
+ 126               	pv_end:
+ 127 00a0 588F      	    addq.l  #4, %sp         /* 引数除去 */
+ 128               	
+ 129 00a2 46DF      	    move.w  (%sp)+, %sr /*割り込み禁止解除*/
+ 130 00a4 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6 /*レジスタ復帰*/
+ 131               	
+ 132 00a8 4E73      	    rte
+ 133               	
+ 134               	/* ==========================================================
+ 135               	   タイマ初期化
+ 136               	   init_timer()
+ 137               	   モニタのシステムコールを使ってタイマを設定する
+ 138               	   ========================================================== */
+ 139               	init_timer:
+ 140 00aa 7004      	    move.l  #SYSCALL_NUM_SET_TIMER, %d0
+ 141 00ac 323C C350 	    move.w  #50000, %d1         /* 割り込み間隔  */
+ 142 00b0 243C 0000 	    move.l  #hard_clock, %d2    /* 割り込みハンドラのアドレス */
+ 142      0000 
+ 143 00b6 4E40      	    trap    #0
+ 144 00b8 4E75      	    rts
+ 145               	
+ 146               	/* ==========================================================
+ 147               	   タイマ割り込みハンドラ
+ 148               	   hard_clock
+ 149               	   モニタから呼ばれるため RTS で戻る
+ 150               	   ========================================================== */
+ 151               	hard_clock:
+ 152 00ba 48E7 FFFE 	    movem.l %d0-%d7/%a0-%a6, -(%sp) /*レジスタ退避*/
+ 153               	
+ 154               	    /* curr_task を ready キューの末尾に追加 */
+ 155               	    /* addq(&ready, curr_task) */
+ 156 00be 2F39 0000 	    move.l  curr_task, -(%sp)   /* 第2引数: id */
+ 156      0000 
+ 157 00c4 4879 0000 	    pea     ready               /* 第1引数: *head (&ready) */
+ 157      0000 
+ 158 00ca 4EB9 0000 	    jsr     addq
 68K GAS  mtk_asm.s 			page 4
 
 
- 161               	hard_clock:
- 162               	    /* 1. レジスタ退避 (重要: 全レジスタ保存) */
- 163 00ba 48E7 FFFE 	    movem.l %d0-%d7/%a0-%a6, -(%sp)
- 164               	
- 165               	    /* 2. curr_task を ready キューの末尾に追加 (ラウンドロビン) */
- 166               	    /* addq(&ready, curr_task) */
- 167 00be 2F39 0000 	    move.l  curr_task, -(%sp)   /* 第2引数: id */
- 167      0000 
- 168 00c4 4879 0000 	    pea     ready               /* 第1引数: *head (&ready) */
- 168      0000 
- 169 00ca 4EB9 0000 	    jsr     addq
- 169      0000 
- 170 00d0 508F      	    addq.l  #8, %sp             /* 引数除去 */
- 171               	
- 172               	    /* 3. 次のタスクを決める */
- 173 00d2 4EB9 0000 	    jsr     sched
- 173      0000 
- 174               	
- 175               	    /* 4. タスク切り替え */
- 176 00d8 4EBA FF46 	    jsr     swtch
- 177               	
- 178               	    /* 5. レジスタ復帰 */
- 179 00dc 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6
- 180               	    
- 181 00e0 4E75      	    rts
+ 158      0000 
+ 159 00d0 508F      	    addq.l  #8, %sp             /* 引数除去 */
+ 160               	
+ 161               	   
+ 162 00d2 4EB9 0000 	    jsr     sched  /*次のタスクを決める */
+ 162      0000 
+ 163               	
+ 164 00d8 4EBA FF46 	    jsr     swtch    /* タスク切り替え */
+ 165               	
+ 166 00dc 4CDF 7FFF 	    movem.l (%sp)+, %d0-%d7/%a0-%a6/*レジスタ復帰*/
+ 167               	    
+ 168 00e0 4E75      	    rts
 68K GAS  mtk_asm.s 			page 5
 
 
 DEFINED SYMBOLS
-           mtk_asm.s:36     .text:0000000000000000 first_task
-           mtk_asm.s:60     .text:0000000000000020 swtch
-           mtk_asm.s:98     .text:000000000000006a P
-           mtk_asm.s:104    .text:0000000000000074 V
-           mtk_asm.s:115    .text:000000000000007e pv_handler
-           mtk_asm.s:161    .text:00000000000000ba hard_clock
-           mtk_asm.s:149    .text:00000000000000aa init_timer
-           mtk_asm.s:27     *ABS*:0000000000000014 TCB_SIZE
-           mtk_asm.s:28     *ABS*:0000000000000004 TCB_SP_OFFSET
-           mtk_asm.s:29     *ABS*:0000000000000004 SYSCALL_NUM_SET_TIMER
-           mtk_asm.s:131    .text:000000000000009a do_v
-           mtk_asm.s:128    .text:0000000000000090 do_p
-           mtk_asm.s:134    .text:00000000000000a0 pv_end
+           mtk_asm.s:35     .text:0000000000000000 first_task
+           mtk_asm.s:58     .text:0000000000000020 swtch
+           mtk_asm.s:92     .text:000000000000006a P
+           mtk_asm.s:98     .text:0000000000000074 V
+           mtk_asm.s:109    .text:000000000000007e pv_handler
+           mtk_asm.s:151    .text:00000000000000ba hard_clock
+           mtk_asm.s:139    .text:00000000000000aa init_timer
+           mtk_asm.s:26     *ABS*:0000000000000014 TCB_SIZE
+           mtk_asm.s:27     *ABS*:0000000000000004 TCB_SP_OFFSET
+           mtk_asm.s:28     *ABS*:0000000000000004 SYSCALL_NUM_SET_TIMER
+           mtk_asm.s:123    .text:000000000000009a do_v
+           mtk_asm.s:120    .text:0000000000000090 do_p
+           mtk_asm.s:126    .text:00000000000000a0 pv_end
 
 UNDEFINED SYMBOLS
 curr_task
 task_tab
 next_task
+curr_task　
 p_body
 v_body
 ready

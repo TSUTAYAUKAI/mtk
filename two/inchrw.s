@@ -1,29 +1,44 @@
+/* inchrw.s : 中難度Option (link/unlk版) */
+
     .section .text
     .global inbyte
     .even
-    .equ SYSCALL_NUM_GETSTRING, 1 /*システムコール定数定義*/
+    .equ SYSCALL_NUM_GETSTRING, 1
 
 inbyte:
-    link    %a6, #-4 /*バッファ確保*/
+    /* 1. スタックフレームの作成 (バッファ確保) */
+    /* 旧FP保存 -> FP更新 -> スタック4バイト確保 を1命令で行う */
+    link    %a6, #-4
 
-    movem.l %d2-%d3, -(%sp) /*レジスタの退避*/
+    /* 2. レジスタの退避 */
+    /* linkの後に行うのが一般的です */
+    movem.l %d2-%d3, -(%sp)
 
 retry_in:
-    move.l  #SYSCALL_NUM_GETSTRING, %d0 /*システムコール*/
+    move.l  #SYSCALL_NUM_GETSTRING, %d0
     move.l  #0, %d1
-    lea     -4(%a6), %a0    
-    move.l  %a0, %d2        
+
+    /* 3. バッファアドレスの指定 */
+    /* フレームポインタ(%a6)基準で -4 の位置が確保したバッファ */
+    /* lea命令でその「アドレス」を計算してd2に入れる */
+    lea     -4(%a6), %a0    /* アドレス -4(%a6) を a0 にロード */
+    move.l  %a0, %d2        /* システムコール引数に設定 */
+
     move.l  #1, %d3
     trap    #0
 
-    tst.l   %d0 /*0文字だったらやり直す*/
+    tst.l   %d0
     beq     retry_in
 
-    move.l  #0, %d0 /*戻り値の取得*/
-    move.b  -4(%a6), %d0 
+    /* 4. 戻り値の取得 */
+    move.l  #0, %d0
+    move.b  -4(%a6), %d0    /* フレームポインタ基準でデータ読み出し */
 
-    movem.l (%sp)+, %d2-%d3　/*レジスタの復帰*/
+    /* 5. レジスタの復帰 */
+    movem.l (%sp)+, %d2-%d3
 
-    unlk    %a6 /*スタックの破棄*/
+    /* 6. スタックフレームの破棄 */
+    /* SPを戻す -> 旧FP復帰 を1命令で行う */
+    unlk    %a6
     
     rts
