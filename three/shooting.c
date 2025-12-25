@@ -277,11 +277,11 @@ static void render_port(int port, const GAMESTATE *s) {
         /* ゲーム終了メッセージ */
         if (s->game_over) {
             if (s->winner == 0) {
-                msg = "A Winner! Press any key to restart";
+                msg = "A Winner! Press W/S/I/K/Space/P to restart";
             } else if (s->winner == 1) {
-                msg = "B Winner! Press any key to restart";
+                msg = "B Winner! Press W/S/I/K/Space/P to restart";
             } else {
-                msg = "Game Over! Press any key to restart";
+                msg = "Game Over! Press W/S/I/K/Space/P to restart";
             }
             cursor_move(port, BOARD_H + 2, 1);
             out_str(port, msg);
@@ -316,11 +316,11 @@ static void render_port(int port, const GAMESTATE *s) {
     if (prev->game_over != s->game_over || prev->winner != s->winner) {
         if (s->game_over) {
             if (s->winner == 0) {
-                msg = "A Winner! Press any key to restart";
+                msg = "A Winner! Press W/S/I/K/Space/P to restart";
             } else if (s->winner == 1) {
-                msg = "B Winner! Press any key to restart";
+                msg = "B Winner! Press W/S/I/K/Space/P to restart";
             } else {
-                msg = "Game Over! Press any key to restart";
+                msg = "Game Over! Press W/S/I/K/Space/P to restart";
             }
             cursor_move(port, BOARD_H + 2, 1);
             out_str(port, msg);
