@@ -10,9 +10,9 @@ extern char inbyte(int port);
 
 #define BOARD_W 40
 #define BOARD_H 8
-#define MAX_BULLETS 7
+#define MAX_BULLETS 9
 #define COOLDOWN_TICKS 6
-#define BULLET_STEP_DIV 15
+#define BULLET_STEP_DIV 20
 #define TARGET_SCORE 30
 #define SEM_MUTEX 0
 #define SEM_RENDER 1
