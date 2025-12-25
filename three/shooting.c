@@ -13,6 +13,7 @@ extern char inbyte(int port);
 #define MAX_BULLETS 5
 #define COOLDOWN_TICKS 6
 #define BULLET_STEP_DIV 18
+#define TARGET_SCORE 30
 #define SEM_MUTEX 0
 #define SEM_RENDER 1
 #define SEM_RENDER_DONE 2
@@ -36,6 +37,8 @@ typedef struct {
     char last_key[2];
     unsigned int rng;
     unsigned int tick;
+    int game_over;
+    int winner;
     BULLET bullets[2][MAX_BULLETS];
 } GAMESTATE;
 
@@ -46,6 +49,8 @@ typedef struct {
     int p1_score;
     int p2_score;
     char board[BOARD_H][BOARD_W];
+    int game_over;
+    int winner;
     int initialized;
 } RENDER_STATE;
 
@@ -140,6 +145,8 @@ static void init_game(void) {
     g.input_fire[1] = 0;
     g.last_key[0] = '-';
     g.last_key[1] = '-';
+    g.game_over = 0;
+    g.winner = -1;
     reset_round();
 }
 
@@ -237,11 +244,15 @@ static void render_port(int port, const GAMESTATE *s) {
     int p1_x = 2;
     int p2_x = BOARD_W - 3;
     int need_full_clear = !prev->initialized;
+    const char *msg = NULL;
     
     /* 現在の盤面状態を計算 */
     build_board(new_board, s);
-    
+
     /* 初回描画またはラウンドリセット時は全画面クリア */
+    if (prev->game_over != s->game_over || prev->winner != s->winner) {
+        need_full_clear = 1;
+    }
     if (need_full_clear) {
         out_str(port, "\x1b[H\x1b[2J");
         prev->initialized = 1;
@@ -260,12 +271,27 @@ static void render_port(int port, const GAMESTATE *s) {
             }
             out_str(port, "\r\n");
         }
+
+        /* ゲーム終了メッセージ */
+        if (s->game_over) {
+            if (s->winner == 0) {
+                msg = "A Winner! Press any key to restart";
+            } else if (s->winner == 1) {
+                msg = "B Winner! Press any key to restart";
+            } else {
+                msg = "Game Over! Press any key to restart";
+            }
+            cursor_move(port, BOARD_H + 2, 1);
+            out_str(port, msg);
+        }
         
         /* 前回状態を保存 */
         prev->p1_y = s->p1_y;
         prev->p2_y = s->p2_y;
         prev->p1_score = s->p1_score;
         prev->p2_score = s->p2_score;
+        prev->game_over = s->game_over;
+        prev->winner = s->winner;
         for (int y = 0; y < BOARD_H; y++) {
             for (int x = 0; x < BOARD_W; x++) {
                 prev->board[y][x] = new_board[y][x];
@@ -283,6 +309,25 @@ static void render_port(int port, const GAMESTATE *s) {
         out_num(port, s->p2_score);
         prev->p1_score = s->p1_score;
         prev->p2_score = s->p2_score;
+    }
+
+    if (prev->game_over != s->game_over || prev->winner != s->winner) {
+        if (s->game_over) {
+            if (s->winner == 0) {
+                msg = "A Winner! Press any key to restart";
+            } else if (s->winner == 1) {
+                msg = "B Winner! Press any key to restart";
+            } else {
+                msg = "Game Over! Press any key to restart";
+            }
+            cursor_move(port, BOARD_H + 2, 1);
+            out_str(port, msg);
+        } else {
+            cursor_move(port, BOARD_H + 2, 1);
+            for (int i = 0; i < BOARD_W + 10; i++) outbyte(port, ' ');
+        }
+        prev->game_over = s->game_over;
+        prev->winner = s->winner;
     }
     
     /* プレイヤー位置の変更を検出して更新 */
@@ -373,6 +418,20 @@ void task_game(void) {
         g.input_fire[0] = 0;
         g.input_fire[1] = 0;
 
+        if (g.game_over) {
+            if (dir1 || dir2 || fire1 || fire2) {
+                init_game();
+                first_render = 1;
+                changed = 1;
+            }
+            V(SEM_MUTEX);
+            if (changed) {
+                V(SEM_RENDER);
+                P(SEM_RENDER_DONE);
+            }
+            continue;
+        }
+
         if (dir1 != 0 || dir2 != 0) {
             changed = 1;
         }
@@ -400,8 +459,18 @@ void task_game(void) {
                 changed = 1;
             }
             if (hit) {
-            reset_round();
-            changed = 1;
+                if (g.p1_score >= TARGET_SCORE) {
+                    g.game_over = 1;
+                    g.winner = 0;
+                    clear_bullets();
+                } else if (g.p2_score >= TARGET_SCORE) {
+                    g.game_over = 1;
+                    g.winner = 1;
+                    clear_bullets();
+                } else {
+                    reset_round();
+                }
+                changed = 1;
             }
         }
 
