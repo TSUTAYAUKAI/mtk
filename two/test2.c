@@ -7,19 +7,25 @@
 /* 動作確認用タスク1 */
 void task1() {
     volatile int i;
+    P(1);
     while (1) {
+    
         /* "1" を表示し続ける */
         printf("1");
 	fflush(stdout);
         
         /* 表示が速すぎると見にくいので少しウェイトを入れる */
         for (i = 0; i < 10000; i++);
+        V(2);
+        P(1);
     }
 }
 
 /* 動作確認用タスク2 */
 void task2() {
     volatile int i;
+    V(1);
+    P(2);
     while (1) {
         /* "2" を表示し続ける */
         printf("2");
@@ -27,8 +33,11 @@ void task2() {
         
         /* 表示が速すぎると見にくいので少しウェイトを入れる */
         for (i = 0; i < 10000; i++);
+        V(1);
+        P(2);
     }
 }
+
 
 /* ユーザ定義 exit() (テーマ1からの引き継ぎ) */
 void exit(int status) {
@@ -40,6 +49,12 @@ int main() {
     /* 1. カーネルの初期化 */
     /* TCB、セマフォ、割り込みベクタ(TRAP #1)の設定 */
     init_kernel();
+    
+        semaphore[1].count = 0; /* 初期値は用途によるが一旦0 */
+        semaphore[1].task_list = NULLTASKID;
+        
+        semaphore[2].count = 0; /* 初期値は用途によるが一旦0 */
+        semaphore[2].task_list = NULLTASKID;
 
     /* 2. タスクの登録 */
     /* ユーザ関数をタスクとして登録する */
