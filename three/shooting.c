@@ -204,7 +204,7 @@ static int step_bullets(int *moved_out) {
         }
     }
     if (moved_out) *moved_out = moved;
-    return moved;
+    return 0;
 }
 
 /* 現在の盤面状態を計算 */
