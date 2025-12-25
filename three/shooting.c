@@ -10,7 +10,7 @@ extern char inbyte(int port);
 
 #define BOARD_W 40
 #define BOARD_H 8
-#define MAX_BULLETS 5
+#define MAX_BULLETS 7
 #define COOLDOWN_TICKS 6
 #define BULLET_STEP_DIV 18
 #define TARGET_SCORE 30
@@ -193,11 +193,13 @@ static int step_bullets(int *moved_out) {
             }
             if (owner == 0 && b->x == p2_x && b->y == g.p2_y) {
                 g.p1_score++;
+                b->alive = 0;
                 if (moved_out) *moved_out = moved;
                 return 1;
             }
             if (owner == 1 && b->x == p1_x && b->y == g.p1_y) {
                 g.p2_score++;
+                b->alive = 0;
                 if (moved_out) *moved_out = moved;
                 return 1;
             }
@@ -467,8 +469,6 @@ void task_game(void) {
                     g.game_over = 1;
                     g.winner = 1;
                     clear_bullets();
-                } else {
-                    reset_round();
                 }
                 changed = 1;
             }
