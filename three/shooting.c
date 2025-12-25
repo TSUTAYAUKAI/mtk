@@ -163,12 +163,13 @@ static int clamp_y(int y) {
     return y;
 }
 
-static int step_bullets(void) {
+static int step_bullets(int *moved_out) {
     int p1_x = 2;
     int p2_x = BOARD_W - 3;
     int moved = 0;
 
     if ((g.tick % BULLET_STEP_DIV) != 0) {
+        if (moved_out) *moved_out = 0;
         return 0;
     }
 
@@ -181,19 +182,21 @@ static int step_bullets(void) {
             moved = 1;
             if (b->x <= 0 || b->x >= BOARD_W - 1) {
                 b->alive = 0;
-                moved = 1;
                 continue;
             }
             if (owner == 0 && b->x == p2_x && b->y == g.p2_y) {
                 g.p1_score++;
+                if (moved_out) *moved_out = moved;
                 return 1;
             }
             if (owner == 1 && b->x == p1_x && b->y == g.p1_y) {
                 g.p2_score++;
+                if (moved_out) *moved_out = moved;
                 return 1;
             }
         }
     }
+    if (moved_out) *moved_out = moved;
     return moved;
 }
 
@@ -323,6 +326,7 @@ void task_input_p1(void) {
     while (1) {
         char c = inbyte(PORT_P1);
         P(SEM_MUTEX);
+        /* 共有状態への入力反映を排他で行う */
         g.last_key[0] = c;
         if (c == 'w' || c == 'W') g.input_dir[0] = -1;
         else if (c == 's' || c == 'S') g.input_dir[0] = 1;
@@ -339,6 +343,7 @@ void task_input_p2(void) {
     while (1) {
         char c = inbyte(PORT_P2);
         P(SEM_MUTEX);
+        /* 入力の割り当てはport0と同じ（共有状態に集約） */
         g.last_key[1] = c;
         if (c == 'w' || c == 'W') g.input_dir[0] = -1;
         else if (c == 's' || c == 'S') g.input_dir[0] = 1;
@@ -358,6 +363,7 @@ void task_game(void) {
         int changed = 0;
         static int first_render = 1;
         P(SEM_MUTEX);
+        /* 入力フラグをまとめて読み出す */
         dir1 = g.input_dir[0];
         dir2 = g.input_dir[1];
         fire1 = g.input_fire[0];
@@ -387,9 +393,16 @@ void task_game(void) {
             changed = 1;
         }
 
-        if (step_bullets()) {
+        {
+            int moved = 0;
+            int hit = step_bullets(&moved);
+            if (moved) {
+                changed = 1;
+            }
+            if (hit) {
             reset_round();
             changed = 1;
+            }
         }
 
         g.tick++;
@@ -402,6 +415,7 @@ void task_game(void) {
         }
 
         if (changed) {
+            /* 描画要求を出し、完了まで待つ */
             V(SEM_RENDER);
             P(SEM_RENDER_DONE);
         }
@@ -414,11 +428,13 @@ void task_render(void) {
         GAMESTATE snapshot;
         P(SEM_RENDER);
         P(SEM_MUTEX);
+        /* 描画用に一貫したスナップショットを取る */
         snapshot = g;
         V(SEM_MUTEX);
 
         render_port(PORT_P1, &snapshot);
         render_port(PORT_P2, &snapshot);
+        /* 描画完了を通知 */
         V(SEM_RENDER_DONE);
     }
 }
@@ -436,6 +452,7 @@ int main(void) {
     semaphore[SEM_RENDER].task_list = NULLTASKID;
     semaphore[SEM_RENDER_DONE].count = 0;
     semaphore[SEM_RENDER_DONE].task_list = NULLTASKID;
+    /* 入力・ゲーム更新・描画の各タスクを登録 */
 
     set_task(task_input_p1);
     set_task(task_input_p2);
