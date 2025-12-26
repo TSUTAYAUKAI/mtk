@@ -1,6 +1,7 @@
 /* mtk_c.c */
+/* マルチタスクカーネル (C言語部分) */
 
-#define _KERNEL_MAIN_  /*ヘッダファイル内のインクルード制限*/ 
+#define _KERNEL_MAIN_   /* 実体を宣言するために定義 */
 #include "mtk_c.h"
 
 /* ==========================================================
@@ -22,7 +23,7 @@ extern void pv_handler(); /* mtk_asm.s にある割り込みハンドラ */
    キュー操作関数
    ========================================================== */
 
-/* addq: キューの最後尾にタスクを追加*/
+/* addq: キューの最後尾にタスクを追加 [cite: 830] */
 void addq(TASK_ID_TYPE *head, TASK_ID_TYPE id) {
     TASK_ID_TYPE curr;
 
@@ -44,7 +45,7 @@ void addq(TASK_ID_TYPE *head, TASK_ID_TYPE id) {
     task_tab[id].next = NULLTASKID;
 }
 
-/* removeq: キューの先頭からタスクを取り出す */
+/* removeq: キューの先頭からタスクを取り出す [cite: 832] */
 TASK_ID_TYPE removeq(TASK_ID_TYPE *head) {
     TASK_ID_TYPE id;
 
@@ -67,12 +68,12 @@ TASK_ID_TYPE removeq(TASK_ID_TYPE *head) {
    スケジューリング関数
    ========================================================== */
 
-/* sched: 次に実行するタスクを決定する  */
+/* sched: 次に実行するタスクを決定する [cite: 843] */
 void sched(void) {
     /* readyキューから1つ取り出す */
     next_task = removeq(&ready);
 
-    /* 実行できるタスクがなければ無限ループ  */
+    /* 実行できるタスクがなければ無限ループ (アイドル状態) */
     if (next_task == NULLTASKID) {
         while(1);
     }
@@ -82,7 +83,7 @@ void sched(void) {
    セマフォ操作 (P/V)
    ========================================================== */
 
-/* sleep: 現在のタスクを待ち行列に入れ、タスク切り替えを行う */
+/* sleep: 現在のタスクを待ち行列に入れ、タスク切り替えを行う [cite: 846] */
 void sleep(int ch) {
     /* 指定されたセマフォの待ち行列に追加 */
     addq(&semaphore[ch].task_list, curr_task);
@@ -90,24 +91,24 @@ void sleep(int ch) {
     /* 次のタスクを決める */
     sched();
 
-    /* タスク変更 */
+    /* コンテキストスイッチ (アセンブラ関数) */
     swtch();
 }
 
-/* wakeup: 待ち行列からタスクを起こしてreadyキューに戻す  */
+/* wakeup: 待ち行列からタスクを起こしてreadyキューに戻す [cite: 850] */
 void wakeup(int ch) {
     TASK_ID_TYPE id;
 
     /* セマフォの待ち行列から1つ取り出す */
     id = removeq(&semaphore[ch].task_list);
 
-    /* タスクがあればreadyキューへ移動  */
+    /* タスクがあればreadyキューへ移動 (実行可能状態へ) */
     if (id != NULLTASKID) {
         addq(&ready, id);
     }
 }
 
-/* p_body: P操作  */
+/* p_body: P操作 (count--) [cite: 834] */
 void p_body(int sem_id) {
     semaphore[sem_id].count--;
     if (semaphore[sem_id].count < 0) {
@@ -116,7 +117,7 @@ void p_body(int sem_id) {
     }
 }
 
-/* v_body: V操作 */
+/* v_body: V操作 (count++) [cite: 839] */
 void v_body(int sem_id) {
     semaphore[sem_id].count++;
     if (semaphore[sem_id].count <= 0) {
@@ -126,30 +127,35 @@ void v_body(int sem_id) {
 }
 
 /* ==========================================================
-   初期化
+   初期化関連
    ========================================================== */
 
-/* init_stack: タスクのスタックフレーム初期化 */
+/* init_stack: タスクのスタックフレーム初期化 [cite: 803] */
+/* 図2.8に基づき、RTEでタスクが開始できるようにダミーのコンテキストを作る */
 void *init_stack(TASK_ID_TYPE id) {
-    /*変数宣言*/
+    /* スタック配列は0始まり、IDは1始まりなので id-1 を使う */
+    /* スタックの底(高位アドレス)から積んでいくためにポインタを設定 */
+    /* STKSIZEの最後尾のアドレスを取得 */
     unsigned char *sp = (unsigned char *)&stacks[id - 1].sstack[STKSIZE];
     unsigned long *lsp;
     unsigned short *wsp;
 
-    /* PCの初期化*/
+    /* 1. Initial PC (4bytes) */
     sp -= 4;
     lsp = (unsigned long *)sp;
     *lsp = (unsigned long)task_tab[id].task_addr;
 
-    /* SRの初期化 */
+    /* 2. Initial SR (2bytes) -> 0x0000 (ユーザモード/割込許可) */
     sp -= 2;
     wsp = (unsigned short *)sp;
-    *wsp = 0x0000;/*ユーザーモード*/
+    *wsp = 0x0000;
 
-    /* レジスタD0-D7, A0-A6分のバッファ確保 */
+    /* 3. Registers D0-D7, A0-A6 (15 * 4 = 60 bytes) */
+    /* 初期値は不定でよいのでポインタだけずらす */
     sp -= 60;
 
-    /* USPの初期化 */
+    /* 4. Initial USP (4bytes) */
+    /* ユーザスタックの底のアドレスを計算して入れる */
     sp -= 4;
     lsp = (unsigned long *)sp;
     *lsp = (unsigned long)&stacks[id - 1].ustack[STKSIZE];
@@ -158,7 +164,7 @@ void *init_stack(TASK_ID_TYPE id) {
     return (void *)sp;
 }
 
-/* set_task: ユーザタスクの登録 */
+/* set_task: ユーザタスクの登録 [cite: 792] */
 void set_task(void (*func)()) {
     TASK_ID_TYPE id;
     int i;
@@ -188,7 +194,7 @@ void set_task(void (*func)()) {
     addq(&ready, id);
 }
 
-/* init_kernel: カーネルの初期化  */
+/* init_kernel: カーネルの初期化 [cite: 785] */
 void init_kernel(void) {
     int i;
 
@@ -205,23 +211,24 @@ void init_kernel(void) {
 
     /* セマフォ初期化 */
     for (i = 0; i < NUMSEMAPHORE; i++) {
-        semaphore[i].count = 0; 
+        semaphore[i].count = 1; /* 初期値は用途によるが一旦0 */
         semaphore[i].task_list = NULLTASKID;
     }
 
-    /* TRAP #1 に pv_handler を登録 */
+    /* TRAP #1 (Vector 33) に pv_handler を登録 */
     /* Vector address = 33 * 4 = 132 = 0x84 */
     *(void (**)())0x84 = pv_handler;
 }
 
-/* begin_sch: マルチタスク開始 */
+/* begin_sch: マルチタスク開始 [cite: 808] */
 void begin_sch(void) {
     /* 最初のタスクを決める */
     curr_task = removeq(&ready);
 
-    /* タイマの初期化 */
+    /* タイマの初期化 (mtk_asm.s) */
     init_timer();
 
-    /* 最初のタスクへ飛ぶ */
+    /* 最初のタスクへ飛ぶ (mtk_asm.s) */
+    /* ここからは戻ってこない */
     first_task();
 }

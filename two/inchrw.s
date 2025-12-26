@@ -13,10 +13,17 @@ inbyte:
     /* 2. レジスタの退避 */
     /* linkの後に行うのが一般的です */
     movem.l %d2-%d3, -(%sp)
+    
+    move.l 8(%a6), %d0
+    cmp.l #0,%d0
+    beq port_0
+    move.l #1,%d1
+    bra retry_in
+port_0:
+    move.l #0,%d1
 
 retry_in:
     move.l  #SYSCALL_NUM_GETSTRING, %d0
-    move.l  #0, %d1
 
     /* 3. バッファアドレスの指定 */
     /* フレームポインタ(%a6)基準で -4 の位置が確保したバッファ */

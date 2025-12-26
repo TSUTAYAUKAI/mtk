@@ -1,33 +1,60 @@
+/* outchr.s : 中難度Option (link/unlk版) */
+
     .section .text
     .global outbyte
     .even
     
-
-    .equ SYSCALL_NUM_PUTSTRING, 2     /* システムコール定数定義 */
+    /* 定数定義 */
+    .equ SYSCALL_NUM_PUTSTRING, 2
 
 outbyte:
-    
-    link    %a6, #-4 /* バッファ確保*/
-   
-    movem.l %d2-%d3, -(%sp) /* レジスタの退避 */
+    /* 1. スタックフレームの作成 (バッファ確保) */
+    /* 旧FP保存 -> FP更新 -> スタック4バイト確保(-4) */
+    link    %a6, #-4
 
-    move.l  8(%a6), %d0     /* 引数cを取り出す */
+    /* 2. レジスタの退避 */
+    movem.l %d2-%d3, -(%sp)
+
+    /* 3. 引数の取得 (ここが便利！) */
+    /* linkを使った場合、引数は必ず 8(%a6) 以降にあります */
+    /* 0(%a6) = 旧フレームポインタ
+       4(%a6) = 戻り番地
+       8(%a6) = 第1引数 (char c)
+    */
+    move.l 8(%a6), %d0
+    cmp.l #0,%d0
+    beq port_0
+    move.l #1,%d1
+    bra out_start
+port_0:
+    move.l #0,%d1
     
-    move.b  %d0, -4(%a6) /*バッファに書き込み*/
+out_start:  
+    move.l  12(%a6), %d0     /* 引数cをレジスタに取り出す */
+    
+    /* 4. ローカル変数(バッファ)への書き込み */
+    /* 確保した -4(%a6) の領域にデータを置く */
+    move.b  %d0, -4(%a6)
 
 retry_out:
-    move.l  #SYSCALL_NUM_PUTSTRING, %d0 /*システムコール*/
-    move.l  #0, %d1
+    move.l  #SYSCALL_NUM_PUTSTRING, %d0
+
+    /* 5. バッファアドレスの指定 */
+    /* フレームポインタ基準で -4 の位置のアドレスを計算 */
     lea     -4(%a6), %a0
     move.l  %a0, %d2
+
     move.l  #1, %d3
     trap    #0
 
-    tst.l   %d0 /*0文字ならリトライ*/
+    /* 6. 戻り値チェック (0文字ならリトライ) */
+    tst.l   %d0
     beq     retry_out
 
-    movem.l (%sp)+, %d2-%d3/* 7. レジスタの復帰 */
+    /* 7. レジスタの復帰 */
+    movem.l (%sp)+, %d2-%d3
 
-    unlk    %a6 /*スタックフレームの破棄*/
+    /* 8. スタックフレームの破棄 */
+    unlk    %a6
 
     rts

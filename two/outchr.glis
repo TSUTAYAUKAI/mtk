@@ -1,45 +1,78 @@
 68K GAS  outchr.s 			page 1
 
 
-   1               	    .section .text
-   2               	    .global outbyte
-   3               	    .even
-   4               	    
-   5               	
-   6               	    .equ SYSCALL_NUM_PUTSTRING, 2     /* システムコール定数定義 */
-   7               	
-   8               	outbyte:
-   9               	    
-  10 0000 4E56 FFFC 	    link    %a6, #-4 /* バッファ確保*/
-  11               	   
-  12 0004 48E7 3000 	    movem.l %d2-%d3, -(%sp) /* レジスタの退避 */
-  13               	
-  14 0008 202E 0008 	    move.l  8(%a6), %d0     /* 引数cを取り出す */
-  15               	    
-  16 000c 1D40 FFFC 	    move.b  %d0, -4(%a6) /*バッファに書き込み*/
+   1               	/* outchr.s : 中難度Option (link/unlk版) */
+   2               	
+   3               	    .section .text
+   4               	    .global outbyte
+   5               	    .even
+   6               	    
+   7               	    /* 定数定義 */
+   8               	    .equ SYSCALL_NUM_PUTSTRING, 2
+   9               	
+  10               	outbyte:
+  11               	    /* 1. スタックフレームの作成 (バッファ確保) */
+  12               	    /* 旧FP保存 -> FP更新 -> スタック4バイト確保(-4) */
+  13 0000 4E56 FFFC 	    link    %a6, #-4
+  14               	
+  15               	    /* 2. レジスタの退避 */
+  16 0004 48E7 3000 	    movem.l %d2-%d3, -(%sp)
   17               	
-  18               	retry_out:
-  19 0010 7002      	    move.l  #SYSCALL_NUM_PUTSTRING, %d0 /*システムコール*/
-  20 0012 7200      	    move.l  #0, %d1
-  21 0014 41EE FFFC 	    lea     -4(%a6), %a0
-  22 0018 2408      	    move.l  %a0, %d2
-  23 001a 7601      	    move.l  #1, %d3
-  24 001c 4E40      	    trap    #0
-  25               	
-  26 001e 4A80      	    tst.l   %d0 /*0文字ならリトライ*/
-  27 0020 6700 FFEE 	    beq     retry_out
-  28               	
-  29 0024 4CDF 000C 	    movem.l (%sp)+, %d2-%d3/* 7. レジスタの復帰 */
-  30               	
-  31 0028 4E5E      	    unlk    %a6 /*スタックフレームの破棄*/
-  32               	
-  33 002a 4E75      	    rts
+  18               	    /* 3. 引数の取得 (ここが便利！) */
+  19               	    /* linkを使った場合、引数は必ず 8(%a6) 以降にあります */
+  20               	    /* 0(%a6) = 旧フレームポインタ
+  21               	       4(%a6) = 戻り番地
+  22               	       8(%a6) = 第1引数 (char c)
+  23               	    */
+  24 0008 202E 0008 	    move.l 8(%a6), %d0
+  25 000c 0C80 0000 	    cmp.l #0,%d0
+  25      0000 
+  26 0012 6700 0008 	    beq port_0
+  27 0016 7201      	    move.l #1,%d1
+  28 0018 6000 0004 	    bra out_start
+  29               	port_0:
+  30 001c 7200      	    move.l #0,%d1
+  31               	    
+  32               	out_start:  
+  33 001e 202E 000C 	    move.l  12(%a6), %d0     /* 引数cをレジスタに取り出す */
+  34               	    
+  35               	    /* 4. ローカル変数(バッファ)への書き込み */
+  36               	    /* 確保した -4(%a6) の領域にデータを置く */
+  37 0022 1D40 FFFC 	    move.b  %d0, -4(%a6)
+  38               	
+  39               	retry_out:
+  40 0026 7002      	    move.l  #SYSCALL_NUM_PUTSTRING, %d0
+  41               	
+  42               	    /* 5. バッファアドレスの指定 */
+  43               	    /* フレームポインタ基準で -4 の位置のアドレスを計算 */
+  44 0028 41EE FFFC 	    lea     -4(%a6), %a0
+  45 002c 2408      	    move.l  %a0, %d2
+  46               	
+  47 002e 7601      	    move.l  #1, %d3
+  48 0030 4E40      	    trap    #0
+  49               	
+  50               	    /* 6. 戻り値チェック (0文字ならリトライ) */
+  51 0032 4A80      	    tst.l   %d0
+  52 0034 6700 FFF0 	    beq     retry_out
+  53               	
+  54               	    /* 7. レジスタの復帰 */
+  55 0038 4CDF 000C 	    movem.l (%sp)+, %d2-%d3
+  56               	
 68K GAS  outchr.s 			page 2
 
 
+  57               	    /* 8. スタックフレームの破棄 */
+  58 003c 4E5E      	    unlk    %a6
+  59               	
+  60 003e 4E75      	    rts
+68K GAS  outchr.s 			page 3
+
+
 DEFINED SYMBOLS
-            outchr.s:8      .text:0000000000000000 outbyte
-            outchr.s:6      *ABS*:0000000000000002 SYSCALL_NUM_PUTSTRING
-            outchr.s:18     .text:0000000000000010 retry_out
+            outchr.s:10     .text:0000000000000000 outbyte
+            outchr.s:8      *ABS*:0000000000000002 SYSCALL_NUM_PUTSTRING
+            outchr.s:29     .text:000000000000001c port_0
+            outchr.s:32     .text:000000000000001e out_start
+            outchr.s:39     .text:0000000000000026 retry_out
 
 NO UNDEFINED SYMBOLS

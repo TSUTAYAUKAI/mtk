@@ -6,7 +6,7 @@
 #define NULLTASKID  0       /* キューの終端 */
 #define NUMTASK     5       /* 最大タスク数 */
 #define STKSIZE     1024    /* スタックサイズ*/
-#define NUMSEMAPHORE 2      /* セマフォの数 */
+#define NUMSEMAPHORE 3      /* セマフォの数 */
 
 /* 型定義 */
 typedef int TASK_ID_TYPE;   /* タスクID */

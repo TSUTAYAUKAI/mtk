@@ -1,0 +1,397 @@
+Archive member included to satisfy reference by file (symbol)
+
+/usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+                              shooting.o (memcpy)
+/usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+                              shooting.o (__mulsi3)
+/usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+                              shooting.o (__udivsi3)
+/usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+                              shooting.o (__divsi3)
+/usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+                              shooting.o (__umodsi3)
+/usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+                              shooting.o (__modsi3)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x0000000000000000 0x0000000000040000 xrw
+rom0             0x0000000000c00000 0x0000000000080000
+device           0x0000000000fff000 0x0000000000001000
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD crt0.o
+LOAD mon.o
+LOAD csys68k.o
+LOAD inchrw.o
+LOAD mtk_asm.o
+LOAD mtk_c.o
+LOAD outchr.o
+LOAD shooting.o
+START GROUP
+LOAD /usr/local/m68k-elf/lib/libidp.a
+LOAD /usr/local/m68k-elf/lib/libc.a
+LOAD /usr/local/lib/gcc/m68k-elf/11/libgcc.a
+END GROUP
+                0x0000000000000000                __DYNAMIC = 0x0
+                0x000000000003fff0                PROVIDE (__stack = 0x3fff0)
+                0x0000000000000000                PROVIDE (hardware_init_hook = 0x0)
+                [!provide]                        PROVIDE (_hardware_init_hook = 0x0)
+                0x0000000000000000                PROVIDE (software_init_hook = 0x0)
+                [!provide]                        PROVIDE (_software_init_hook = 0x0)
+
+.vector
+ *(.vector)
+
+.text           0x0000000000000400     0x2078
+                0x0000000000000400                __text_start = .
+ *(.text)
+ .text          0x0000000000000400       0x90 crt0.o
+                0x000000000000043c                start
+ .text          0x0000000000000490      0x498 mon.o
+                0x0000000000000490                monitor_begin
+ .text          0x0000000000000928      0x15a csys68k.o
+                0x0000000000000928                fcntl
+                0x000000000000093a                read
+                0x0000000000000a06                write
+ *fill*         0x0000000000000a82        0x2 
+ .text          0x0000000000000a84       0x3e inchrw.o
+                0x0000000000000a84                inbyte
+ *fill*         0x0000000000000ac2        0x2 
+ .text          0x0000000000000ac4       0xe2 mtk_asm.o
+                0x0000000000000ac4                first_task
+                0x0000000000000ae4                swtch
+                0x0000000000000b2e                P
+                0x0000000000000b38                V
+                0x0000000000000b42                pv_handler
+                0x0000000000000b6e                init_timer
+                0x0000000000000b7e                hard_clock
+ *fill*         0x0000000000000ba6        0x2 
+ .text          0x0000000000000ba8      0x4c4 mtk_c.o
+                0x0000000000000ba8                addq
+                0x0000000000000c08                removeq
+                0x0000000000000c28                sched
+                0x0000000000000c54                sleep
+                0x0000000000000cfa                wakeup
+                0x0000000000000d84                p_body
+                0x0000000000000e3a                v_body
+                0x0000000000000ed8                init_stack
+                0x0000000000000f1a                set_task
+                0x0000000000000fde                init_kernel
+                0x0000000000001038                begin_sch
+ .text          0x000000000000106c       0x40 outchr.o
+                0x000000000000106c                outbyte
+ .text          0x00000000000010ac     0x122c shooting.o
+                0x00000000000010ac                task_input_p1
+                0x00000000000011c4                task_input_p2
+                0x000000000000158a                task_game
+                0x0000000000002242                task_render
+                0x00000000000022d6                exit
+ .text          0x00000000000022d8       0x6e /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+                0x00000000000022d8                memcpy
+ *fill*         0x0000000000002346        0x2 
+ .text          0x0000000000002348       0x22 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+                0x0000000000002348                __mulsi3
+ *fill*         0x000000000000236a        0x2 
+ .text          0x000000000000236c       0x5c /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+                0x000000000000236c                __udivsi3
+ .text          0x00000000000023c8       0x2e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+                0x00000000000023c8                __divsi3
+ *fill*         0x00000000000023f6        0x2 
+ .text          0x00000000000023f8       0x2e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+                0x00000000000023f8                __umodsi3
+ *fill*         0x0000000000002426        0x2 
+ .text          0x0000000000002428       0x2e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+                0x0000000000002428                __modsi3
+                0x0000000000002458                . = ALIGN (0x4)
+ *fill*         0x0000000000002456        0x2 
+                0x0000000000002458                __CTOR_LIST__ = .
+                0x0000000000002458                ___CTOR_LIST__ = .
+                0x0000000000002458        0x4 LONG 0x0 (((__CTOR_END__ - __CTOR_LIST__) / 0x4) - 0x2)
+ *(.ctors)
+                0x000000000000245c        0x4 LONG 0x0
+                0x0000000000002460                __CTOR_END__ = .
+                0x0000000000002460                __DTOR_LIST__ = .
+                0x0000000000002460                ___DTOR_LIST__ = .
+                0x0000000000002460        0x4 LONG 0x0 (((__DTOR_END__ - __DTOR_LIST__) / 0x4) - 0x2)
+ *(.dtors)
+                0x0000000000002464        0x4 LONG 0x0
+                0x0000000000002468                __DTOR_END__ = .
+ *(.rodata)
+ *(.gcc_except_table)
+                0x0000000000002468                __INIT_SECTION__ = .
+                0x0000000000002468        0x4 LONG 0x4e560000
+ *(.init)
+                0x000000000000246c        0x2 SHORT 0x4e5e
+                0x000000000000246e        0x2 SHORT 0x4e75
+                0x0000000000002470                __FINI_SECTION__ = .
+                0x0000000000002470        0x4 LONG 0x4e560000
+ *(.fini)
+                0x0000000000002474        0x2 SHORT 0x4e5e
+                0x0000000000002476        0x2 SHORT 0x4e75
+                0x0000000000002478                _etext = .
+ *(.lit)
+
+.text.startup   0x0000000000002478       0x64
+ .text.startup  0x0000000000002478       0x64 shooting.o
+                0x0000000000002478                main
+
+.rodata.str1.1  0x00000000000024dc       0x98
+ .rodata.str1.1
+                0x00000000000024dc       0x98 shooting.o
+
+.data           0x0000000000002574      0x464
+ *(.shdata)
+ *(.data)
+ .data          0x0000000000002574        0x4 crt0.o
+ .data          0x0000000000002578      0x45a mon.o
+ *fill*         0x00000000000029d2        0x2 
+ .data          0x00000000000029d4        0x0 csys68k.o
+ .data          0x00000000000029d4        0x0 inchrw.o
+ .data          0x00000000000029d4        0x0 mtk_asm.o
+ .data          0x00000000000029d4        0x0 mtk_c.o
+ .data          0x00000000000029d4        0x0 outchr.o
+ .data          0x00000000000029d4        0x4 shooting.o
+ .data          0x00000000000029d8        0x0 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .data          0x00000000000029d8        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .data          0x00000000000029d8        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .data          0x00000000000029d8        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .data          0x00000000000029d8        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .data          0x00000000000029d8        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+                0x00000000000029d8                _edata = .
+
+.bss            0x00000000000029d8     0xadc0
+                0x00000000000029d8                . = ALIGN (0x4)
+                0x00000000000029d8                __bss_start = .
+ *(.shbss)
+ *(.bss)
+ .bss           0x00000000000029d8        0x0 crt0.o
+ .bss           0x00000000000029d8     0x8104 mon.o
+ .bss           0x000000000000aadc        0x0 csys68k.o
+ .bss           0x000000000000aadc        0x0 inchrw.o
+ .bss           0x000000000000aadc        0x0 mtk_asm.o
+ .bss           0x000000000000aadc     0x28a8 mtk_c.o
+                0x000000000000aadc                next_task
+                0x000000000000aae0                curr_task
+                0x000000000000aae4                ready
+                0x000000000000aae8                semaphore
+                0x000000000000ab0c                stacks
+                0x000000000000d30c                task_tab
+ .bss           0x000000000000d384        0x0 outchr.o
+ .bss           0x000000000000d384      0x412 shooting.o
+ *fill*         0x000000000000d796        0x2 
+ .bss           0x000000000000d798        0x0 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .bss           0x000000000000d798        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .bss           0x000000000000d798        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .bss           0x000000000000d798        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .bss           0x000000000000d798        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .bss           0x000000000000d798        0x0 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+ *(COMMON)
+                0x000000000000d798                _end = ALIGN (0x8)
+                0x000000000000d798                __end = _end
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+OUTPUT(shooting.hex srec)
+
+.debug_info     0x0000000000000000     0x205f
+ .debug_info    0x0000000000000000      0x237 csys68k.o
+ .debug_info    0x0000000000000237      0x7c5 mtk_c.o
+ .debug_info    0x00000000000009fc     0x158b shooting.o
+ .debug_info    0x0000000000001f87       0x24 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_info    0x0000000000001fab       0x24 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .debug_info    0x0000000000001fcf       0x24 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .debug_info    0x0000000000001ff3       0x24 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .debug_info    0x0000000000002017       0x24 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .debug_info    0x000000000000203b       0x24 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+
+.debug_abbrev   0x0000000000000000      0x93d
+ .debug_abbrev  0x0000000000000000      0x150 csys68k.o
+ .debug_abbrev  0x0000000000000150      0x282 mtk_c.o
+ .debug_abbrev  0x00000000000003d2      0x4f3 shooting.o
+ .debug_abbrev  0x00000000000008c5       0x14 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_abbrev  0x00000000000008d9       0x14 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .debug_abbrev  0x00000000000008ed       0x14 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .debug_abbrev  0x0000000000000901       0x14 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .debug_abbrev  0x0000000000000915       0x14 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .debug_abbrev  0x0000000000000929       0x14 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+
+.debug_loclists
+                0x0000000000000000     0x173e
+ .debug_loclists
+                0x0000000000000000      0x13f csys68k.o
+ .debug_loclists
+                0x000000000000013f      0x459 mtk_c.o
+ .debug_loclists
+                0x0000000000000598     0x11a6 shooting.o
+
+.debug_aranges  0x0000000000000000      0x128
+ .debug_aranges
+                0x0000000000000000       0x20 csys68k.o
+ .debug_aranges
+                0x0000000000000020       0x20 mtk_c.o
+ .debug_aranges
+                0x0000000000000040       0x28 shooting.o
+ .debug_aranges
+                0x0000000000000068       0x20 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_aranges
+                0x0000000000000088       0x20 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .debug_aranges
+                0x00000000000000a8       0x20 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .debug_aranges
+                0x00000000000000c8       0x20 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .debug_aranges
+                0x00000000000000e8       0x20 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .debug_aranges
+                0x0000000000000108       0x20 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+
+.debug_rnglists
+                0x0000000000000000      0x390
+ .debug_rnglists
+                0x0000000000000000       0x28 csys68k.o
+ .debug_rnglists
+                0x0000000000000028       0x85 mtk_c.o
+ .debug_rnglists
+                0x00000000000000ad      0x2e3 shooting.o
+
+.debug_line     0x0000000000000000     0x1d1a
+ .debug_line    0x0000000000000000      0x19e csys68k.o
+ .debug_line    0x000000000000019e      0x63b mtk_c.o
+ .debug_line    0x00000000000007d9     0x130b shooting.o
+ .debug_line    0x0000000000001ae4       0x69 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_line    0x0000000000001b4d       0x54 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .debug_line    0x0000000000001ba1       0x6d /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .debug_line    0x0000000000001c0e       0x5c /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .debug_line    0x0000000000001c6a       0x58 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .debug_line    0x0000000000001cc2       0x58 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+
+.debug_str      0x0000000000000000      0x89b
+ .debug_str     0x0000000000000000       0xe5 csys68k.o
+ .debug_str     0x00000000000000e5      0x20b mtk_c.o
+ .debug_str     0x00000000000002f0      0x358 shooting.o
+ .debug_str     0x0000000000000648       0x73 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_str     0x00000000000006bb       0x60 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .debug_str     0x000000000000071b       0x60 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .debug_str     0x000000000000077b       0x60 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .debug_str     0x00000000000007db       0x60 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .debug_str     0x000000000000083b       0x60 /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+
+.comment        0x0000000000000000       0x39
+ .comment       0x0000000000000000       0x13 csys68k.o
+ .comment       0x0000000000000013       0x13 mtk_c.o
+ .comment       0x0000000000000026       0x13 shooting.o
+
+.debug_frame    0x0000000000000000      0x66c
+ .debug_frame   0x0000000000000000       0xb8 csys68k.o
+ .debug_frame   0x00000000000000b8       0xf0 mtk_c.o
+ .debug_frame   0x00000000000001a8      0x4c4 shooting.o
+
+.debug_line_str
+                0x0000000000000000      0x246
+ .debug_line_str
+                0x0000000000000000       0x70 /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_line_str
+                0x0000000000000070       0x5e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+ .debug_line_str
+                0x00000000000000ce       0x5e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+ .debug_line_str
+                0x000000000000012c       0x5e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+ .debug_line_str
+                0x000000000000018a       0x5e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+ .debug_line_str
+                0x00000000000001e8       0x5e /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+
+Cross Reference Table
+
+Symbol                                            File
+P                                                 mtk_asm.o
+                                                  shooting.o
+V                                                 mtk_asm.o
+                                                  shooting.o
+__bss_start                                       crt0.o
+__divsi3                                          /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+                                                  /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+                                                  shooting.o
+__modsi3                                          /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+                                                  shooting.o
+__mulsi3                                          /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_mulsi3.o)
+                                                  /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_modsi3.o)
+                                                  /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+                                                  shooting.o
+__stack                                           crt0.o
+__udivsi3                                         /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_udivsi3.o)
+                                                  /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+                                                  /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_divsi3.o)
+                                                  shooting.o
+__umodsi3                                         /usr/local/lib/gcc/m68k-elf/11/libgcc.a(_umodsi3.o)
+                                                  shooting.o
+_end                                              crt0.o
+addq                                              mtk_c.o
+                                                  mtk_asm.o
+begin_sch                                         mtk_c.o
+                                                  shooting.o
+curr_task                                         mtk_c.o
+                                                  mtk_asm.o
+exit                                              shooting.o
+                                                  crt0.o
+fcntl                                             csys68k.o
+first_task                                        mtk_asm.o
+                                                  mtk_c.o
+hard_clock                                        mtk_asm.o
+hardware_init_hook                                crt0.o
+inbyte                                            inchrw.o
+                                                  shooting.o
+                                                  csys68k.o
+init_kernel                                       mtk_c.o
+                                                  shooting.o
+init_stack                                        mtk_c.o
+init_timer                                        mtk_asm.o
+                                                  mtk_c.o
+main                                              shooting.o
+                                                  crt0.o
+memcpy                                            /usr/local/m68k-elf/lib/libc.a(libc_a-memcpy.o)
+                                                  shooting.o
+monitor_begin                                     mon.o
+                                                  crt0.o
+next_task                                         mtk_c.o
+                                                  mtk_asm.o
+outbyte                                           outchr.o
+                                                  shooting.o
+                                                  csys68k.o
+p_body                                            mtk_c.o
+                                                  mtk_asm.o
+pv_handler                                        mtk_asm.o
+                                                  mtk_c.o
+read                                              csys68k.o
+ready                                             mtk_c.o
+                                                  mtk_asm.o
+removeq                                           mtk_c.o
+sched                                             mtk_c.o
+                                                  mtk_asm.o
+semaphore                                         mtk_c.o
+                                                  shooting.o
+set_task                                          mtk_c.o
+                                                  shooting.o
+sleep                                             mtk_c.o
+software_init_hook                                crt0.o
+stacks                                            mtk_c.o
+start                                             crt0.o
+                                                  mon.o
+swtch                                             mtk_asm.o
+                                                  mtk_c.o
+task_game                                         shooting.o
+task_input_p1                                     shooting.o
+task_input_p2                                     shooting.o
+task_render                                       shooting.o
+task_tab                                          mtk_c.o
+                                                  mtk_asm.o
+v_body                                            mtk_c.o
+                                                  mtk_asm.o
+wakeup                                            mtk_c.o
+write                                             csys68k.o
